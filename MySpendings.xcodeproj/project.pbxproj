@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -99,12 +99,13 @@
 		D9AE714329683F5A00BDE7DD /* MySpendings */ = {
 			isa = PBXGroup;
 			children = (
+				D9AE717429683FEC00BDE7DD /* viewControllers */,
 				D9AE714429683F5A00BDE7DD /* AppDelegate.swift */,
 				D9AE714629683F5A00BDE7DD /* SceneDelegate.swift */,
 				D9AE714829683F5A00BDE7DD /* ViewController.swift */,
 				D9AE714A29683F5A00BDE7DD /* Main.storyboard */,
-				D9AE714D29683F5C00BDE7DD /* Assets.xcassets */,
 				D9AE714F29683F5C00BDE7DD /* LaunchScreen.storyboard */,
+				D9AE714D29683F5C00BDE7DD /* Assets.xcassets */,
 				D9AE715229683F5C00BDE7DD /* Info.plist */,
 			);
 			path = MySpendings;
@@ -125,6 +126,13 @@
 				D9AE716729683F5C00BDE7DD /* MySpendingsUITestsLaunchTests.swift */,
 			);
 			path = MySpendingsUITests;
+			sourceTree = "<group>";
+		};
+		D9AE717429683FEC00BDE7DD /* viewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = viewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,7 +215,7 @@
 				};
 			};
 			buildConfigurationList = D9AE713C29683F5A00BDE7DD /* Build configuration list for PBXProject "MySpendings" */;
-			compatibilityVersion = "Xcode 13.0";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
