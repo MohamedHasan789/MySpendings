@@ -17,6 +17,15 @@
 		D9AE716629683F5C00BDE7DD /* MySpendingsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE716529683F5C00BDE7DD /* MySpendingsUITests.swift */; };
 		D9AE716829683F5C00BDE7DD /* MySpendingsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE716729683F5C00BDE7DD /* MySpendingsUITestsLaunchTests.swift */; };
 		D9AE717629684A1400BDE7DD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE717529684A1400BDE7DD /* MainViewController.swift */; };
+		D9AE717829684D6D00BDE7DD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE717729684D6D00BDE7DD /* HomeViewController.swift */; };
+		D9AE717A29684F1B00BDE7DD /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE717929684F1B00BDE7DD /* CategoriesViewController.swift */; };
+		D9AE717C2968503100BDE7DD /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE717B2968503100BDE7DD /* CalculatorViewController.swift */; };
+		D9AE717E296850AE00BDE7DD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE717D296850AE00BDE7DD /* SettingsViewController.swift */; };
+		D9AE7183296858F900BDE7DD /* ItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE7182296858F900BDE7DD /* ItemsViewController.swift */; };
+		D9AE718529685B2D00BDE7DD /* AddCategoryFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE718429685B2D00BDE7DD /* AddCategoryFormController.swift */; };
+		D9AE718729685C6800BDE7DD /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE718629685C6800BDE7DD /* Category.swift */; };
+		D9AE718929685CA600BDE7DD /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE718829685CA600BDE7DD /* Item.swift */; };
+		D9AE718B2968630700BDE7DD /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE718A2968630700BDE7DD /* Record.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +60,15 @@
 		D9AE716529683F5C00BDE7DD /* MySpendingsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendingsUITests.swift; sourceTree = "<group>"; };
 		D9AE716729683F5C00BDE7DD /* MySpendingsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySpendingsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D9AE717529684A1400BDE7DD /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		D9AE717729684D6D00BDE7DD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		D9AE717929684F1B00BDE7DD /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		D9AE717B2968503100BDE7DD /* CalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
+		D9AE717D296850AE00BDE7DD /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		D9AE7182296858F900BDE7DD /* ItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewController.swift; sourceTree = "<group>"; };
+		D9AE718429685B2D00BDE7DD /* AddCategoryFormController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryFormController.swift; sourceTree = "<group>"; };
+		D9AE718629685C6800BDE7DD /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		D9AE718829685CA600BDE7DD /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		D9AE718A2968630700BDE7DD /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +119,7 @@
 		D9AE714329683F5A00BDE7DD /* MySpendings */ = {
 			isa = PBXGroup;
 			children = (
+				D9AE717F2968580B00BDE7DD /* Objects */,
 				D9AE717429683FEC00BDE7DD /* viewControllers */,
 				D9AE714429683F5A00BDE7DD /* AppDelegate.swift */,
 				D9AE714629683F5A00BDE7DD /* SceneDelegate.swift */,
@@ -134,8 +153,40 @@
 			isa = PBXGroup;
 			children = (
 				D9AE717529684A1400BDE7DD /* MainViewController.swift */,
+				D9AE71802968588600BDE7DD /* Basic Views */,
+				D9AE7181296858A000BDE7DD /* Sub Views */,
 			);
 			path = viewControllers;
+			sourceTree = "<group>";
+		};
+		D9AE717F2968580B00BDE7DD /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				D9AE718A2968630700BDE7DD /* Record.swift */,
+				D9AE718629685C6800BDE7DD /* Category.swift */,
+				D9AE718829685CA600BDE7DD /* Item.swift */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		D9AE71802968588600BDE7DD /* Basic Views */ = {
+			isa = PBXGroup;
+			children = (
+				D9AE717729684D6D00BDE7DD /* HomeViewController.swift */,
+				D9AE717929684F1B00BDE7DD /* CategoriesViewController.swift */,
+				D9AE717B2968503100BDE7DD /* CalculatorViewController.swift */,
+				D9AE717D296850AE00BDE7DD /* SettingsViewController.swift */,
+			);
+			path = "Basic Views";
+			sourceTree = "<group>";
+		};
+		D9AE7181296858A000BDE7DD /* Sub Views */ = {
+			isa = PBXGroup;
+			children = (
+				D9AE7182296858F900BDE7DD /* ItemsViewController.swift */,
+				D9AE718429685B2D00BDE7DD /* AddCategoryFormController.swift */,
+			);
+			path = "Sub Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,10 +320,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9AE717829684D6D00BDE7DD /* HomeViewController.swift in Sources */,
 				D9AE714929683F5A00BDE7DD /* ViewController.swift in Sources */,
+				D9AE717A29684F1B00BDE7DD /* CategoriesViewController.swift in Sources */,
+				D9AE718529685B2D00BDE7DD /* AddCategoryFormController.swift in Sources */,
+				D9AE718929685CA600BDE7DD /* Item.swift in Sources */,
 				D9AE714529683F5A00BDE7DD /* AppDelegate.swift in Sources */,
+				D9AE7183296858F900BDE7DD /* ItemsViewController.swift in Sources */,
+				D9AE718B2968630700BDE7DD /* Record.swift in Sources */,
 				D9AE714729683F5A00BDE7DD /* SceneDelegate.swift in Sources */,
+				D9AE717C2968503100BDE7DD /* CalculatorViewController.swift in Sources */,
 				D9AE717629684A1400BDE7DD /* MainViewController.swift in Sources */,
+				D9AE717E296850AE00BDE7DD /* SettingsViewController.swift in Sources */,
+				D9AE718729685C6800BDE7DD /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,8 +517,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -469,7 +530,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -486,8 +547,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -498,7 +560,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
