@@ -12,6 +12,7 @@
         <!--home-->
         <scene sceneID="oPQ-xw-ZaM">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fft-gi-hRz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController title="home" id="z8D-ju-qOM" customClass="HomeViewController" customModule="MySpendings" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JbT-7e-fnu">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
@@ -79,19 +80,16 @@
                     <tabBarItem key="tabBarItem" title="Home" image="homekit" catalog="system" id="5OP-8T-QTL"/>
                     <navigationItem key="navigationItem" id="Jl6-Gm-Xi0"/>
                     <connections>
-                        <outlet property="view_HomeBody" destination="yg2-Pc-SL6" id="cCn-4K-PXt"/>
-                        <outlet property="view_HomeTop" destination="9nX-6i-rT3" id="i0d-bw-b3E"/>
                         <segue destination="1bx-XX-kpH" kind="show" identifier="ziftTest" destinationCreationSelector="shoeitems:" id="ueE-kl-mMn"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Fft-gi-hRz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2641.1214953271028" y="1321.8142548596113"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main View Controller-->
         <scene sceneID="iMH-Mr-6Sl">
             <objects>
-                <tabBarController id="FeU-72-rBp" sceneMemberID="viewController">
+                <tabBarController id="FeU-72-rBp" customClass="MainViewController" customModule="MySpendings" customModuleProvider="target" sceneMemberID="viewController">
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Mgo-ID-lsI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -163,7 +161,8 @@
         <!--Categories-->
         <scene sceneID="bwe-0G-RMb">
             <objects>
-                <viewController id="LpG-ya-Vj1" customClass="CategoriesViewController" customModule="MySpendings" customModuleProvider="target" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Pr-nD-1qD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController id="LpG-ya-Vj1" customClass="ViewController" customModule="MySpendings" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Zr4-1J-VZW">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -203,14 +202,14 @@
                         <outlet property="categoriesMainView" destination="8Xm-dc-tiP" id="6Dr-Pc-86b"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2Pr-nD-1qD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1814" y="1323"/>
         </scene>
         <!--Settings-->
         <scene sceneID="PXG-18-UeA">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="qe8-Ar-6Xn" customClass="SettingsViewController" customModule="MySpendings" customModuleProvider="target" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Slw-ZA-79A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController modalPresentationStyle="fullScreen" id="qe8-Ar-6Xn" customClass="ViewController" customModule="MySpendings" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Vtf-Y8-YEW">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -279,7 +278,6 @@
                         <segue destination="1X8-4k-oYg" kind="show" identifier="help" destinationCreationSelector="help:" id="tky-yb-2Gn"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Slw-ZA-79A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-224.29906542056074" y="1321.8142548596113"/>
         </scene>
@@ -303,7 +301,8 @@
         <!--Calculator-->
         <scene sceneID="z9n-HS-5Sb">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="6q9-Q7-Es2" customClass="CategoriesViewController" customModule="MySpendings" customModuleProvider="target" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fKk-5g-Jkv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController modalPresentationStyle="fullScreen" id="6q9-Q7-Es2" customClass="ViewController" customModule="MySpendings" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Lxn-wK-xq6">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -335,13 +334,13 @@
                         <outlet property="categoriesMainView" destination="966-oV-My2" id="RL0-Cu-eCA"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fKk-5g-Jkv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1005" y="1322"/>
         </scene>
         <!--"Category View"-->
         <scene sceneID="aqN-8a-ewq">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QpV-e3-nXM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="1bx-XX-kpH" customClass="ItemsViewController" customModule="MySpendings" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Kjg-yw-te8">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
@@ -369,13 +368,14 @@
                     <tabBarItem key="tabBarItem" title="Categories" image="square.grid.2x2" catalog="system" id="i1P-uC-CyI"/>
                     <navigationItem key="navigationItem" title="&quot;Category View&quot;" id="td5-C1-5b7"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QpV-e3-nXM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2641.1214953271028" y="2175.1619870410368"/>
         </scene>
         <!--Add Category-->
         <scene sceneID="Jvb-Zb-rqA">
             <objects>
+                <exit id="c1S-TW-fgB" userLabel="Exit" sceneMemberID="exit"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="etU-ln-qzk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController modalPresentationStyle="fullScreen" id="JZ8-fz-X71" customClass="AddCategoryViewController" customModule="MySpendings" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Iei-v5-qVw">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
@@ -448,14 +448,13 @@
                         <segue destination="c1S-TW-fgB" kind="unwind" identifier="unwindToHere" unwindAction="unwindToHere:" id="H3l-Yg-bJZ"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="etU-ln-qzk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="c1S-TW-fgB" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-1814" y="2176"/>
         </scene>
         <!--Help-->
         <scene sceneID="hbM-ZA-VBY">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dVh-yA-dT4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController title="Help" modalPresentationStyle="fullScreen" id="1X8-4k-oYg" customClass="ViewController" customModule="MySpendings" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6GS-8t-jY8">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
@@ -760,7 +759,6 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="zPn-em-EKq"/>
                     </navigationItem>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dVh-yA-dT4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="757" y="2082"/>
         </scene>
