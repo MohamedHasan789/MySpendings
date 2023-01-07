@@ -26,6 +26,8 @@
 		D9AE718729685C6800BDE7DD /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE718629685C6800BDE7DD /* Category.swift */; };
 		D9AE718929685CA600BDE7DD /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE718829685CA600BDE7DD /* Item.swift */; };
 		D9AE718B2968630700BDE7DD /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE718A2968630700BDE7DD /* Record.swift */; };
+		D9AE71912968BF1100BDE7DD /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE71902968BF1100BDE7DD /* CategoryTableViewCell.swift */; };
+		D9AE71952968DC4700BDE7DD /* EmojiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE71942968DC4700BDE7DD /* EmojiTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,8 @@
 		D9AE718629685C6800BDE7DD /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		D9AE718829685CA600BDE7DD /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		D9AE718A2968630700BDE7DD /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
+		D9AE71902968BF1100BDE7DD /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
+		D9AE71942968DC4700BDE7DD /* EmojiTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +176,7 @@
 		D9AE71802968588600BDE7DD /* Basic Views */ = {
 			isa = PBXGroup;
 			children = (
+				D9AE718C2968BE9D00BDE7DD /* Custome Elements */,
 				D9AE717729684D6D00BDE7DD /* HomeViewController.swift */,
 				D9AE717929684F1B00BDE7DD /* CategoriesViewController.swift */,
 				D9AE717B2968503100BDE7DD /* CalculatorViewController.swift */,
@@ -187,6 +192,15 @@
 				D9AE718429685B2D00BDE7DD /* AddCategoryFormController.swift */,
 			);
 			path = "Sub Views";
+			sourceTree = "<group>";
+		};
+		D9AE718C2968BE9D00BDE7DD /* Custome Elements */ = {
+			isa = PBXGroup;
+			children = (
+				D9AE71902968BF1100BDE7DD /* CategoryTableViewCell.swift */,
+				D9AE71942968DC4700BDE7DD /* EmojiTextField.swift */,
+			);
+			path = "Custome Elements";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -324,6 +338,7 @@
 				D9AE714929683F5A00BDE7DD /* ViewController.swift in Sources */,
 				D9AE717A29684F1B00BDE7DD /* CategoriesViewController.swift in Sources */,
 				D9AE718529685B2D00BDE7DD /* AddCategoryFormController.swift in Sources */,
+				D9AE71952968DC4700BDE7DD /* EmojiTextField.swift in Sources */,
 				D9AE718929685CA600BDE7DD /* Item.swift in Sources */,
 				D9AE714529683F5A00BDE7DD /* AppDelegate.swift in Sources */,
 				D9AE7183296858F900BDE7DD /* ItemsViewController.swift in Sources */,
@@ -331,6 +346,7 @@
 				D9AE714729683F5A00BDE7DD /* SceneDelegate.swift in Sources */,
 				D9AE717C2968503100BDE7DD /* CalculatorViewController.swift in Sources */,
 				D9AE717629684A1400BDE7DD /* MainViewController.swift in Sources */,
+				D9AE71912968BF1100BDE7DD /* CategoryTableViewCell.swift in Sources */,
 				D9AE717E296850AE00BDE7DD /* SettingsViewController.swift in Sources */,
 				D9AE718729685C6800BDE7DD /* Category.swift in Sources */,
 			);
