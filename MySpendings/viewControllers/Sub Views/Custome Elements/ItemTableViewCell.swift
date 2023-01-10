@@ -13,6 +13,9 @@ class ItemTableViewCell: UITableViewCell {
     @IBOutlet weak var lbl_Name: UILabel!
     @IBOutlet weak var lbl_Price: UILabel!
     
+    @IBOutlet weak var img_editIcon: UIImageView!
+    
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
