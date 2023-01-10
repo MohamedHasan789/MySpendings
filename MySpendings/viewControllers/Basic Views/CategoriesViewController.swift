@@ -22,6 +22,9 @@ class catCheck
 }
 
 
+let test1 = catCheck(catTitle: "Rent", catImage: "🧾")
+let test2 = catCheck(catTitle: "House", catImage: "🏠")
+
 class CategoriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
     
@@ -29,7 +32,13 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var tblView_Categories: UITableView!
     
     // again jsut teting
-    var categories = [catCheck]()
+    
+    
+    
+    var categories = [test1,test2]
+    
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +52,6 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     // testing for categories
     func poupCategories()
     {
-        let test1 = catCheck(catTitle: "Rent", catImage: "🧾")
-        let test2 = catCheck(catTitle: "House", catImage: "🏠")
-        
-        categories.append(test1)
-        categories.append(test2)
         
         tblView_Categories.dataSource = self
         tblView_Categories.delegate = self
@@ -81,6 +85,11 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         cell.lbl_Items.text = "5"
         cell.lbl_Total.text = "10"
          
+        cell.btn_Info.addTarget(self, action: #selector(infoCat(sender:)), for: .touchUpInside)
+        cell.btn_Edit.addTarget(self, action: #selector(editCat(sender:)), for: .touchUpInside)
+        
+        cell.btn_Info.tag = indexPath.row
+        cell.btn_Edit.tag = indexPath.row
         
         return cell
     }
@@ -92,5 +101,41 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     // selecion of item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete
+        {
+            tableView.beginUpdates()
+            
+            let alert = UIAlertController(title: "Are You Sure?", message: "You cannot undo this action.", preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{action in
+                self.categories.remove(at: indexPath.row);
+                tableView.deleteRows(at: [indexPath], with: .fade);
+            }))
+            alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            
+            
+            tableView.endUpdates()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    @objc
+    func infoCat(sender:UIButton)
+    {
+        print("info for:")
+        print(sender.tag)
+    }
+    
+    @objc
+    func editCat(sender:UIButton)
+    {
+        print("edit for:")
+        print(sender.tag)
     }
 }

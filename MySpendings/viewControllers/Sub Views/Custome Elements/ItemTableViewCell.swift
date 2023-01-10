@@ -1,28 +1,24 @@
 //
-//  CategoryTableViewCell.swift
+//  ItemTableViewCell.swift
 //  MySpendings
 //
-//  Created by Mohamed on 06/01/2023.
+//  Created by Mohamed on 10/01/2023.
 //
 
 import UIKit
 
-class CategoryTableViewCell: UITableViewCell {
+class ItemTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var img_CatIcon: UILabel!
+    @IBOutlet weak var img_ItemIcon: UIImageView!
     @IBOutlet weak var lbl_Name: UILabel!
-    @IBOutlet weak var lbl_Items: UILabel!
-    @IBOutlet weak var lbl_Total: UILabel!
+    @IBOutlet weak var lbl_Price: UILabel!
     
-    @IBOutlet weak var btn_Info: UIButton!
-    @IBOutlet weak var btn_Edit: UIButton!
-    
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

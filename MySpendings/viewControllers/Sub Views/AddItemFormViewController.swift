@@ -1,13 +1,13 @@
 //
-//  AddCategoryFormController.swift
+//  AddItemFormViewController.swift
 //  MySpendings
 //
-//  Created by Mohamed on 06/01/2023.
+//  Created by Mohamed on 10/01/2023.
 //
 
 import UIKit
 
-class AddCategoryFormController: UIViewController {
+class AddItemFormViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -18,14 +18,12 @@ class AddCategoryFormController: UIViewController {
         keyboardLsnr()
     }
     
-    
-    
     func keyboardLsnr(){
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
 
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-
-}
+        
+    }
     
     @objc func keyboardWillShow(notification: NSNotification) {
             
@@ -46,5 +44,14 @@ class AddCategoryFormController: UIViewController {
             scrollView.contentInset = contentInsets
             scrollView.scrollIndicatorInsets = contentInsets
     }
-    
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }
