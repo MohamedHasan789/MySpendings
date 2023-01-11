@@ -122,8 +122,19 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
                 
                     for indexPath in itmstodelete!
                     {
-                            self.itemsList.remove(at: indexPath.row);
-                            self.tblView_Items.deleteRows(at: [indexPath], with: .fade);
+                        if (self.searchController.isActive)
+                        {
+                            let obj = self.filterdItems.remove(at: indexPath.row);
+                            let indx = self.itemsList.firstIndex(where: {$0 === obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
+                            self.itemsList.remove(at: indx!);
+                        }
+                        else
+                        {
+                            self.itemsList.remove(at: indexPath.row)
+                        }
+                        
+                        
+                        self.tblView_Items.deleteRows(at: [indexPath], with: .fade);
                     };
                     self.tblView_Items.isEditing = false;
                     self.tblView_Items.allowsMultipleSelection = false;
@@ -417,7 +428,11 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             return filterdItems.count
         }
-        return itemsList.count
+        else
+        {
+            return itemsList.count
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

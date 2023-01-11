@@ -10,14 +10,13 @@ import UIKit
 
 struct Category {
     let id = UUID()
-    var image = UIImage()
+    var icon:String
     var name: String
-    var description: String
+    var description: String?
     
-    var budget: Int
+    var budget: Double?
+    var resetEvery: Int?
     
-    
-    var resetCaregory: Bool
     var permanentCategory: Bool
     var alowOverBudgt: Bool
     

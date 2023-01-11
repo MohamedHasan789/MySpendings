@@ -28,7 +28,7 @@ let test2 = catCheck(catTitle: "House", catImage: "🏠")
 class CategoriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate
 {
     
-    
+    var mainView: MainViewController? = nil
     
     @IBOutlet weak var view_MainBody: UIView!
     @IBOutlet weak var tblView_Categories: UITableView!
@@ -82,6 +82,8 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         
         
         initSearchController()
+        
+        mainView = tabBarController as? MainViewController
     }
     
     func initSortMenu()
@@ -399,7 +401,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         print(sender.tag)
     }
     
-    // footer for table (easy add button)
+    // footer for table (easy add button) - deprectaed
     /*
     // the add button at the end - removed as it has a bug when using cells - apple issue, implemented within each function (view, edit delet)
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -420,4 +422,10 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     
+    @IBAction func unwindToCategories(_ segue: UIStoryboardSegue) {
+        tblView_Categories.reloadData()
+        print("urback") // comment
+        
+        print((mainView?.usrRptCatgrs[0])! as Category)
+    }
 }
