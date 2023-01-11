@@ -21,4 +21,13 @@ struct Category {
     var alowOverBudgt: Bool
     
     var items: [Item]
+    
+    func getTotal() -> Double
+    {
+        var sum: Double = 0.0
+        for item in items {
+            sum += item.price
+        }
+        return sum
+    }
 }

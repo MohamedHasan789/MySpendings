@@ -173,6 +173,10 @@ class AddCategoryFormController: UIViewController {
         if (stch_Budget.isOn)
         {
             txt_CatgBudget.text = "\(stpr_Budget.value)"
+            if (stpr_Budget.value == 0.0)
+            {
+                txt_CatgBudget.text = ""
+            }
         }
     }
     

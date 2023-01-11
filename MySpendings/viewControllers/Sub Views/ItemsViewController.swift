@@ -7,7 +7,7 @@
 
 import UIKit
 
-
+/*
 // testing class - to check items for category
 class itemCheck
 {
@@ -31,11 +31,15 @@ let item5 = itemCheck(itemImage: UIImage(systemName: "cart.badge.minus")!, itemT
 let item6 = itemCheck(itemImage: UIImage(systemName: "cart.badge.plus")!, itemTitle: "Refund", itemPrice: "78.88 BHD")
 let item7 = itemCheck(itemImage: UIImage(systemName: "cart.badge.minus")!, itemTitle: "zift", itemPrice: "-47.55 BHD")
 let item8 = itemCheck(itemImage: UIImage(systemName: "cart.badge.plus")!, itemTitle: "Refund", itemPrice: "78.88 BHD")
-
+*/
+ 
 
 class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate{
     
+    var mainView: MainViewController? = nil
     
+    //var category: Category?
+    var catgIndex: Int?
     //var catgoryName: String
     @IBOutlet weak var btn_Add: UIButton!
     @IBOutlet weak var btn_Edit: UIButton!
@@ -49,10 +53,14 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     var editEnable: Bool = false
     
+    /*
     //testing
     var itemsList = [item1,item2,item3,item4,item5,item6,item7,item8,item1,item2]
-    var filterdItems: [itemCheck] = []
+     */
     
+    var filterdItems: [Item] = []
+    
+     
     let searchController = UISearchController()
     
     var srt_bDate: Bool = true
@@ -62,8 +70,6 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     var srt_Asc: Bool = true
     var srt_Desc: Bool = false
-
-    
     
     
     var actn_bDate: UIAction? = nil
@@ -74,17 +80,6 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     var actn_Asc: UIAction? = nil
     var actn_Desc: UIAction? = nil
     
-    /*
-    init?(coder: NSCoder, catgoryName: String)
-    {
-        self.catgoryName = catgoryName
-        super.init(coder: coder)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    */
     
     
     override func viewDidLoad() {
@@ -104,6 +99,17 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         
         initSearchController()
+        
+        mainView = tabBarController as? MainViewController
+        
+        self.title = mainView?.usrRptCatgrs[catgIndex!].name
+    }
+    
+    
+    
+    @IBAction func btn_Add(_ sender: Any)
+    {
+        performSegue(withIdentifier: "addItem", sender: self)
     }
     
     
@@ -125,12 +131,12 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
                         if (self.searchController.isActive)
                         {
                             let obj = self.filterdItems.remove(at: indexPath.row);
-                            let indx = self.itemsList.firstIndex(where: {$0 === obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
-                            self.itemsList.remove(at: indx!);
+                            let indx = self.mainView?.usrRptCatgrs[self.catgIndex!].items.firstIndex(where: {$0 === obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
+                            self.mainView?.usrRptCatgrs[self.catgIndex!].items.remove(at: indx!);
                         }
                         else
                         {
-                            self.itemsList.remove(at: indexPath.row)
+                            self.mainView?.usrRptCatgrs[self.catgIndex!].items.remove(at: indexPath.row)
                         }
                         
                         
@@ -313,11 +319,11 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             if(srt_Asc)
             {
-                itemsList = itemsList.sorted(by: {$0.itemTitle < $1.itemTitle})
+                mainView?.usrRptCatgrs[catgIndex!].items = (mainView?.usrRptCatgrs[catgIndex!].items.sorted(by: {$0.name < $1.name}))!
             }
             else if (srt_Desc)
             {
-                itemsList = itemsList.sorted(by: {$0.itemTitle > $1.itemTitle})
+                mainView?.usrRptCatgrs[catgIndex!].items = (mainView?.usrRptCatgrs[catgIndex!].items.sorted(by: {$0.name > $1.name}))!
             }
         }
         
@@ -379,12 +385,12 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func filterItems(searchText: String)
     {
-        filterdItems = itemsList.filter
-        {
+        filterdItems = (mainView?.usrRptCatgrs[catgIndex!].items.filter
+                        {
             itemF in
             let matching = true; if (searchController.searchBar.text != "")
             {
-                let mtchngItems = itemF.itemTitle.lowercased().contains(searchText.lowercased())
+                let mtchngItems = itemF.name.lowercased().contains(searchText.lowercased())
                 
                 return matching && mtchngItems
             }
@@ -393,7 +399,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
                 return matching
             }
             
-        }
+        })!
         tblView_Items.reloadData()
     }
     
@@ -426,18 +432,18 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (searchController.isActive)
         {
-            return filterdItems.count
+            return (filterdItems.count)
         }
         else
         {
-            return itemsList.count
+            return (mainView?.usrRptCatgrs[catgIndex!].items.count) ?? 0
         }
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var itemsList = itemsList
+        var itemsList = mainView?.usrRptCatgrs[catgIndex!].items
         if (searchController.isActive)
         {
             itemsList = filterdItems
@@ -445,9 +451,9 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCard") as! ItemTableViewCell
         
-        cell.lbl_Name.text = itemsList[indexPath.row].itemTitle
-        cell.img_ItemIcon.image = itemsList[indexPath.row].itemImage
-        cell.lbl_Price.text = itemsList[indexPath.row].itemPrice
+        cell.lbl_Name.text = itemsList![indexPath.row].name
+        //cell.img_ItemIcon.image = itemsList[indexPath.row].itemImage
+        cell.lbl_Price.text = "\(itemsList![indexPath.row].price)"
         
         if editEnable
         {
@@ -474,7 +480,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             let alert = UIAlertController(title: "Are You Sure?", message: "You cannot undo this action.", preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{action in
-                self.itemsList.remove(at: indexPath.row);
+                self.mainView?.usrRptCatgrs[self.catgIndex!].items.remove(at: indexPath.row);
                 tableView.deleteRows(at: [indexPath], with: .fade);
             }))
             alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: nil))
@@ -502,5 +508,25 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tblView_Items.reloadData()
+    }
+    
+    
+    @IBAction func unwindToItems(_ segue: UIStoryboardSegue)
+    {
+        
+        tblView_Items.reloadData()
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "addItem")
+        {
+            let addItemsView = segue.destination as! AddItemFormViewController
+            addItemsView.catgIndex = catgIndex
+        }
     }
 }

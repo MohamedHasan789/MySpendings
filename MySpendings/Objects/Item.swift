@@ -8,13 +8,25 @@
 import Foundation
 import UIKit
 
-struct Item {
+class Item: Equatable
+{
     let id = UUID()
-    var image = UIImage()
+    var icon: String
     var name: String
+    var isDeduct: Bool
     var price: Double
     var amount: Int
     var dateTime: Date
+    
+    init(icon: String, name: String, isDeduct: Bool, price: Double, amount: Int, dateTime: Date)
+    {
+        self.icon = icon
+        self.name = name
+        self.isDeduct = isDeduct
+        self.price = price
+        self.amount = amount
+        self.dateTime = dateTime
+    }
     
     //reciept part
     
@@ -30,5 +42,8 @@ struct Item {
         return formatter
     }()
     
-    
+}
+
+func == (lhs: Item, rhs: Item) -> Bool {
+    return lhs.id == rhs.id
 }

@@ -8,7 +8,8 @@
 import UIKit
 
 
-// testing class - to check ctageory items
+// testing class - to check ctageory items - REMOVELATER
+/*
 class catCheck
 {
     var catTitle: String
@@ -24,6 +25,7 @@ class catCheck
 
 let test1 = catCheck(catTitle: "Rent", catImage: "🧾")
 let test2 = catCheck(catTitle: "House", catImage: "🏠")
+*/
 
 class CategoriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate
 {
@@ -36,9 +38,9 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var btn_Sort: UIBarButtonItem!
     
     
-    // again jsut teting
-    var categories = [test1,test2]
-    var filterdCats: [catCheck] = []
+    // again jsut teting - REMOVELATER
+    //var categories: [Category] = []
+    var filterdCats: [Category] = []
     
     
     let searchController = UISearchController()
@@ -84,6 +86,8 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         initSearchController()
         
         mainView = tabBarController as? MainViewController
+        
+        //categories = mainView!.usrRptCatgrs
     }
     
     func initSortMenu()
@@ -181,11 +185,11 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         {
             if(srt_Asc)
             {
-                categories = categories.sorted(by: {$0.catTitle < $1.catTitle})
+                mainView?.usrRptCatgrs = (mainView?.usrRptCatgrs.sorted(by: {$0.name < $1.name}))!
             }
             else if (srt_Desc)
             {
-                categories = categories.sorted(by: {$0.catTitle > $1.catTitle})
+                mainView?.usrRptCatgrs = (mainView?.usrRptCatgrs.sorted(by: {$0.name > $1.name}))!
             }
         }
         
@@ -268,12 +272,12 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     func filterCats(searchText: String)
     {
-        filterdCats = categories.filter
-        {
+        filterdCats = (mainView?.usrRptCatgrs.filter
+                       {
             categoryT in
             let matching = true; if (searchController.searchBar.text != "")
             {
-                let mtchngCats = categoryT.catTitle.lowercased().contains(searchText.lowercased())
+                let mtchngCats = categoryT.name.lowercased().contains(searchText.lowercased())
                 
                 return matching && mtchngCats
             }
@@ -282,7 +286,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
                 return matching
             }
             
-        }
+        })!
         tblView_Categories.reloadData()
     }
     
@@ -293,13 +297,13 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         {
             return filterdCats.count
         }
-        return (categories.count)+1
+        return ((mainView?.usrRptCatgrs.count) ?? 0)+1
     }
     
     // actual cells and their info
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        var categoriesLsit = categories
+        var categoriesLsit = mainView?.usrRptCatgrs
         if (searchController.isActive)
         {
             categoriesLsit = filterdCats
@@ -307,7 +311,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         
         if (!(searchController.isActive))
         {
-            if (indexPath.row == categories.count)
+            if (indexPath.row == mainView?.usrRptCatgrs.count)
             {
                 let cell = tblView_Categories.dequeueReusableCell(withIdentifier: "addCard")
                 return cell!
@@ -316,10 +320,10 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         
             let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCard") as! CategoryTableViewCell
             
-            cell.lbl_Name.text = categoriesLsit[indexPath.row].catTitle
-            cell.img_CatIcon.text = categoriesLsit[indexPath.row].catImage
-            cell.lbl_Items.text = "5"
-            cell.lbl_Total.text = "10"
+        cell.lbl_Name.text = categoriesLsit![indexPath.row].name.capitalized
+        cell.img_CatIcon.text = categoriesLsit![indexPath.row].icon
+        cell.lbl_Items.text = "Items: \(categoriesLsit![indexPath.row].items.count)"
+        cell.lbl_Total.text = "Total: \(categoriesLsit![indexPath.row].getTotal())"
              
             cell.btn_Info.addTarget(self, action: #selector(infoCat(sender:)), for: .touchUpInside)
             cell.btn_Edit.addTarget(self, action: #selector(editCat(sender:)), for: .touchUpInside)
@@ -336,9 +340,16 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         return 150
     }
     
+    var catgToSend: Category? = nil
+    var catgIndex: Int? = nil
+    
     // selecion of item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        //tableView.deselectRow(at: indexPath, animated: true)
+        
+        catgToSend = mainView?.usrRptCatgrs[indexPath.row]
+        catgIndex = indexPath.row
+        performSegue(withIdentifier: "showCategoryItems", sender: self)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -348,7 +359,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
             
             let alert = UIAlertController(title: "Are You Sure?", message: "You cannot undo this action.", preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{action in
-                self.categories.remove(at: indexPath.row);
+                self.mainView?.usrRptCatgrs.remove(at: indexPath.row);
                 tableView.deleteRows(at: [indexPath], with: .fade);
             }))
             alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: nil))
@@ -360,7 +371,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if (indexPath.row == categories.count)
+        if (indexPath.row == mainView?.usrRptCatgrs.count)
         {
             return .none
         }
@@ -373,7 +384,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     // editing functonanilty
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if (indexPath.row == categories.count)
+        if (indexPath.row == mainView?.usrRptCatgrs.count)
         {
             return nil
         }
@@ -401,6 +412,10 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         print(sender.tag)
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tblView_Categories.reloadData()
+    }
     // footer for table (easy add button) - deprectaed
     /*
     // the add button at the end - removed as it has a bug when using cells - apple issue, implemented within each function (view, edit delet)
@@ -423,9 +438,19 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     
     @IBAction func unwindToCategories(_ segue: UIStoryboardSegue) {
+        //categories = mainView!.usrRptCatgrs
         tblView_Categories.reloadData()
-        print("urback") // comment
         
-        print((mainView?.usrRptCatgrs[0])! as Category)
+        //print((mainView?.usrRptCatgrs[0])! as Category)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "showCategoryItems")
+        {
+            let itemsView = segue.destination as! ItemsViewController
+            //itemsView.category = catgToSend
+            itemsView.catgIndex = catgIndex
+        }
+    }
+    
 }
