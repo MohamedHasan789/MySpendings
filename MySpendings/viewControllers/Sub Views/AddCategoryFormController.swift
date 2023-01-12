@@ -236,9 +236,14 @@ class AddCategoryFormController: UIViewController {
         {
             let items: [Item] = []
             
-            let newCategory = Category(icon: icon, name: name, description: description, budget: budget, resetEvery: resetEvery, permanentCategory: permanentCategory, alowOverBudgt: alowOverBudgt, items: items)
+            let newCategory = Category(icon: icon, name: name, description: description, budget: budget, resetCEvery: resetEvery, permanentategory: permanentCategory, alowOverBudgt: alowOverBudgt, items: items)
             
-            mainView?.usrRptCatgrs.append(newCategory)
+            mainView?.records[mainView!.currRcrd]?.append(newCategory)
+            
+            if (permanentCategory)
+            {
+                mainView?.prmntCatgrs.append(newCategory)
+            }
             
             //print(newCategory)
             
@@ -246,6 +251,13 @@ class AddCategoryFormController: UIViewController {
         }
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if (mainView!.catgChanged)
+        {
+            self.navigationController?.popToRootViewController(animated: false)
+        }
+    }
     
     
     // known issue for toggle switch https://developer.apple.com/forums/thread/132035

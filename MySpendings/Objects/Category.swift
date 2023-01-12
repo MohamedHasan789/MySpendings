@@ -15,9 +15,9 @@ struct Category {
     var description: String?
     
     var budget: Double?
-    var resetEvery: Int?
+    var resetCEvery: Int?
     
-    var permanentCategory: Bool
+    var permanentategory: Bool
     var alowOverBudgt: Bool
     
     var items: [Item]
@@ -30,4 +30,10 @@ struct Category {
         }
         return sum
     }
+    
+    
+}
+
+func == (lhs: Category, rhs: Category) -> Bool {
+    return lhs.id == rhs.id
 }

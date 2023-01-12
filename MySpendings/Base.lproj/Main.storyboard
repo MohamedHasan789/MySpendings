@@ -23,26 +23,50 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9nX-6i-rT3">
                                         <rect key="frame" x="0.0" y="0.0" width="428" height="135"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6bZ-h7-K0a">
-                                                <rect key="frame" x="8" y="30" width="57" height="74"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6bZ-h7-K0a">
+                                                <rect key="frame" x="58.666666666666657" y="47.333333333333343" width="42" height="40.333333333333343"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain">
                                                     <imageReference key="image" image="chevron.backward" catalog="system" symbolScale="medium"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="22" weight="heavy"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="btn_PrevRcrd:" destination="z8D-ju-qOM" eventType="touchUpInside" id="c6h-Tu-KJe"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E4B-gA-QqA">
-                                                <rect key="frame" x="363" y="30" width="57" height="74"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E4B-gA-QqA">
+                                                <rect key="frame" x="327.33333333333331" y="47.333333333333343" width="42" height="40.333333333333343"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain">
                                                     <imageReference key="image" image="chevron.right" catalog="system" symbolScale="medium"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="22" weight="heavy"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="btn_NextRcrd:" destination="z8D-ju-qOM" eventType="touchUpInside" id="wUl-Ef-mtA"/>
+                                                </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sIa-V9-E9B">
+                                                <rect key="frame" x="193.33333333333334" y="40" width="41.333333333333343" height="55"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.78658086059999999" green="0.99767488240000002" blue="0.7177128196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="sIa-V9-E9B" secondAttribute="bottom" constant="40" id="1vh-c7-vTE"/>
                                             <constraint firstAttribute="height" constant="135" id="6Fe-Zi-pLl"/>
+                                            <constraint firstItem="6bZ-h7-K0a" firstAttribute="centerY" secondItem="sIa-V9-E9B" secondAttribute="centerY" id="7ki-xH-Toa"/>
+                                            <constraint firstItem="E4B-gA-QqA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="sIa-V9-E9B" secondAttribute="trailing" constant="8" symbolic="YES" id="DWU-5c-Ast"/>
+                                            <constraint firstItem="sIa-V9-E9B" firstAttribute="centerY" secondItem="9nX-6i-rT3" secondAttribute="centerY" id="Wpu-Hy-izI"/>
+                                            <constraint firstItem="sIa-V9-E9B" firstAttribute="centerX" secondItem="9nX-6i-rT3" secondAttribute="centerX" id="Ysh-Bf-5Wh"/>
+                                            <constraint firstItem="6bZ-h7-K0a" firstAttribute="baseline" secondItem="E4B-gA-QqA" secondAttribute="baseline" id="aKU-Si-qe7"/>
+                                            <constraint firstItem="6bZ-h7-K0a" firstAttribute="leading" secondItem="9nX-6i-rT3" secondAttribute="leading" constant="58.666666666666671" id="cdc-7c-b11"/>
+                                            <constraint firstItem="sIa-V9-E9B" firstAttribute="top" secondItem="9nX-6i-rT3" secondAttribute="top" constant="40" id="l5V-RL-NPR"/>
+                                            <constraint firstItem="E4B-gA-QqA" firstAttribute="centerY" secondItem="9nX-6i-rT3" secondAttribute="centerY" id="moi-yh-qdX"/>
+                                            <constraint firstItem="6bZ-h7-K0a" firstAttribute="centerY" secondItem="9nX-6i-rT3" secondAttribute="centerY" id="qNr-If-Ord"/>
+                                            <constraint firstAttribute="trailing" secondItem="E4B-gA-QqA" secondAttribute="trailing" constant="58.666666666666629" id="uty-bk-FtZ"/>
+                                            <constraint firstItem="sIa-V9-E9B" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6bZ-h7-K0a" secondAttribute="trailing" constant="8" symbolic="YES" id="xfr-tu-tDP"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yg2-Pc-SL6">
@@ -355,6 +379,9 @@
                     <tabBarItem key="tabBarItem" title="Home" image="homekit" catalog="system" id="5OP-8T-QTL"/>
                     <navigationItem key="navigationItem" id="Jl6-Gm-Xi0"/>
                     <connections>
+                        <outlet property="btn_NextRcrd" destination="E4B-gA-QqA" id="Rwo-oR-ulM"/>
+                        <outlet property="btn_PrevRcrd" destination="6bZ-h7-K0a" id="f5p-N9-ZyU"/>
+                        <outlet property="lbl_RcrdTotal" destination="sIa-V9-E9B" id="etm-pY-3ji"/>
                         <outlet property="view_HomeBody" destination="yg2-Pc-SL6" id="9db-b7-Ihb"/>
                         <outlet property="view_HomeTop" destination="9nX-6i-rT3" id="DyO-6a-84i"/>
                     </connections>
@@ -1052,7 +1079,11 @@
                     <tabBarItem key="tabBarItem" title="Categories" image="square.grid.2x2" catalog="system" id="i1P-uC-CyI"/>
                     <navigationItem key="navigationItem" title="&quot;Items View&quot;" id="td5-C1-5b7">
                         <rightBarButtonItems>
-                            <barButtonItem title="Help" image="questionmark.circle" catalog="system" id="Nw5-GQ-sfn"/>
+                            <barButtonItem title="Help" image="questionmark.circle" catalog="system" id="Nw5-GQ-sfn">
+                                <connections>
+                                    <action selector="hlp:" destination="1bx-XX-kpH" id="iC4-Vd-aUV"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem title="Sort" image="arrow.up.arrow.down.circle" catalog="system" id="gGR-UW-Hlo"/>
                         </rightBarButtonItems>
                     </navigationItem>
@@ -1064,11 +1095,12 @@
                         <outlet property="tblView_Items" destination="F6u-GJ-E1J" id="hVV-p0-zPW"/>
                         <outlet property="view_MainBody" destination="Ano-HW-LGc" id="SER-cO-rnE"/>
                         <segue destination="a1V-eU-qIN" kind="show" identifier="addItem" id="UdV-Pz-24h"/>
+                        <segue destination="a1V-eU-qIN" kind="show" identifier="editItem" id="qyj-de-SgQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QpV-e3-nXM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2641.1214953271028" y="2175.1619870410368"/>
+            <point key="canvasLocation" x="-1400" y="2152"/>
         </scene>
         <!--Help-->
         <scene sceneID="hbM-ZA-VBY">
@@ -1716,12 +1748,12 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L4p-19-Ezq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="12Z-rV-0FB" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1815.2" y="2173.8916256157636"/>
+            <point key="canvasLocation" x="-2228" y="2152"/>
         </scene>
-        <!--Add New Item-->
+        <!--Add/Edit New Item-->
         <scene sceneID="Fg2-14-Vvb">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="a1V-eU-qIN" customClass="AddItemFormViewController" customModule="MySpendings" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="a1V-eU-qIN" userLabel="Add/Edit New Item" customClass="AddItemFormViewController" customModule="MySpendings" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="E9V-HC-Zfg">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1918,7 +1950,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="w0y-0G-vcI">
-                                                                <rect key="frame" x="119" y="31" width="191" height="31"/>
+                                                                <rect key="frame" x="118.66666666666669" y="31.333333333333314" width="191" height="31"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="191" id="74X-Ml-nCM"/>
                                                                 </constraints>
@@ -2009,6 +2041,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="btn_Add" destination="jMa-Ua-VbL" id="fFv-W8-N82"/>
                         <outlet property="dat_ItemDate" destination="w0y-0G-vcI" id="brO-1S-UDG"/>
                         <outlet property="scrollView" destination="nJI-gw-IoA" id="lMq-dg-T7p"/>
                         <outlet property="stch_ItemType" destination="aHv-0Y-2yY" id="yud-7M-eeI"/>
@@ -2024,10 +2057,11 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IDA-mh-hYS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="9Gz-eB-F4H" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-2642.4000000000001" y="2909.8522167487686"/>
+            <point key="canvasLocation" x="-1057" y="2906"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="qyj-de-SgQ"/>
         <segue reference="eQP-xQ-tiL"/>
     </inferredMetricsTieBreakers>
     <resources>

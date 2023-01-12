@@ -12,6 +12,9 @@ class AddItemFormViewController: UIViewController {
     var mainView: MainViewController? = nil
     
     var catgIndex: Int?
+    
+    var itemEdit: Bool = false
+    var itemIndex: Int?
 
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -27,6 +30,9 @@ class AddItemFormViewController: UIViewController {
     
     @IBOutlet weak var stch_ItemType: UISegmentedControl!
     
+    @IBOutlet weak var btn_Add: UIBarButtonItem!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,9 +42,37 @@ class AddItemFormViewController: UIViewController {
         
         mainView = tabBarController as? MainViewController
         
+        if itemEdit
+        {
+            initItem()
+            btn_Add.title = "Edit"
+            self.title = "Edit \(mainView!.records[mainView!.currRcrd]![catgIndex!].items[itemIndex!].name)"
+        }
+        
         //print(catgIndex)
     }
     
+    
+    func initItem()
+    {
+        let retrivedItem = mainView!.records[mainView!.currRcrd]![catgIndex!].items[itemIndex!]
+        
+        txt_ItemIcon.text = retrivedItem.icon
+        txt_ItemName.text = retrivedItem.name
+        txt_ItemPrice.text = "\(retrivedItem.price)"
+        txt_ItemAmount.text = "\(retrivedItem.amount)"
+        
+        dat_ItemDate.date = retrivedItem.dateTime
+        
+        stpr_Price.value = retrivedItem.price
+        stpr_Amount.value = Double(retrivedItem.amount)
+        
+        stch_ItemType.selectedSegmentIndex = 0
+        if (!retrivedItem.isDeduct)
+        {
+            stch_ItemType.selectedSegmentIndex = 1
+        }
+    }
     
     
     @IBAction func txt_ItemPriceEdit(_ sender: Any)
@@ -138,22 +172,48 @@ class AddItemFormViewController: UIViewController {
         
         let date = dat_ItemDate.date
         
-        let newItem = Item(icon: icon, name: name, isDeduct: isDeduct, price: price, amount: amount, dateTime: date)
+        if (!itemEdit)
+        {
+            let newItem = Item(icon: icon, name: name, isDeduct: isDeduct, price: price, amount: amount, dateTime: date)
+            
+            mainView?.records[mainView!.currRcrd]?[catgIndex!].items.append(newItem)
+            
+            performSegue(withIdentifier: "unwindToItems", sender: nil)
+        }
+        else
+        {
+            let alert = UIAlertController(title: "Are You Sure?", message: "You cannot undo this edit action.", preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler:{action in
+                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].icon = icon
+                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].name = name
+                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].isDeduct = isDeduct
+                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].price = price
+                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].amount = amount
+                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].dateTime = date
+                
+                self.performSegue(withIdentifier: "unwindToItems", sender: nil)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            
+        }
         
-        mainView?.usrRptCatgrs[catgIndex!].items.append(newItem)
         
-        print(newItem)
-        
-        
-        performSegue(withIdentifier: "unwindToItems", sender: self)
+    
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        if (mainView!.catgChanged)
+        {
+            self.navigationController?.popToRootViewController(animated: false)
+        }
+    }
     
     func keyboardLsnr(){
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
 
-    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
     }
     
@@ -176,5 +236,9 @@ class AddItemFormViewController: UIViewController {
             scrollView.contentInset = contentInsets
             scrollView.scrollIndicatorInsets = contentInsets
     }
+    
+    
+
+    
 
 }

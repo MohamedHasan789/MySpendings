@@ -87,7 +87,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         
         mainView = tabBarController as? MainViewController
         
-        //categories = mainView!.usrRptCatgrs
+        //categories = mainView!.currCatgrs
     }
     
     func initSortMenu()
@@ -185,11 +185,11 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         {
             if(srt_Asc)
             {
-                mainView?.usrRptCatgrs = (mainView?.usrRptCatgrs.sorted(by: {$0.name < $1.name}))!
+                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: {$0.name < $1.name}))!
             }
             else if (srt_Desc)
             {
-                mainView?.usrRptCatgrs = (mainView?.usrRptCatgrs.sorted(by: {$0.name > $1.name}))!
+                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: {$0.name > $1.name}))!
             }
         }
         
@@ -272,7 +272,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     func filterCats(searchText: String)
     {
-        filterdCats = (mainView?.usrRptCatgrs.filter
+        filterdCats = (mainView?.records[mainView!.currRcrd]?.filter
                        {
             categoryT in
             let matching = true; if (searchController.searchBar.text != "")
@@ -297,13 +297,13 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         {
             return filterdCats.count
         }
-        return ((mainView?.usrRptCatgrs.count) ?? 0)+1
+        return ((mainView?.records[mainView!.currRcrd]?.count) ?? 0) + 1 //for the add button
     }
     
     // actual cells and their info
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        var categoriesLsit = mainView?.usrRptCatgrs
+        var categoriesLsit = mainView?.records[mainView!.currRcrd]
         if (searchController.isActive)
         {
             categoriesLsit = filterdCats
@@ -311,7 +311,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         
         if (!(searchController.isActive))
         {
-            if (indexPath.row == mainView?.usrRptCatgrs.count)
+            if (indexPath.row == mainView?.records[mainView!.currRcrd]?.count)
             {
                 let cell = tblView_Categories.dequeueReusableCell(withIdentifier: "addCard")
                 return cell!
@@ -340,16 +340,25 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         return 150
     }
     
-    var catgToSend: Category? = nil
+    //var catgToSend: Category? = nil
     var catgIndex: Int? = nil
     
     // selecion of item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        catgToSend = mainView?.usrRptCatgrs[indexPath.row]
-        catgIndex = indexPath.row
-        performSegue(withIdentifier: "showCategoryItems", sender: self)
+        if (indexPath.row != mainView?.records[mainView!.currRcrd]?.endIndex)
+        {
+            //catgToSend = mainView?.currCatgrs[indexPath.row]
+            catgIndex = indexPath.row
+            if (searchController.isActive)
+            {
+                catgIndex = mainView?.records[mainView!.currRcrd]?.firstIndex(where: {$0.id == filterdCats[indexPath.row].id})
+            }
+            
+            performSegue(withIdentifier: "showCategoryItems", sender: self)
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -359,7 +368,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
             
             let alert = UIAlertController(title: "Are You Sure?", message: "You cannot undo this action.", preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{action in
-                self.mainView?.usrRptCatgrs.remove(at: indexPath.row);
+                self.mainView?.records[self.mainView!.currRcrd]?.remove(at: indexPath.row);
                 tableView.deleteRows(at: [indexPath], with: .fade);
             }))
             alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: nil))
@@ -371,7 +380,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if (indexPath.row == mainView?.usrRptCatgrs.count)
+        if (indexPath.row == mainView?.records[mainView!.currRcrd]?.count)
         {
             return .none
         }
@@ -384,7 +393,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     // editing functonanilty
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if (indexPath.row == mainView?.usrRptCatgrs.count)
+        if (indexPath.row == mainView?.records[mainView!.currRcrd]?.count)
         {
             return nil
         }
@@ -414,8 +423,10 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     
     override func viewWillAppear(_ animated: Bool) {
+        mainView!.catgChanged = false //reset if cat has been chnaged
         tblView_Categories.reloadData()
     }
+    
     // footer for table (easy add button) - deprectaed
     /*
     // the add button at the end - removed as it has a bug when using cells - apple issue, implemented within each function (view, edit delet)
@@ -436,12 +447,11 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         print("Tapped")
     }
     
-    
     @IBAction func unwindToCategories(_ segue: UIStoryboardSegue) {
-        //categories = mainView!.usrRptCatgrs
+        //categories = mainView!.currCatgrs
         tblView_Categories.reloadData()
         
-        //print((mainView?.usrRptCatgrs[0])! as Category)
+        //print((mainView?.currCatgrs[0])! as Category)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

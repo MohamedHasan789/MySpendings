@@ -12,6 +12,7 @@ struct Record
     var month: Date
     var categories: [Category]
     
+    // has to be fixed
     func getTotal() -> Double
     {
         var total: Double = 0

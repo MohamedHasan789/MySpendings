@@ -7,40 +7,14 @@
 
 import UIKit
 
-/*
-// testing class - to check items for category
-class itemCheck
-{
-    var itemImage: UIImage
-    var itemTitle: String
-    var itemPrice: String
-    
-    init(itemImage: UIImage, itemTitle: String, itemPrice: String)
-    {
-        self.itemImage = itemImage
-        self.itemTitle = itemTitle
-        self.itemPrice = itemPrice
-    }
-}
-
-let item1 = itemCheck(itemImage: UIImage(systemName: "cart.badge.plus")!, itemTitle: "edumamy", itemPrice: "15.88 BHD")
-let item2 = itemCheck(itemImage: UIImage(systemName: "cart.badge.minus")!, itemTitle: "zift", itemPrice: "-47.55 BHD")
-let item3 = itemCheck(itemImage: UIImage(systemName: "cart.badge.plus")!, itemTitle: "Refund", itemPrice: "78.88 BHD")
-let item4 = itemCheck(itemImage: UIImage(systemName: "cart.badge.plus")!, itemTitle: "edumamy", itemPrice: "15.88 BHD")
-let item5 = itemCheck(itemImage: UIImage(systemName: "cart.badge.minus")!, itemTitle: "zift", itemPrice: "-47.55 BHD")
-let item6 = itemCheck(itemImage: UIImage(systemName: "cart.badge.plus")!, itemTitle: "Refund", itemPrice: "78.88 BHD")
-let item7 = itemCheck(itemImage: UIImage(systemName: "cart.badge.minus")!, itemTitle: "zift", itemPrice: "-47.55 BHD")
-let item8 = itemCheck(itemImage: UIImage(systemName: "cart.badge.plus")!, itemTitle: "Refund", itemPrice: "78.88 BHD")
-*/
- 
 
 class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate{
     
     var mainView: MainViewController? = nil
     
-    //var category: Category?
+
     var catgIndex: Int?
-    //var catgoryName: String
+
     @IBOutlet weak var btn_Add: UIButton!
     @IBOutlet weak var btn_Edit: UIButton!
     @IBOutlet weak var btn_Delete: UIButton!
@@ -53,10 +27,6 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     var editEnable: Bool = false
     
-    /*
-    //testing
-    var itemsList = [item1,item2,item3,item4,item5,item6,item7,item8,item1,item2]
-     */
     
     var filterdItems: [Item] = []
     
@@ -81,7 +51,6 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     var actn_Desc: UIAction? = nil
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -89,12 +58,14 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         //self.title = catgoryName
         
         pageLook()
+        
+        
         poupCategories()
         
         initSortMenu()
         rfrshSortMenu()
         
-        // to load defult sorting abc asc
+
         rfrshTbl()
         
         
@@ -102,7 +73,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         mainView = tabBarController as? MainViewController
         
-        self.title = mainView?.usrRptCatgrs[catgIndex!].name
+        self.title = mainView?.records[mainView!.currRcrd]?[catgIndex!].name
     }
     
     
@@ -131,12 +102,12 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
                         if (self.searchController.isActive)
                         {
                             let obj = self.filterdItems.remove(at: indexPath.row);
-                            let indx = self.mainView?.usrRptCatgrs[self.catgIndex!].items.firstIndex(where: {$0 === obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
-                            self.mainView?.usrRptCatgrs[self.catgIndex!].items.remove(at: indx!);
+                            let indx = self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.firstIndex(where: {$0 === obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
+                            self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indx!);
                         }
                         else
                         {
-                            self.mainView?.usrRptCatgrs[self.catgIndex!].items.remove(at: indexPath.row)
+                            self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indexPath.row)
                         }
                         
                         
@@ -146,7 +117,9 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
                     self.tblView_Items.allowsMultipleSelection = false;
                 
                 }))
-                alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: {action in
+                    self.tblView_Items.isEditing = false;
+                    self.tblView_Items.allowsMultipleSelection = false;}))
                 self.present(alert, animated: true, completion: nil)
             }
             else
@@ -319,11 +292,11 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             if(srt_Asc)
             {
-                mainView?.usrRptCatgrs[catgIndex!].items = (mainView?.usrRptCatgrs[catgIndex!].items.sorted(by: {$0.name < $1.name}))!
+                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.name < $1.name}))!
             }
             else if (srt_Desc)
             {
-                mainView?.usrRptCatgrs[catgIndex!].items = (mainView?.usrRptCatgrs[catgIndex!].items.sorted(by: {$0.name > $1.name}))!
+                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.name > $1.name}))!
             }
         }
         
@@ -385,8 +358,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func filterItems(searchText: String)
     {
-        filterdItems = (mainView?.usrRptCatgrs[catgIndex!].items.filter
-                        {
+        filterdItems = (mainView?.records[mainView!.currRcrd]?[catgIndex!].items.filter {
             itemF in
             let matching = true; if (searchController.searchBar.text != "")
             {
@@ -412,7 +384,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     
-    func pageLook() // to have the fancy look of the application
+    func pageLook() // to have the fancy look of the application - global - might be chnaged - for the theme options
     {
         view_MainBody.layer.cornerRadius = 45
         view_MainBody.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
@@ -436,14 +408,14 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         else
         {
-            return (mainView?.usrRptCatgrs[catgIndex!].items.count) ?? 0
+            return (mainView?.records[mainView!.currRcrd]?[catgIndex!].items.count) ?? 0
         }
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var itemsList = mainView?.usrRptCatgrs[catgIndex!].items
+        var itemsList = mainView?.records[mainView!.currRcrd]?[catgIndex!].items
         if (searchController.isActive)
         {
             itemsList = filterdItems
@@ -453,7 +425,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         cell.lbl_Name.text = itemsList![indexPath.row].name
         //cell.img_ItemIcon.image = itemsList[indexPath.row].itemImage
-        cell.lbl_Price.text = "\(itemsList![indexPath.row].price)"
+        cell.lbl_Price.text = "\(itemsList![indexPath.row].getPrice())"
         
         if editEnable
         {
@@ -480,7 +452,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             let alert = UIAlertController(title: "Are You Sure?", message: "You cannot undo this action.", preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{action in
-                self.mainView?.usrRptCatgrs[self.catgIndex!].items.remove(at: indexPath.row);
+                self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indexPath.row);
                 tableView.deleteRows(at: [indexPath], with: .fade);
             }))
             alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: nil))
@@ -496,22 +468,47 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     
+    var itemIndex: Int? = nil
+    
     // editing functonanilty
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let edit = UIContextualAction(style: .normal, title: "Edit") {(action, view, completionHandler) in print("editing \(indexPath.row)"); completionHandler(true)}
         
         let swipe = UISwipeActionsConfiguration(actions: [edit])
         
+        //segua to edit for a spisific item
+        
         return swipe
     }
     
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if (editEnable)
+        {
+            itemIndex = indexPath.row
+            
+            if searchController.isActive
+            {
+                itemIndex = mainView!.records[mainView!.currRcrd]![catgIndex!].items.firstIndex(where: {$0.id == filterdItems[indexPath.row].id})
+            }
+            
+            performSegue(withIdentifier: "editItem", sender: self)
+        }
+        
+        //go to the view items page info thing
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tblView_Items.reloadData()
+        if (mainView!.catgChanged)
+        {
+            self.navigationController?.popToRootViewController(animated: false)
+        }
+        else
+        {
+            tblView_Items.reloadData()
+        }
     }
     
     
@@ -528,5 +525,21 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
             let addItemsView = segue.destination as! AddItemFormViewController
             addItemsView.catgIndex = catgIndex
         }
+        
+        if (segue.identifier == "editItem")
+        {
+            let editItemsView = segue.destination as! AddItemFormViewController
+            editItemsView.catgIndex = catgIndex
+            editItemsView.itemIndex = itemIndex
+            editItemsView.itemEdit = true
+        }
     }
+    
+    @IBAction func hlp(_ sender: Any)
+    {
+        //self.navigationController?.popToRootViewController(animated: false)
+
+    }
+    
+    
 }

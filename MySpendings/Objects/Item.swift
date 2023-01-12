@@ -35,6 +35,8 @@ class Item: Equatable
         return Double(self.amount)*self.price
     }
     
+    
+    // might not need
     static let dueDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short

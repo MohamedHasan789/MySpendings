@@ -13,6 +13,14 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var view_HomeBody: UIView!
     
     
+    @IBOutlet weak var lbl_RcrdTotal: UILabel!
+    
+    @IBOutlet weak var btn_NextRcrd: UIButton!
+    @IBOutlet weak var btn_PrevRcrd: UIButton!
+    
+    
+    var mainView: MainViewController? = nil
+    var rcrdKeys: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +30,24 @@ class HomeViewController: UIViewController {
         
         // call the "fancy" looks function
         pageLook()
+        
+        refreshPage()
+        
     }
+    
+    
+    @IBAction func btn_NextRcrd(_ sender: Any)
+    {
+        mainView!.goForward()
+        refreshPage()
+    }
+    
+    @IBAction func btn_PrevRcrd(_ sender: Any)
+    {
+        mainView!.goBack()
+        refreshPage()
+    }
+    
     
     
     func pageLook() // to have the fancy look of the application
@@ -43,4 +68,29 @@ class HomeViewController: UIViewController {
         view_HomeBody.layer.shouldRasterize = true
     }
 
+    func refreshPage()
+    {
+        mainView = tabBarController as? MainViewController
+        
+        if (mainView!.hasNext)
+        {
+            btn_NextRcrd.isEnabled = true
+        }
+        else
+        {
+            btn_NextRcrd.isEnabled = false
+        }
+        
+        if (mainView!.hasBefore)
+        {
+            btn_PrevRcrd.isEnabled = true
+        }
+        else
+        {
+            btn_PrevRcrd.isEnabled = false
+        }
+        
+        lbl_RcrdTotal.text = mainView?.currRcrd
+        
+    }
 }
