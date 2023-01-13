@@ -9,6 +9,9 @@ import UIKit
 
 class CategoryTableViewCell: UITableViewCell {
     
+    
+    @IBOutlet weak var view_CellBody: UIView!
+    
     @IBOutlet weak var img_CatIcon: UILabel!
     @IBOutlet weak var lbl_Name: UILabel!
     @IBOutlet weak var lbl_Items: UILabel!

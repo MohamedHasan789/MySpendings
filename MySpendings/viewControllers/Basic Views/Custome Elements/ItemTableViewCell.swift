@@ -9,6 +9,8 @@ import UIKit
 
 class ItemTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var view_CellBody: UIView!
+    
     @IBOutlet weak var img_ItemIcon: UIImageView!
     @IBOutlet weak var lbl_Name: UILabel!
     @IBOutlet weak var lbl_Price: UILabel!

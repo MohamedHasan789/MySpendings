@@ -28,9 +28,13 @@ class MainViewController: UITabBarController {
     var hasBefore = false
     var catgChanged = false
     
-    // color stuff, get the colors from here as well
-    //var baseColor: UIColor() = UIColor(
     
+    var mianColor = UIColor(red: 0.891, green: 0.999, blue: 0.856, alpha: 1.0)
+    var scndColor = UIColor(red: 0.787, green: 0.998, blue: 0.718, alpha: 1.0)
+    var itemsColor = UIColor.white
+    
+    var currncy = "BHD د.ب"
+    var curIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,11 +44,6 @@ class MainViewController: UITabBarController {
         if rcrdsList.isEmpty
         {
             newRecord()
-            
-            print(getCurrRecordName())
-            print(rcrdsList)
-            print(currIndex)
-            print(currRcrd)
         }
         
         

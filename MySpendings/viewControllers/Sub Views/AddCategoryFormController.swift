@@ -12,6 +12,8 @@ class AddCategoryFormController: UIViewController {
     var mainView: MainViewController? = nil
     
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var view_MainBody: UIView!
+    
     
     @IBOutlet weak var txt_CatgIcon: EmojiTextField!
     @IBOutlet weak var txt_CatgName: UITextField!
@@ -47,8 +49,14 @@ class AddCategoryFormController: UIViewController {
             initCatg()
             btn_Add.title = "Edit"
         }
+        
+        updateTheme()
     }
     
+    func updateTheme()
+    {
+        view_MainBody.backgroundColor = mainView!.mianColor
+    }
     
     func initCatg()
     {

@@ -10,6 +10,9 @@ import UIKit
 class ViewItemViewController: UIViewController, UIScrollViewDelegate {
 
     var retrivedItem: Item?
+    var mainColor: UIColor?
+    
+    @IBOutlet var view_MainBody: UIView!
     
     @IBOutlet weak var lbl_Name: UILabel!
     @IBOutlet weak var txt_Icon: UITextField!
@@ -29,6 +32,13 @@ class ViewItemViewController: UIViewController, UIScrollViewDelegate {
         getItem()
         
         setUpScrollView()
+        
+        updateTheme()
+    }
+    
+    func updateTheme()
+    {
+        view_MainBody.backgroundColor = mainColor!
     }
     
     func getItem()

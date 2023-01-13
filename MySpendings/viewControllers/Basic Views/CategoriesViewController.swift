@@ -216,8 +216,14 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         view_MainBody.layer.shadowOpacity = 0.18
         view_MainBody.layer.shadowRadius = 10
         view_MainBody.layer.shadowOffset = CGSize(width: 0, height: -10)
+        
+        updateTheme()
     }
 
+    func updateTheme()
+    {
+        view_MainBody.backgroundColor = mainView!.mianColor
+    }
     
     // implemented from https://www.youtube.com/watch?v=DAHG0orOxKo
     func initSearchController()
@@ -233,8 +239,6 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.searchBar.delegate = self
     }
-    
-    
     
     
     func updateSearchResults(for searchController: UISearchController)
@@ -294,19 +298,21 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
             }
         }
         
-            let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCard") as! CategoryTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCard") as! CategoryTableViewCell
             
         cell.lbl_Name.text = categoriesLsit![indexPath.row].name.capitalized
         cell.img_CatIcon.text = categoriesLsit![indexPath.row].icon
         cell.lbl_Items.text = "Items: \(categoriesLsit![indexPath.row].items.count)"
         cell.lbl_Total.text = "Total: \(categoriesLsit![indexPath.row].getTotal())"
              
-            cell.btn_Info.addTarget(self, action: #selector(infoCat(sender:)), for: .touchUpInside)
-            cell.btn_Edit.addTarget(self, action: #selector(editCat(sender:)), for: .touchUpInside)
+        cell.btn_Info.addTarget(self, action: #selector(infoCat(sender:)), for: .touchUpInside)
+        cell.btn_Edit.addTarget(self, action: #selector(editCat(sender:)), for: .touchUpInside)
             
-            cell.btn_Info.tag = indexPath.row
-            cell.btn_Edit.tag = indexPath.row
-            return cell
+        cell.btn_Info.tag = indexPath.row
+        cell.btn_Edit.tag = indexPath.row
+        
+        cell.view_CellBody.backgroundColor = mainView!.itemsColor
+        return cell
         
         
     }
@@ -332,7 +338,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
             
             performSegue(withIdentifier: "showCategoryItems", sender: nil)
         }
-        
+        tblView_Categories.reloadData()
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -342,14 +348,27 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
             
             let alert = UIAlertController(title: "Are You Sure?", message: "You cannot undo this action.", preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{action in
-                self.mainView?.records[self.mainView!.currRcrd]?.remove(at: indexPath.row);
-                tableView.deleteRows(at: [indexPath], with: .fade);
+                if (self.searchController.isActive)
+                {
+                    let obj = self.filterdCats.remove(at: indexPath.row);
+                    let indx = self.mainView?.records[self.mainView!.currRcrd]?.firstIndex(where: {$0 == obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
+                    self.mainView?.records[self.mainView!.currRcrd]?.remove(at: indx!);
+                    self.tblView_Categories.deleteRows(at: [indexPath], with: .fade);
+                    self.tblView_Categories.reloadData()
+                }
+                else
+                {
+                    self.mainView?.records[self.mainView!.currRcrd]?.remove(at: indexPath.row);
+                    tableView.deleteRows(at: [indexPath], with: .fade);
+                    self.tblView_Categories.reloadData()
+                }
             }))
-            alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: {action in self.tblView_Categories.reloadData();}))
             self.present(alert, animated: true, completion: nil)
             
             
             tableView.endUpdates()
+            
         }
     }
     
@@ -384,9 +403,10 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
                 completionHandler(true)}
             
             let swipe = UISwipeActionsConfiguration(actions: [edit])
-            
+            tblView_Categories.reloadData()
             return swipe
         }
+        
     }
     
     @objc
@@ -421,6 +441,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     override func viewWillAppear(_ animated: Bool) {
         mainView!.catgChanged = false //reset if cat has been chnaged
         tblView_Categories.reloadData()
+        updateTheme()
     }
     
     // footer for table (easy add button) - deprectaed
@@ -466,6 +487,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         {
             let viewCatgView = segue.destination as! ViewCategoryViewController
             viewCatgView.retrivedCatg = category
+            viewCatgView.mainColor = mainView!.mianColor
         }
     }
     

@@ -30,6 +30,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     var item: Item? // item to send to views
     
     var editEnable: Bool = false
+    var deleteEnable: Bool = false
     
     
     var filterdItems: [Item] = []
@@ -88,7 +89,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     // delete multiple items button
     @IBAction func btn_Delete(_ sender: Any) {
-        if tblView_Items.isEditing
+        if deleteEnable
         {
             
             tblView_Items.allowsMultipleSelection = true
@@ -106,28 +107,38 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
                             let obj = self.filterdItems.remove(at: indexPath.row);
                             let indx = self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.firstIndex(where: {$0 === obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
                             self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indx!);
+                            self.tblView_Items.deleteRows(at: [indexPath], with: .fade);
                         }
                         else
                         {
                             self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indexPath.row)
+                            self.tblView_Items.deleteRows(at: [indexPath], with: .fade);
                         }
+                        self.tblView_Items.reloadData()
                         
-                        
-                        self.tblView_Items.deleteRows(at: [indexPath], with: .fade);
                     };
+                    self.deleteEnable = false
                     self.tblView_Items.isEditing = false;
                     self.tblView_Items.allowsMultipleSelection = false;
+                    self.tblView_Items.reloadData()
                 
                 }))
                 alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: {action in
+                    self.deleteEnable = false;
                     self.tblView_Items.isEditing = false;
-                    self.tblView_Items.allowsMultipleSelection = false;}))
+                    self.tblView_Items.allowsMultipleSelection = false;
+                    self.tblView_Items.reloadData();
+                }))
                 self.present(alert, animated: true, completion: nil)
+                
+                tblView_Items.reloadData()
             }
             else
             {
-                self.tblView_Items.isEditing = false;
-                self.tblView_Items.allowsMultipleSelection = false;
+                deleteEnable = false
+                tblView_Items.isEditing = false;
+                tblView_Items.allowsMultipleSelection = false;
+                self.tblView_Items.reloadData();
             }
             
             
@@ -139,6 +150,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         else
         {
+            deleteEnable = true
             tblView_Items.allowsMultipleSelection = true
             tblView_Items.isEditing = true
             
@@ -400,8 +412,14 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         btn_Add.layer.cornerRadius = btn_Add.bounds.size.width/2;
         btn_Edit.layer.cornerRadius = btn_Edit.bounds.size.width/2;
         btn_Delete.layer.cornerRadius = btn_Delete.bounds.size.width/2;
+        
+        updateTheme()
     }
     
+    func updateTheme()
+    {
+        view_MainBody.backgroundColor = mainView!.mianColor
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (searchController.isActive)
@@ -428,6 +446,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.lbl_Name.text = itemsList![indexPath.row].name
         //cell.img_ItemIcon.image = itemsList[indexPath.row].itemImage
         cell.lbl_Price.text = "\(itemsList![indexPath.row].getPrice())"
+        cell.view_CellBody.backgroundColor = mainView!.itemsColor
         
         if editEnable
         {
@@ -454,10 +473,22 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             let alert = UIAlertController(title: "Are You Sure?", message: "You cannot undo this action.", preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler:{action in
-                self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indexPath.row);
-                tableView.deleteRows(at: [indexPath], with: .fade);
+                if (self.searchController.isActive)
+                {
+                    let obj = self.filterdItems.remove(at: indexPath.row);
+                    let indx = self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.firstIndex(where: {$0 === obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
+                    self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indx!);
+                    self.tblView_Items.deleteRows(at: [indexPath], with: .fade);
+                    self.tblView_Items.reloadData()
+                }
+                else
+                {
+                    self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indexPath.row)
+                    self.tblView_Items.deleteRows(at: [indexPath], with: .fade);
+                    self.tblView_Items.reloadData()
+                }
             }))
-            alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: {action in self.tblView_Items.reloadData();}))
             self.present(alert, animated: true, completion: nil)
             
             
@@ -493,10 +524,11 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        
         
         if (editEnable)
         {
+            tableView.deselectRow(at: indexPath, animated: true)
             itemIndex = indexPath.row
             
             if searchController.isActive
@@ -506,8 +538,9 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             performSegue(withIdentifier: "editItem", sender: nil)
         }
-        else
+        else if (!deleteEnable)
         {
+            tableView.deselectRow(at: indexPath, animated: true)
             item = mainView!.records[mainView!.currRcrd]![catgIndex!].items[indexPath.row]
             
             if searchController.isActive
@@ -530,6 +563,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             tblView_Items.reloadData()
         }
+        updateTheme()
     }
     
     
@@ -567,6 +601,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             let viewItemsView = segue.destination as! ViewItemViewController
             viewItemsView.retrivedItem = item
+            viewItemsView.mainColor = mainView!.mianColor
         }
     }
     

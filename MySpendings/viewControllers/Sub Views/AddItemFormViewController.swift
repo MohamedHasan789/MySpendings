@@ -13,6 +13,7 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
     
 
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var view_MainBody: UIView!
     
     @IBOutlet weak var txt_ItemIcon: EmojiTextField!
     @IBOutlet weak var txt_ItemName: UITextField!
@@ -55,9 +56,13 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
             self.title = "Edit \(mainView!.records[mainView!.currRcrd]![catgIndex!].items[itemIndex!].name)"
         }
         
-        //print(catgIndex)
+        updateTheme()
     }
     
+    func updateTheme()
+    {
+        view_MainBody.backgroundColor = mainView!.mianColor
+    }
     
     func initItem()
     {

@@ -32,6 +32,12 @@
 		D9B333A7296D1CDD005381D7 /* AddItemFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B333A6296D1CDD005381D7 /* AddItemFormViewController.swift */; };
 		D9B333AB2970F0C8005381D7 /* ViewItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B333AA2970F0C8005381D7 /* ViewItemViewController.swift */; };
 		D9B333AD2971796A005381D7 /* ViewCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B333AC2971796A005381D7 /* ViewCategoryViewController.swift */; };
+		D9B333AF29718A3C005381D7 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B333AE29718A3C005381D7 /* Setting.swift */; };
+		D9B333B1297191AD005381D7 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B333B0297191AD005381D7 /* Help.swift */; };
+		D9B333B329719278005381D7 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B333B229719278005381D7 /* HelpViewController.swift */; };
+		D9B333B529719705005381D7 /* HelpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B333B429719705005381D7 /* HelpTableViewCell.swift */; };
+		D9B333B72971BAB0005381D7 /* ThemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B333B62971BAB0005381D7 /* ThemeViewController.swift */; };
+		D9B333B92971C8F8005381D7 /* CurrancyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B333B82971C8F8005381D7 /* CurrancyViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +87,12 @@
 		D9B333A6296D1CDD005381D7 /* AddItemFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemFormViewController.swift; sourceTree = "<group>"; };
 		D9B333AA2970F0C8005381D7 /* ViewItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewItemViewController.swift; sourceTree = "<group>"; };
 		D9B333AC2971796A005381D7 /* ViewCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCategoryViewController.swift; sourceTree = "<group>"; };
+		D9B333AE29718A3C005381D7 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		D9B333B0297191AD005381D7 /* Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Help.swift; sourceTree = "<group>"; };
+		D9B333B229719278005381D7 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
+		D9B333B429719705005381D7 /* HelpTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpTableViewCell.swift; sourceTree = "<group>"; };
+		D9B333B62971BAB0005381D7 /* ThemeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeViewController.swift; sourceTree = "<group>"; };
+		D9B333B82971C8F8005381D7 /* CurrancyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrancyViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +189,8 @@
 				D9AE718A2968630700BDE7DD /* Record.swift */,
 				D9AE718629685C6800BDE7DD /* Category.swift */,
 				D9AE718829685CA600BDE7DD /* Item.swift */,
+				D9B333AE29718A3C005381D7 /* Setting.swift */,
+				D9B333B0297191AD005381D7 /* Help.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -190,6 +204,9 @@
 				D9AE7182296858F900BDE7DD /* ItemsViewController.swift */,
 				D9AE717B2968503100BDE7DD /* CalculatorViewController.swift */,
 				D9AE717D296850AE00BDE7DD /* SettingsViewController.swift */,
+				D9B333B229719278005381D7 /* HelpViewController.swift */,
+				D9B333B62971BAB0005381D7 /* ThemeViewController.swift */,
+				D9B333B82971C8F8005381D7 /* CurrancyViewController.swift */,
 			);
 			path = "Basic Views";
 			sourceTree = "<group>";
@@ -210,6 +227,7 @@
 			children = (
 				D9AE71902968BF1100BDE7DD /* CategoryTableViewCell.swift */,
 				D9B333A4296D0551005381D7 /* ItemTableViewCell.swift */,
+				D9B333B429719705005381D7 /* HelpTableViewCell.swift */,
 				D9AE71942968DC4700BDE7DD /* EmojiTextField.swift */,
 			);
 			path = "Custome Elements";
@@ -352,15 +370,21 @@
 				D9AE718529685B2D00BDE7DD /* AddCategoryFormController.swift in Sources */,
 				D9B333A5296D0551005381D7 /* ItemTableViewCell.swift in Sources */,
 				D9AE71952968DC4700BDE7DD /* EmojiTextField.swift in Sources */,
+				D9B333B72971BAB0005381D7 /* ThemeViewController.swift in Sources */,
 				D9AE718929685CA600BDE7DD /* Item.swift in Sources */,
 				D9B333AD2971796A005381D7 /* ViewCategoryViewController.swift in Sources */,
 				D9AE714529683F5A00BDE7DD /* AppDelegate.swift in Sources */,
 				D9B333AB2970F0C8005381D7 /* ViewItemViewController.swift in Sources */,
+				D9B333AF29718A3C005381D7 /* Setting.swift in Sources */,
+				D9B333B329719278005381D7 /* HelpViewController.swift in Sources */,
 				D9B333A7296D1CDD005381D7 /* AddItemFormViewController.swift in Sources */,
 				D9AE7183296858F900BDE7DD /* ItemsViewController.swift in Sources */,
 				D9AE718B2968630700BDE7DD /* Record.swift in Sources */,
+				D9B333B1297191AD005381D7 /* Help.swift in Sources */,
 				D9AE714729683F5A00BDE7DD /* SceneDelegate.swift in Sources */,
+				D9B333B92971C8F8005381D7 /* CurrancyViewController.swift in Sources */,
 				D9AE717C2968503100BDE7DD /* CalculatorViewController.swift in Sources */,
+				D9B333B529719705005381D7 /* HelpTableViewCell.swift in Sources */,
 				D9AE717629684A1400BDE7DD /* MainViewController.swift in Sources */,
 				D9AE71912968BF1100BDE7DD /* CategoryTableViewCell.swift in Sources */,
 				D9AE717E296850AE00BDE7DD /* SettingsViewController.swift in Sources */,

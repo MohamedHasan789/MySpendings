@@ -8,6 +8,8 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+    
+    var mainView: MainViewController?
 
     @IBOutlet weak var view_HomeTop: UIView!
     @IBOutlet weak var view_HomeBody: UIView!
@@ -19,12 +21,11 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var btn_PrevRcrd: UIButton!
     
     
-    var mainView: MainViewController? = nil
     var rcrdKeys: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        mainView = tabBarController as? MainViewController
         // Do any additional setup after loading the view.
         
         
@@ -66,8 +67,17 @@ class HomeViewController: UIViewController {
         
         view_HomeBody.layer.shouldRasterize = true
         view_HomeBody.layer.shouldRasterize = true
+        
+        updateTheme()
     }
 
+    
+    func updateTheme()
+    {
+        view_HomeBody.backgroundColor = mainView!.mianColor
+        view_HomeTop.backgroundColor = mainView!.scndColor
+    }
+    
     func refreshPage()
     {
         mainView = tabBarController as? MainViewController
@@ -92,5 +102,9 @@ class HomeViewController: UIViewController {
         
         lbl_RcrdTotal.text = mainView?.currRcrd
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updateTheme()
     }
 }

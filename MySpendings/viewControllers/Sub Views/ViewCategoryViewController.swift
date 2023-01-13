@@ -10,6 +10,9 @@ import UIKit
 class ViewCategoryViewController: UIViewController {
     
     var retrivedCatg: Category?
+    var mainColor: UIColor?
+    
+    @IBOutlet var view_MainBody: UIView!
     
     @IBOutlet weak var lbl_Name: UILabel!
     @IBOutlet weak var txt_Icon: UITextField!
@@ -24,6 +27,13 @@ class ViewCategoryViewController: UIViewController {
         super.viewDidLoad()
         
         getCatgeory()
+        
+        updateTheme()
+    }
+    
+    func updateTheme()
+    {
+        view_MainBody.backgroundColor = mainColor!
     }
     
     func getCatgeory()
