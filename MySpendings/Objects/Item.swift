@@ -17,8 +17,9 @@ class Item: Equatable
     var price: Double
     var amount: Int
     var dateTime: Date
+    var rcptImage: UIImage?
     
-    init(icon: String, name: String, isDeduct: Bool, price: Double, amount: Int, dateTime: Date)
+    init(icon: String, name: String, isDeduct: Bool, price: Double, amount: Int, dateTime: Date, rcptImage: UIImage?)
     {
         self.icon = icon
         self.name = name
@@ -26,13 +27,19 @@ class Item: Equatable
         self.price = price
         self.amount = amount
         self.dateTime = dateTime
+        self.rcptImage = rcptImage
     }
     
     //reciept part
     
     func getPrice() -> Double
     {
-        return Double(self.amount)*self.price
+        var price = Double(self.amount)*self.price
+        if (!isDeduct)
+        {
+            price =  Double(self.amount)*self.price * -1
+        }
+        return price
     }
     
     

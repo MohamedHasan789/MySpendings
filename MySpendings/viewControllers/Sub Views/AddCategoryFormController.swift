@@ -27,17 +27,69 @@ class AddCategoryFormController: UIViewController {
     @IBOutlet weak var stpr_Budget: UIStepper!
     @IBOutlet weak var stpr_Rst: UIStepper!
     
+    @IBOutlet weak var btn_Add: UIBarButtonItem!
+    
+    
+    var catgIndex: Int?
+    
+    var catgEdit: Bool = false
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        mainView = tabBarController as? MainViewController
         // Do any additional setup after loading the view.
         keyboardLsnr()
         
-        mainView = tabBarController as? MainViewController
+        if catgEdit
+        {
+            initCatg()
+            btn_Add.title = "Edit"
+        }
     }
     
+    
+    func initCatg()
+    {
+        let retrivedCatg = mainView!.records[mainView!.currRcrd]![catgIndex!]
+        
+        txt_CatgIcon.text = retrivedCatg.icon
+        txt_CatgName.text = retrivedCatg.name
+        
+        if let desc = retrivedCatg.description
+        {
+            txt_CatgDescription.text = desc
+        }
+        
+        if let budget = retrivedCatg.budget
+        {
+            txt_CatgBudget.backgroundColor = UIColor.quaternaryLabel
+            txt_CatgBudget.text = "\(budget)"
+            stpr_Budget.value = budget
+            stch_Budget.isOn = true
+            stpr_Budget.isEnabled = true
+        }
+        
+        if let reset = retrivedCatg.resetCEvery
+        {
+            txt_CatgRst.backgroundColor = UIColor.quaternaryLabel
+            txt_CatgRst.text = "\(reset) Month"
+            stpr_Rst.value = Double(reset)
+            stch_Rst.isOn = true
+            stpr_Rst.isEnabled = true
+        }
+        
+        if (retrivedCatg.permanentategory)
+        {
+            stch_Prmnt.isOn = true
+        }
+        
+        if (retrivedCatg.alowOverBudgt)
+        {
+            stch_OvBdgt.isOn = true
+        }
+    }
     
     
     @IBAction func stch_Budget(_ sender: Any)
@@ -223,7 +275,12 @@ class AddCategoryFormController: UIViewController {
         
         let budget = Double(txt_CatgBudget.text!) ?? nil // force unrawped as value will be 0.0 if user ignores warning, and it will be checked below
         
-        let resetEvery = Int(txt_CatgBudget.text!) ?? nil
+        var resetEvery: Int? = nil
+        
+        if (stch_Rst.isOn)
+        {
+            resetEvery = Int(stpr_Rst.value)
+        }
         
         if (stch_Budget.isOn && (budget == 0.0 || txt_CatgBudget.text == "BHD"))
         {
@@ -234,20 +291,40 @@ class AddCategoryFormController: UIViewController {
         }
         else
         {
-            let items: [Item] = []
-            
-            let newCategory = Category(icon: icon, name: name, description: description, budget: budget, resetCEvery: resetEvery, permanentategory: permanentCategory, alowOverBudgt: alowOverBudgt, items: items)
-            
-            mainView?.records[mainView!.currRcrd]?.append(newCategory)
-            
-            if (permanentCategory)
+            if (!catgEdit)
             {
-                mainView?.prmntCatgrs.append(newCategory)
+                let items: [Item] = []
+                
+                let newCategory = Category(icon: icon, name: name, description: description, budget: budget, resetCEvery: resetEvery, permanentategory: permanentCategory, alowOverBudgt: alowOverBudgt, items: items)
+                
+                mainView?.records[mainView!.currRcrd]?.append(newCategory)
+                
+                if (permanentCategory)
+                {
+                    mainView?.prmntCatgrs.append(newCategory)
+                }
+                
+
+                performSegue(withIdentifier: "unwindToCategories", sender: nil)
             }
-            
-            //print(newCategory)
-            
-            performSegue(withIdentifier: "unwindToCategories", sender: self)
+            else
+            {
+                let alert = UIAlertController(title: "Are You Sure?", message: "You cannot undo this edit action.", preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler:{action in
+                    self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].icon = icon
+                    self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].name = name
+                    self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].description = description
+                    self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].budget = budget
+                    self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].resetCEvery = resetEvery
+                    self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].permanentategory = permanentCategory
+                    self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].alowOverBudgt = alowOverBudgt
+                    
+                    
+                    self.performSegue(withIdentifier: "unwindToCategories", sender: nil)
+                }))
+                alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
     

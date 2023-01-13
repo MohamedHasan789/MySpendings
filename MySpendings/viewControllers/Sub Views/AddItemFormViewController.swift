@@ -7,14 +7,10 @@
 
 import UIKit
 
-class AddItemFormViewController: UIViewController {
+class AddItemFormViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var mainView: MainViewController? = nil
     
-    var catgIndex: Int?
-    
-    var itemEdit: Bool = false
-    var itemIndex: Int?
 
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -28,19 +24,29 @@ class AddItemFormViewController: UIViewController {
     @IBOutlet weak var stpr_Price: UIStepper!
     @IBOutlet weak var stpr_Amount: UIStepper!
     
+    @IBOutlet weak var btn_ImageSelect: UIButton!
+    
     @IBOutlet weak var stch_ItemType: UISegmentedControl!
     
     @IBOutlet weak var btn_Add: UIBarButtonItem!
     
     
+    var catgIndex: Int?
+    
+    var itemEdit: Bool = false
+    var itemIndex: Int?
+    
+    var itemImage: UIImage?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        mainView = tabBarController as? MainViewController
         // Do any additional setup after loading the view.
         keyboardLsnr()
         
-        mainView = tabBarController as? MainViewController
+        
         
         if itemEdit
         {
@@ -71,6 +77,12 @@ class AddItemFormViewController: UIViewController {
         if (!retrivedItem.isDeduct)
         {
             stch_ItemType.selectedSegmentIndex = 1
+        }
+        
+        if let itemImage = retrivedItem.rcptImage {
+            self.itemImage = itemImage
+            btn_ImageSelect.configuration?.background.image = itemImage
+            btn_ImageSelect.tintColor = UIColor(red: 0.891, green: 0.999, blue: 0.856, alpha: 1.0)
         }
     }
     
@@ -138,6 +150,53 @@ class AddItemFormViewController: UIViewController {
     }
     
     
+    
+    @IBAction func btn_ImageSelect(_ sender: Any)
+    {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let cameraAction = UIAlertAction(title: "Take Photo", style: .default, handler: { (_) in
+                imagePicker.sourceType = .camera
+                self.present(imagePicker, animated: true, completion: nil)
+            })
+            alertController.addAction(cameraAction)
+        }
+        
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default, handler: { (_) in
+                imagePicker.sourceType = .photoLibrary
+                self.present(imagePicker, animated: true, completion: nil)
+            })
+            alertController.addAction(photoLibraryAction)
+        }
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+        guard let image = info[.originalImage] as? UIImage else { return }
+        itemImage = image
+        btn_ImageSelect.configuration?.background.image = itemImage
+        btn_ImageSelect.tintColor = UIColor(red: 0.891, green: 0.999, blue: 0.856, alpha: 1.0)
+        
+        dismiss(animated: true) {
+            //self.updateView()
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     @IBAction func btn_AddItem(_ sender: Any)
     {
         guard let icon = txt_ItemIcon.text,  txt_ItemIcon.text != "" else {
@@ -174,7 +233,7 @@ class AddItemFormViewController: UIViewController {
         
         if (!itemEdit)
         {
-            let newItem = Item(icon: icon, name: name, isDeduct: isDeduct, price: price, amount: amount, dateTime: date)
+            let newItem = Item(icon: icon, name: name, isDeduct: isDeduct, price: price, amount: amount, dateTime: date, rcptImage: itemImage)
             
             mainView?.records[mainView!.currRcrd]?[catgIndex!].items.append(newItem)
             
@@ -190,6 +249,7 @@ class AddItemFormViewController: UIViewController {
                 self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].price = price
                 self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].amount = amount
                 self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].dateTime = date
+                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].rcptImage = self.itemImage
                 
                 self.performSegue(withIdentifier: "unwindToItems", sender: nil)
             }))
@@ -201,6 +261,8 @@ class AddItemFormViewController: UIViewController {
         
     
     }
+    
+    
     
     
     override func viewWillAppear(_ animated: Bool) {

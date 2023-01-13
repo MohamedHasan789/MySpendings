@@ -8,29 +8,10 @@
 import UIKit
 
 
-// testing class - to check ctageory items - REMOVELATER
-/*
-class catCheck
-{
-    var catTitle: String
-    var catImage: String
-    
-    init(catTitle: String, catImage: String)
-    {
-        self.catTitle = catTitle
-        self.catImage = catImage
-    }
-}
-
-
-let test1 = catCheck(catTitle: "Rent", catImage: "🧾")
-let test2 = catCheck(catTitle: "House", catImage: "🏠")
-*/
-
 class CategoriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate
 {
     
-    var mainView: MainViewController? = nil
+    var mainView: MainViewController?
     
     @IBOutlet weak var view_MainBody: UIView!
     @IBOutlet weak var tblView_Categories: UITableView!
@@ -38,12 +19,13 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var btn_Sort: UIBarButtonItem!
     
     
-    // again jsut teting - REMOVELATER
-    //var categories: [Category] = []
-    var filterdCats: [Category] = []
-    
-    
     let searchController = UISearchController()
+    
+    
+    var catgIndex: Int? // to send to other views
+    var category: Category? // to send to other views
+    
+    var filterdCats: [Category] = []
     
     var srt_bAlph: Bool = true
     var srt_bPrc: Bool = false
@@ -64,15 +46,13 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     var actn_Desc: UIAction? = nil
 
     
-    //frstaction.state = UIMenuElement.State.on
-    
-    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        mainView = tabBarController as? MainViewController
+        
         pageLook()
         poupCategories()
         
@@ -84,10 +64,6 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         
         
         initSearchController()
-        
-        mainView = tabBarController as? MainViewController
-        
-        //categories = mainView!.currCatgrs
     }
     
     func initSortMenu()
@@ -340,8 +316,6 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         return 150
     }
     
-    //var catgToSend: Category? = nil
-    var catgIndex: Int? = nil
     
     // selecion of item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -356,7 +330,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
                 catgIndex = mainView?.records[mainView!.currRcrd]?.firstIndex(where: {$0.id == filterdCats[indexPath.row].id})
             }
             
-            performSegue(withIdentifier: "showCategoryItems", sender: self)
+            performSegue(withIdentifier: "showCategoryItems", sender: nil)
         }
         
     }
@@ -399,7 +373,15 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         }
         else
         {
-            let edit = UIContextualAction(style: .normal, title: "Edit") {(action, view, completionHandler) in print("editing \(indexPath.row)"); completionHandler(true)}
+            let edit = UIContextualAction(style: .normal, title: "Edit") {(action, view, completionHandler) in
+                self.catgIndex = indexPath.row
+                if self.searchController.isActive
+                {
+                    self.catgIndex = self.mainView?.records[self.mainView!.currRcrd]?.firstIndex(where: {$0.id == self.filterdCats[indexPath.row].id})
+                }
+                
+                self.performSegue(withIdentifier: "editCategory", sender: nil)
+                completionHandler(true)}
             
             let swipe = UISwipeActionsConfiguration(actions: [edit])
             
@@ -410,15 +392,29 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     @objc
     func infoCat(sender:UIButton)
     {
-        print("info for:")
-        print(sender.tag)
+        catgIndex = sender.tag
+        if searchController.isActive
+        {
+            catgIndex = mainView?.records[mainView!.currRcrd]?.firstIndex(where: {$0.id == filterdCats[sender.tag].id})
+        }
+        
+        category = mainView!.records[mainView!.currRcrd]![catgIndex!]
+        
+        performSegue(withIdentifier: "viewCatgory", sender: nil)
     }
     
     @objc
     func editCat(sender:UIButton)
     {
-        print("edit for:")
-        print(sender.tag)
+        
+        catgIndex = sender.tag
+        if searchController.isActive
+        {
+            catgIndex = mainView?.records[mainView!.currRcrd]?.firstIndex(where: {$0.id == filterdCats[sender.tag].id})
+        }
+        
+        performSegue(withIdentifier: "editCategory", sender: nil)
+         
     }
     
     
@@ -458,8 +454,18 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         if (segue.identifier == "showCategoryItems")
         {
             let itemsView = segue.destination as! ItemsViewController
-            //itemsView.category = catgToSend
             itemsView.catgIndex = catgIndex
+        }
+        if (segue.identifier == "editCategory")
+        {
+            let editCatgView = segue.destination as! AddCategoryFormController
+            editCatgView.catgIndex = catgIndex
+            editCatgView.catgEdit = true
+        }
+        if (segue.identifier == "viewCatgory")
+        {
+            let viewCatgView = segue.destination as! ViewCategoryViewController
+            viewCatgView.retrivedCatg = category
         }
     }
     

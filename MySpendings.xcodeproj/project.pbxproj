@@ -30,6 +30,8 @@
 		D9AE71952968DC4700BDE7DD /* EmojiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AE71942968DC4700BDE7DD /* EmojiTextField.swift */; };
 		D9B333A5296D0551005381D7 /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B333A4296D0551005381D7 /* ItemTableViewCell.swift */; };
 		D9B333A7296D1CDD005381D7 /* AddItemFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B333A6296D1CDD005381D7 /* AddItemFormViewController.swift */; };
+		D9B333AB2970F0C8005381D7 /* ViewItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B333AA2970F0C8005381D7 /* ViewItemViewController.swift */; };
+		D9B333AD2971796A005381D7 /* ViewCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B333AC2971796A005381D7 /* ViewCategoryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,8 @@
 		D9AE71942968DC4700BDE7DD /* EmojiTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTextField.swift; sourceTree = "<group>"; };
 		D9B333A4296D0551005381D7 /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
 		D9B333A6296D1CDD005381D7 /* AddItemFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemFormViewController.swift; sourceTree = "<group>"; };
+		D9B333AA2970F0C8005381D7 /* ViewItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewItemViewController.swift; sourceTree = "<group>"; };
+		D9B333AC2971796A005381D7 /* ViewCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCategoryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +187,7 @@
 				D9AE718C2968BE9D00BDE7DD /* Custome Elements */,
 				D9AE717729684D6D00BDE7DD /* HomeViewController.swift */,
 				D9AE717929684F1B00BDE7DD /* CategoriesViewController.swift */,
+				D9AE7182296858F900BDE7DD /* ItemsViewController.swift */,
 				D9AE717B2968503100BDE7DD /* CalculatorViewController.swift */,
 				D9AE717D296850AE00BDE7DD /* SettingsViewController.swift */,
 			);
@@ -192,8 +197,8 @@
 		D9AE7181296858A000BDE7DD /* Sub Views */ = {
 			isa = PBXGroup;
 			children = (
-				D9B333A3296D0528005381D7 /* Custome Elements */,
-				D9AE7182296858F900BDE7DD /* ItemsViewController.swift */,
+				D9B333AC2971796A005381D7 /* ViewCategoryViewController.swift */,
+				D9B333AA2970F0C8005381D7 /* ViewItemViewController.swift */,
 				D9AE718429685B2D00BDE7DD /* AddCategoryFormController.swift */,
 				D9B333A6296D1CDD005381D7 /* AddItemFormViewController.swift */,
 			);
@@ -204,15 +209,8 @@
 			isa = PBXGroup;
 			children = (
 				D9AE71902968BF1100BDE7DD /* CategoryTableViewCell.swift */,
-				D9AE71942968DC4700BDE7DD /* EmojiTextField.swift */,
-			);
-			path = "Custome Elements";
-			sourceTree = "<group>";
-		};
-		D9B333A3296D0528005381D7 /* Custome Elements */ = {
-			isa = PBXGroup;
-			children = (
 				D9B333A4296D0551005381D7 /* ItemTableViewCell.swift */,
+				D9AE71942968DC4700BDE7DD /* EmojiTextField.swift */,
 			);
 			path = "Custome Elements";
 			sourceTree = "<group>";
@@ -355,7 +353,9 @@
 				D9B333A5296D0551005381D7 /* ItemTableViewCell.swift in Sources */,
 				D9AE71952968DC4700BDE7DD /* EmojiTextField.swift in Sources */,
 				D9AE718929685CA600BDE7DD /* Item.swift in Sources */,
+				D9B333AD2971796A005381D7 /* ViewCategoryViewController.swift in Sources */,
 				D9AE714529683F5A00BDE7DD /* AppDelegate.swift in Sources */,
+				D9B333AB2970F0C8005381D7 /* ViewItemViewController.swift in Sources */,
 				D9B333A7296D1CDD005381D7 /* AddItemFormViewController.swift in Sources */,
 				D9AE7183296858F900BDE7DD /* ItemsViewController.swift in Sources */,
 				D9AE718B2968630700BDE7DD /* Record.swift in Sources */,

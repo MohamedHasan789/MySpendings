@@ -10,10 +10,8 @@ import UIKit
 
 class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate{
     
-    var mainView: MainViewController? = nil
+    var mainView: MainViewController?
     
-
-    var catgIndex: Int?
 
     @IBOutlet weak var btn_Add: UIButton!
     @IBOutlet weak var btn_Edit: UIButton!
@@ -24,6 +22,12 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBOutlet weak var btn_Sort: UIBarButtonItem!
     
+    let searchController = UISearchController()
+    
+    
+    var catgIndex: Int?
+    var itemIndex: Int?
+    var item: Item? // item to send to views
     
     var editEnable: Bool = false
     
@@ -31,7 +35,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     var filterdItems: [Item] = []
     
      
-    let searchController = UISearchController()
+    
     
     var srt_bDate: Bool = true
     var srt_bAlph: Bool = false
@@ -53,9 +57,8 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        //self.title = catgoryName
+        
+        mainView = tabBarController as? MainViewController
         
         pageLook()
         
@@ -71,7 +74,6 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         initSearchController()
         
-        mainView = tabBarController as? MainViewController
         
         self.title = mainView?.records[mainView!.currRcrd]?[catgIndex!].name
     }
@@ -80,7 +82,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBAction func btn_Add(_ sender: Any)
     {
-        performSegue(withIdentifier: "addItem", sender: self)
+        performSegue(withIdentifier: "addItem", sender: nil)
     }
     
     
@@ -468,15 +470,23 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     
-    var itemIndex: Int? = nil
+    
     
     // editing functonanilty
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let edit = UIContextualAction(style: .normal, title: "Edit") {(action, view, completionHandler) in print("editing \(indexPath.row)"); completionHandler(true)}
+        let edit = UIContextualAction(style: .normal, title: "Edit") {(action, view, completionHandler) in
+            self.itemIndex = indexPath.row
+            
+            if self.searchController.isActive
+            {
+                self.itemIndex = self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items.firstIndex(where: {$0.id == self.filterdItems[indexPath.row].id})
+            }
+            
+            self.performSegue(withIdentifier: "editItem", sender: nil)
+            completionHandler(true)}
         
         let swipe = UISwipeActionsConfiguration(actions: [edit])
         
-        //segua to edit for a spisific item
         
         return swipe
     }
@@ -494,7 +504,18 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
                 itemIndex = mainView!.records[mainView!.currRcrd]![catgIndex!].items.firstIndex(where: {$0.id == filterdItems[indexPath.row].id})
             }
             
-            performSegue(withIdentifier: "editItem", sender: self)
+            performSegue(withIdentifier: "editItem", sender: nil)
+        }
+        else
+        {
+            item = mainView!.records[mainView!.currRcrd]![catgIndex!].items[indexPath.row]
+            
+            if searchController.isActive
+            {
+                item = mainView!.records[mainView!.currRcrd]![catgIndex!].items[mainView!.records[mainView!.currRcrd]![catgIndex!].items.firstIndex(where: {$0.id == filterdItems[indexPath.row].id})!]
+            }
+            
+            self.performSegue(withIdentifier: "viewItem", sender: nil)
         }
         
         //go to the view items page info thing
@@ -515,6 +536,14 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBAction func unwindToItems(_ segue: UIStoryboardSegue)
     {
         
+        if editEnable
+        {
+            editEnable = false
+            
+            btn_Edit.configuration?.baseForegroundColor = UIColor(red: 0.862, green: 0.601, blue: 0.0, alpha: 1.0)
+            btn_Edit.backgroundColor = UIColor.white
+        }
+        
         tblView_Items.reloadData()
     }
     
@@ -532,6 +561,12 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
             editItemsView.catgIndex = catgIndex
             editItemsView.itemIndex = itemIndex
             editItemsView.itemEdit = true
+        }
+        
+        if (segue.identifier == "viewItem")
+        {
+            let viewItemsView = segue.destination as! ViewItemViewController
+            viewItemsView.retrivedItem = item
         }
     }
     
