@@ -50,4 +50,4 @@ The project is compatibale with xcode 13.2.1 and higer, tested on ios 15.2 and 1
 - keyboard, known glitch when switching to emoji keyboard in simulator
 - sorting menu, known issue about "uicollectionview" when displaying the menu
 
-* all the code used or implemnted from other sources (other than the labs), is refrinced in the comments 
+* all the code used or implemnted from other sources (other than the labs), is referenced in the comments of the application
