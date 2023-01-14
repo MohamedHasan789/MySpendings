@@ -53,7 +53,7 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
         {
             initItem()
             btn_Add.title = "Edit"
-            self.title = "Edit \(mainView!.records[mainView!.currRcrd]![catgIndex!].items[itemIndex!].name)"
+            self.title = "Edit \(mainView!.record.records[mainView!.record.currRcrd]![catgIndex!].items[itemIndex!].name)"
         }
         
         updateTheme()
@@ -66,7 +66,7 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
     
     func initItem()
     {
-        let retrivedItem = mainView!.records[mainView!.currRcrd]![catgIndex!].items[itemIndex!]
+        let retrivedItem = mainView!.record.records[mainView!.record.currRcrd]![catgIndex!].items[itemIndex!]
         
         txt_ItemIcon.text = retrivedItem.icon
         txt_ItemName.text = retrivedItem.name
@@ -245,16 +245,16 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
             if let imagedata = itemImage?.jpegData(compressionQuality: 0.9)
             {newItem.rcptImage = imagedata }
             
-            mainView?.records[mainView!.currRcrd]?[catgIndex!].items.append(newItem)
+            mainView?.record.records[mainView!.record.currRcrd]?[catgIndex!].items.append(newItem)
             
-            if (mainView!.records[mainView!.currRcrd]![catgIndex!].permanentategory)
+            if (mainView!.record.records[mainView!.record.currRcrd]![catgIndex!].permanentategory)
             {
-                let catgId = mainView!.records[mainView!.currRcrd]![catgIndex!].id
+                let catgId = mainView!.record.records[mainView!.record.currRcrd]![catgIndex!].id
                 
-                let permindex = mainView!.prmntCatgrs.firstIndex(where: {$0.id == catgId})
+                let permindex = mainView!.record.prmntCatgrs.firstIndex(where: {$0.id == catgId})
                 
-                mainView!.prmntCatgrs.remove(at: permindex!)
-                mainView!.prmntCatgrs.insert(mainView!.records[mainView!.currRcrd]![catgIndex!], at: permindex!)
+                mainView!.record.prmntCatgrs.remove(at: permindex!)
+                mainView!.record.prmntCatgrs.insert(mainView!.record.records[mainView!.record.currRcrd]![catgIndex!], at: permindex!)
             }
             
             performSegue(withIdentifier: "unwindToItems", sender: nil)
@@ -263,22 +263,22 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
         {
             let alert = UIAlertController(title: "Are You Sure?", message: "You cannot undo this edit action.", preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler:{action in
-                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].icon = icon
-                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].name = name
-                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].isDeduct = isDeduct
-                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].price = price
-                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].amount = amount
-                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].dateTime = date
-                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].rcptImage = self.itemImage?.jpegData(compressionQuality: 0.9)
+                self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].items[self.itemIndex!].icon = icon
+                self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].items[self.itemIndex!].name = name
+                self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].items[self.itemIndex!].isDeduct = isDeduct
+                self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].items[self.itemIndex!].price = price
+                self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].items[self.itemIndex!].amount = amount
+                self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].items[self.itemIndex!].dateTime = date
+                self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].items[self.itemIndex!].rcptImage = self.itemImage?.jpegData(compressionQuality: 0.9)
                 
-                if (self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].permanentategory)
+                if (self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].permanentategory)
                 {
-                    let catgId = self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].id
+                    let catgId = self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].id
                     
-                    let permindex = self.mainView!.prmntCatgrs.firstIndex(where: {$0.id == catgId})
+                    let permindex = self.mainView!.record.prmntCatgrs.firstIndex(where: {$0.id == catgId})
                     
-                    self.mainView!.prmntCatgrs.remove(at: permindex!)
-                    self.mainView!.prmntCatgrs.insert(self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!], at: permindex!)
+                    self.mainView!.record.prmntCatgrs.remove(at: permindex!)
+                    self.mainView!.record.prmntCatgrs.insert(self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!], at: permindex!)
                 }
                 
                 self.performSegue(withIdentifier: "unwindToItems", sender: nil)
@@ -296,7 +296,7 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
     
     
     override func viewWillAppear(_ animated: Bool) {
-        if (mainView!.catgChanged)
+        if (mainView!.record.catgChanged)
         {
             self.navigationController?.popToRootViewController(animated: false)
         }

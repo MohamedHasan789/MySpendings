@@ -76,7 +76,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         initSearchController()
         
         
-        self.title = mainView?.records[mainView!.currRcrd]?[catgIndex!].name
+        self.title = mainView?.record.records[mainView!.record.currRcrd]?[catgIndex!].name
     }
     
     
@@ -105,13 +105,13 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
                         if (self.searchController.isActive)
                         {
                             let obj = self.filterdItems.remove(at: indexPath.row);
-                            let indx = self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.firstIndex(where: {$0 == obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
-                            self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indx!);
+                            let indx = self.mainView?.record.records[self.mainView!.record.currRcrd]?[self.catgIndex!].items.firstIndex(where: {$0 == obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
+                            self.mainView?.record.records[self.mainView!.record.currRcrd]?[self.catgIndex!].items.remove(at: indx!);
                             self.tblView_Items.deleteRows(at: [indexPath], with: .fade);
                         }
                         else
                         {
-                            self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indexPath.row)
+                            self.mainView?.record.records[self.mainView!.record.currRcrd]?[self.catgIndex!].items.remove(at: indexPath.row)
                             self.tblView_Items.deleteRows(at: [indexPath], with: .fade);
                         }
                         
@@ -296,22 +296,22 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             if(srt_Asc)
             {
-                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.dateTime < $1.dateTime}))!
+                mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items = (mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items.sorted(by: {$0.dateTime < $1.dateTime}))!
             }
             else if (srt_Desc)
             {
-                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.dateTime > $1.dateTime}))!
+                mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items = (mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items.sorted(by: {$0.dateTime > $1.dateTime}))!
             }
         }
         if (srt_bAlph)
         {
             if(srt_Asc)
             {
-                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: <))!
+                mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items = (mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items.sorted(by: <))!
             }
             else if (srt_Desc)
             {
-                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: >))!
+                mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items = (mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items.sorted(by: >))!
             }
         }
         
@@ -319,11 +319,11 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             if(srt_Asc)
             {
-                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.getPrice() < $1.getPrice()}))!
+                mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items = (mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items.sorted(by: {$0.getPrice() < $1.getPrice()}))!
             }
             else if (srt_Desc)
             {
-                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.getPrice() > $1.getPrice()}))!
+                mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items = (mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items.sorted(by: {$0.getPrice() > $1.getPrice()}))!
             }
         }
         
@@ -331,11 +331,11 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             if(srt_Asc)
             {
-                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.amount < $1.amount}))!
+                mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items = (mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items.sorted(by: {$0.amount < $1.amount}))!
             }
             else if (srt_Desc)
             {
-                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.amount > $1.amount}))!
+                mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items = (mainView?.record.records[mainView!.record.currRcrd]![catgIndex!].items.sorted(by: {$0.amount > $1.amount}))!
             }
         }
         
@@ -373,7 +373,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func filterItems(searchText: String)
     {
-        filterdItems = (mainView?.records[mainView!.currRcrd]?[catgIndex!].items.filter {
+        filterdItems = (mainView?.record.records[mainView!.record.currRcrd]?[catgIndex!].items.filter {
             itemF in
             let matching = true; if (searchController.searchBar.text != "")
             {
@@ -429,14 +429,14 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         else
         {
-            return (mainView?.records[mainView!.currRcrd]?[catgIndex!].items.count) ?? 0
+            return (mainView?.record.records[mainView!.record.currRcrd]?[catgIndex!].items.count) ?? 0
         }
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var itemsList = mainView?.records[mainView!.currRcrd]?[catgIndex!].items
+        var itemsList = mainView?.record.records[mainView!.record.currRcrd]?[catgIndex!].items
         if (searchController.isActive)
         {
             itemsList = filterdItems
@@ -457,7 +457,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
             cell.img_ItemIcon.tintColor = UIColor.systemRed
         }
         
-        cell.lbl_Price.text = "\(itemsList![indexPath.row].getPrice()) \(mainView!.currncy)"
+        cell.lbl_Price.text = "\(itemsList![indexPath.row].getPrice()) \(mainView!.record.currncy)"
         cell.view_CellBody.backgroundColor = mainView!.itemsColor
         
         if editEnable
@@ -488,14 +488,14 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
                 if (self.searchController.isActive)
                 {
                     let obj = self.filterdItems.remove(at: indexPath.row);
-                    let indx = self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.firstIndex(where: {$0 == obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
-                    self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indx!);
+                    let indx = self.mainView?.record.records[self.mainView!.record.currRcrd]?[self.catgIndex!].items.firstIndex(where: {$0 == obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
+                    self.mainView?.record.records[self.mainView!.record.currRcrd]?[self.catgIndex!].items.remove(at: indx!);
                     self.tblView_Items.deleteRows(at: [indexPath], with: .fade);
                     self.tblView_Items.reloadData()
                 }
                 else
                 {
-                    self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indexPath.row)
+                    self.mainView?.record.records[self.mainView!.record.currRcrd]?[self.catgIndex!].items.remove(at: indexPath.row)
                     self.tblView_Items.deleteRows(at: [indexPath], with: .fade);
                     self.tblView_Items.reloadData()
                 }
@@ -522,7 +522,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             if self.searchController.isActive
             {
-                self.itemIndex = self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items.firstIndex(where: {$0.id == self.filterdItems[indexPath.row].id})
+                self.itemIndex = self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].items.firstIndex(where: {$0.id == self.filterdItems[indexPath.row].id})
             }
             
             self.performSegue(withIdentifier: "editItem", sender: nil)
@@ -545,7 +545,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             if searchController.isActive
             {
-                itemIndex = mainView!.records[mainView!.currRcrd]![catgIndex!].items.firstIndex(where: {$0.id == filterdItems[indexPath.row].id})
+                itemIndex = mainView!.record.records[mainView!.record.currRcrd]![catgIndex!].items.firstIndex(where: {$0.id == filterdItems[indexPath.row].id})
             }
             
             performSegue(withIdentifier: "editItem", sender: nil)
@@ -553,11 +553,11 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         else if (!deleteEnable)
         {
             tableView.deselectRow(at: indexPath, animated: true)
-            item = mainView!.records[mainView!.currRcrd]![catgIndex!].items[indexPath.row]
+            item = mainView!.record.records[mainView!.record.currRcrd]![catgIndex!].items[indexPath.row]
             
             if searchController.isActive
             {
-                item = mainView!.records[mainView!.currRcrd]![catgIndex!].items[mainView!.records[mainView!.currRcrd]![catgIndex!].items.firstIndex(where: {$0.id == filterdItems[indexPath.row].id})!]
+                item = mainView!.record.records[mainView!.record.currRcrd]![catgIndex!].items[mainView!.record.records[mainView!.record.currRcrd]![catgIndex!].items.firstIndex(where: {$0.id == filterdItems[indexPath.row].id})!]
             }
             
             self.performSegue(withIdentifier: "viewItem", sender: nil)
@@ -567,7 +567,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if (mainView!.catgChanged)
+        if (mainView!.record.catgChanged)
         {
             self.navigationController?.popToRootViewController(animated: false)
         }

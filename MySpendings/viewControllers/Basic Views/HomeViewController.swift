@@ -15,6 +15,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var view_HomeBody: UIView!
     
     
+    @IBOutlet weak var lbl_CurrRcrd: UILabel!
     @IBOutlet weak var lbl_RcrdTotal: UILabel!
     
     @IBOutlet weak var btn_NextRcrd: UIButton!
@@ -92,79 +93,79 @@ class HomeViewController: UIViewController {
     
     func initFavs()
     {
-        if mainView!.favs[mainView!.curIndex]!.count >= 1
+        if mainView!.record.favs[mainView!.record.curIndex]!.count >= 1
         {
             fav1 = true
             view_Fav1.backgroundColor = UIColor.white
-            icon_Fav1.text = mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![0]].icon
-            btn_Fav1.configuration?.title = mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![0]].name
+            icon_Fav1.text = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![0]].icon
+            btn_Fav1.configuration?.title = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![0]].name
             
-            if (mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![0]].alowOverBudgt && (mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![0]].getTotal() >= mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![0]].budget ?? 0))
+            if (mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![0]].alowOverBudgt && (mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![0]].getTotal() >= mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![0]].budget ?? 0))
             {
                 wrn_Fav1.isHidden = false
             }
         }
         
-        if mainView!.favs[mainView!.curIndex]!.count >= 2
+        if mainView!.record.favs[mainView!.record.curIndex]!.count >= 2
         {
             fav2 = true
             view_Fav2.backgroundColor = UIColor.white
-            icon_Fav2.text = mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![1]].icon
-            btn_Fav2.configuration?.title = mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![1]].name
+            icon_Fav2.text = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![1]].icon
+            btn_Fav2.configuration?.title = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![1]].name
             
-            if (mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![1]].alowOverBudgt && (mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![1]].getTotal() >= mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![1]].budget ?? 0))
+            if (mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![1]].alowOverBudgt && (mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![1]].getTotal() >= mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![1]].budget ?? 0))
             {
                 wrn_Fav2.isHidden = false
             }
         }
         
-        if mainView!.favs[mainView!.curIndex]!.count >= 3
+        if mainView!.record.favs[mainView!.record.curIndex]!.count >= 3
         {
             fav3 = true
             view_Fav3.backgroundColor = UIColor.white
-            icon_Fav3.text = mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![2]].icon
-            btn_Fav3.configuration?.title = mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![2]].name
+            icon_Fav3.text = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![2]].icon
+            btn_Fav3.configuration?.title = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![2]].name
             
-            if (mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![2]].alowOverBudgt && (mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![2]].getTotal() >= mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![2]].budget ?? 0))
+            if (mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![2]].alowOverBudgt && (mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![2]].getTotal() >= mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![2]].budget ?? 0))
             {
                 wrn_Fav3.isHidden = false
             }
         }
         
-        if mainView!.favs[mainView!.curIndex]!.count >= 4
+        if mainView!.record.favs[mainView!.record.curIndex]!.count >= 4
         {
             fav4 = true
             view_Fav4.backgroundColor = UIColor.white
-            icon_Fav4.text = mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![3]].icon
-            btn_Fav4.configuration?.title = mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![3]].name
+            icon_Fav4.text = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![3]].icon
+            btn_Fav4.configuration?.title = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![3]].name
             
-            if (mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![3]].alowOverBudgt && (mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![3]].getTotal() >= mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![3]].budget ?? 0))
+            if (mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![3]].alowOverBudgt && (mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![3]].getTotal() >= mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![3]].budget ?? 0))
             {
                 wrn_Fav4.isHidden = false
             }
         }
         
-        if mainView!.favs[mainView!.curIndex]!.count >= 5
+        if mainView!.record.favs[mainView!.record.curIndex]!.count >= 5
         {
             fav5 = true
             view_Fav5.backgroundColor = UIColor.white
-            icon_Fav5.text = mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![4]].icon
-            btn_Fav5.configuration?.title = mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![4]].name
+            icon_Fav5.text = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![4]].icon
+            btn_Fav5.configuration?.title = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![4]].name
             
-            if (mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![4]].alowOverBudgt && (mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![4]].getTotal() >= mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![4]].budget ?? 0))
+            if (mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![4]].alowOverBudgt && (mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![4]].getTotal() >= mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![4]].budget ?? 0))
             {
                 wrn_Fav5.isHidden = false
             }
         }
         
-        if mainView!.favs[mainView!.curIndex]!.count == 6
+        if mainView!.record.favs[mainView!.record.curIndex]!.count == 6
         {
             fav6 = true
             view_Fav6.backgroundColor = UIColor.white
-            icon_Fav6.text = mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![5]].icon
-            btn_Fav6.configuration?.title = mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![5]].name
+            icon_Fav6.text = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![5]].icon
+            btn_Fav6.configuration?.title = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![5]].name
             
-            if (mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![5]].alowOverBudgt && (mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![5]].getTotal() >= mainView!.records[mainView!.currRcrd]![mainView!.favs[mainView!.currIndex]![5]].budget ?? 0))
+            if (mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![5]].alowOverBudgt && (mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![5]].getTotal() >= mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![5]].budget ?? 0))
             {
                 wrn_Fav6.isHidden = false
             }
@@ -175,7 +176,7 @@ class HomeViewController: UIViewController {
     {
         if fav1
         {
-            catgIndex = mainView!.favs[mainView!.currIndex]![0]
+            catgIndex = mainView!.record.favs[mainView!.record.currIndex]![0]
             performSegue(withIdentifier: "quickItem", sender: nil)
         }
         else
@@ -191,7 +192,7 @@ class HomeViewController: UIViewController {
     {
         if fav2
         {
-            catgIndex = mainView!.favs[mainView!.currIndex]![1]
+            catgIndex = mainView!.record.favs[mainView!.record.currIndex]![1]
             performSegue(withIdentifier: "quickItem", sender: nil)
         }
         else
@@ -207,7 +208,7 @@ class HomeViewController: UIViewController {
     {
         if fav3
         {
-            catgIndex = mainView!.favs[mainView!.currIndex]![2]
+            catgIndex = mainView!.record.favs[mainView!.record.currIndex]![2]
             performSegue(withIdentifier: "quickItem", sender: nil)
         }
         else
@@ -223,7 +224,7 @@ class HomeViewController: UIViewController {
     {
         if fav4
         {
-            catgIndex = mainView!.favs[mainView!.currIndex]![3]
+            catgIndex = mainView!.record.favs[mainView!.record.currIndex]![3]
             performSegue(withIdentifier: "quickItem", sender: nil)
         }
         else
@@ -239,7 +240,7 @@ class HomeViewController: UIViewController {
     {
         if fav5
         {
-            catgIndex = mainView!.favs[mainView!.currIndex]![4]
+            catgIndex = mainView!.record.favs[mainView!.record.currIndex]![4]
             performSegue(withIdentifier: "quickItem", sender: nil)
         }
         else
@@ -255,7 +256,7 @@ class HomeViewController: UIViewController {
     {
         if fav6
         {
-            catgIndex = mainView!.favs[mainView!.currIndex]![5]
+            catgIndex = mainView!.record.favs[mainView!.record.currIndex]![5]
             performSegue(withIdentifier: "quickItem", sender: nil)
         }
         else
@@ -309,7 +310,7 @@ class HomeViewController: UIViewController {
     {
         mainView = tabBarController as? MainViewController
         
-        if (mainView!.hasNext)
+        if (mainView!.record.hasNext)
         {
             btn_NextRcrd.isEnabled = true
         }
@@ -318,7 +319,7 @@ class HomeViewController: UIViewController {
             btn_NextRcrd.isEnabled = false
         }
         
-        if (mainView!.hasBefore)
+        if (mainView!.record.hasBefore)
         {
             btn_PrevRcrd.isEnabled = true
         }
@@ -327,12 +328,18 @@ class HomeViewController: UIViewController {
             btn_PrevRcrd.isEnabled = false
         }
         
-        lbl_RcrdTotal.text = mainView?.currRcrd
+        let totalRcrd = mainView?.record.getTotal()
+        let carncRcrd = mainView?.record.currncy
+        lbl_RcrdTotal.text = "\(totalRcrd!) \(carncRcrd!)"
+        lbl_CurrRcrd.text = mainView?.record.currRcrd
+        initFavs()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         updateTheme()
         initFavs()
+        
+        Record.saveRocrd(mainView!.record)
     }
 }

@@ -161,11 +161,11 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         {
             if(srt_Asc)
             {
-                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: <))!
+                mainView?.record.records[mainView!.record.currRcrd]! = (mainView?.record.records[mainView!.record.currRcrd]!.sorted(by: <))!
             }
             else if (srt_Desc)
             {
-                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: >))!
+                mainView?.record.records[mainView!.record.currRcrd]! = (mainView?.record.records[mainView!.record.currRcrd]!.sorted(by: >))!
             }
         }
         
@@ -173,11 +173,11 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         {
             if(srt_Asc)
             {
-                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: {$0.getTotal() < $1.getTotal()}))!
+                mainView?.record.records[mainView!.record.currRcrd]! = (mainView?.record.records[mainView!.record.currRcrd]!.sorted(by: {$0.getTotal() < $1.getTotal()}))!
             }
             else if (srt_Desc)
             {
-                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: {$0.getTotal() > $1.getTotal()}))!
+                mainView?.record.records[mainView!.record.currRcrd]! = (mainView?.record.records[mainView!.record.currRcrd]!.sorted(by: {$0.getTotal() > $1.getTotal()}))!
             }
         }
         
@@ -185,11 +185,11 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         {
             if(srt_Asc)
             {
-                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: {$0.items.count < $1.items.count}))!
+                mainView?.record.records[mainView!.record.currRcrd]! = (mainView?.record.records[mainView!.record.currRcrd]!.sorted(by: {$0.items.count < $1.items.count}))!
             }
             else if (srt_Desc)
             {
-                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: {$0.items.count > $1.items.count}))!
+                mainView?.record.records[mainView!.record.currRcrd]! = (mainView?.record.records[mainView!.record.currRcrd]!.sorted(by: {$0.items.count > $1.items.count}))!
             }
         }
         
@@ -252,7 +252,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     func filterCats(searchText: String)
     {
-        filterdCats = (mainView?.records[mainView!.currRcrd]?.filter
+        filterdCats = (mainView?.record.records[mainView!.record.currRcrd]?.filter
                        {
             categoryT in
             let matching = true; if (searchController.searchBar.text != "")
@@ -277,13 +277,13 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         {
             return filterdCats.count
         }
-        return ((mainView?.records[mainView!.currRcrd]?.count) ?? 0) + 1 //for the add button
+        return ((mainView?.record.records[mainView!.record.currRcrd]?.count) ?? 0) + 1 //for the add button
     }
     
     // actual cells and their info
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        var categoriesLsit = mainView?.records[mainView!.currRcrd]
+        var categoriesLsit = mainView?.record.records[mainView!.record.currRcrd]
         if (searchController.isActive)
         {
             categoriesLsit = filterdCats
@@ -291,7 +291,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         
         if (!(searchController.isActive))
         {
-            if (indexPath.row == mainView?.records[mainView!.currRcrd]?.count)
+            if (indexPath.row == mainView?.record.records[mainView!.record.currRcrd]?.count)
             {
                 let cell = tblView_Categories.dequeueReusableCell(withIdentifier: "addCard")
                 return cell!
@@ -303,7 +303,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         cell.lbl_Name.text = categoriesLsit![indexPath.row].name.capitalized
         cell.img_CatIcon.text = categoriesLsit![indexPath.row].icon
         cell.lbl_Items.text = "Items: \(categoriesLsit![indexPath.row].items.count)"
-        cell.lbl_Total.text = "Total: \(categoriesLsit![indexPath.row].getTotal()) \(mainView!.currncy)"
+        cell.lbl_Total.text = "Total: \(categoriesLsit![indexPath.row].getTotal()) \(mainView!.record.currncy)"
              
         cell.btn_Info.addTarget(self, action: #selector(infoCat(sender:)), for: .touchUpInside)
         cell.btn_Edit.addTarget(self, action: #selector(editCat(sender:)), for: .touchUpInside)
@@ -327,13 +327,13 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if (indexPath.row != mainView?.records[mainView!.currRcrd]?.endIndex)
+        if (indexPath.row != mainView?.record.records[mainView!.record.currRcrd]?.endIndex)
         {
             //catgToSend = mainView?.currCatgrs[indexPath.row]
             catgIndex = indexPath.row
             if (searchController.isActive)
             {
-                catgIndex = mainView?.records[mainView!.currRcrd]?.firstIndex(where: {$0.id == filterdCats[indexPath.row].id})
+                catgIndex = mainView?.record.records[mainView!.record.currRcrd]?.firstIndex(where: {$0.id == filterdCats[indexPath.row].id})
             }
             
             performSegue(withIdentifier: "showCategoryItems", sender: nil)
@@ -351,14 +351,14 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
                 if (self.searchController.isActive)
                 {
                     let obj = self.filterdCats.remove(at: indexPath.row);
-                    let indx = self.mainView?.records[self.mainView!.currRcrd]?.firstIndex(where: {$0 == obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
-                    self.mainView?.records[self.mainView!.currRcrd]?.remove(at: indx!);
+                    let indx = self.mainView?.record.records[self.mainView!.record.currRcrd]?.firstIndex(where: {$0 == obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
+                    self.mainView?.record.records[self.mainView!.record.currRcrd]?.remove(at: indx!);
                     self.tblView_Categories.deleteRows(at: [indexPath], with: .fade);
                     self.tblView_Categories.reloadData()
                 }
                 else
                 {
-                    self.mainView?.records[self.mainView!.currRcrd]?.remove(at: indexPath.row);
+                    self.mainView?.record.records[self.mainView!.record.currRcrd]?.remove(at: indexPath.row);
                     tableView.deleteRows(at: [indexPath], with: .fade);
                     self.tblView_Categories.reloadData()
                 }
@@ -373,7 +373,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if (indexPath.row == mainView?.records[mainView!.currRcrd]?.count)
+        if (indexPath.row == mainView?.record.records[mainView!.record.currRcrd]?.count)
         {
             return .none
         }
@@ -386,7 +386,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     // editing functonanilty
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if (indexPath.row == mainView?.records[mainView!.currRcrd]?.count)
+        if (indexPath.row == mainView?.record.records[mainView!.record.currRcrd]?.count)
         {
             return nil
         }
@@ -396,7 +396,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
                 self.catgIndex = indexPath.row
                 if self.searchController.isActive
                 {
-                    self.catgIndex = self.mainView?.records[self.mainView!.currRcrd]?.firstIndex(where: {$0.id == self.filterdCats[indexPath.row].id})
+                    self.catgIndex = self.mainView?.record.records[self.mainView!.record.currRcrd]?.firstIndex(where: {$0.id == self.filterdCats[indexPath.row].id})
                 }
                 
                 self.performSegue(withIdentifier: "editCategory", sender: nil)
@@ -415,10 +415,10 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         catgIndex = sender.tag
         if searchController.isActive
         {
-            catgIndex = mainView?.records[mainView!.currRcrd]?.firstIndex(where: {$0.id == filterdCats[sender.tag].id})
+            catgIndex = mainView?.record.records[mainView!.record.currRcrd]?.firstIndex(where: {$0.id == filterdCats[sender.tag].id})
         }
         
-        category = mainView!.records[mainView!.currRcrd]![catgIndex!]
+        category = mainView!.record.records[mainView!.record.currRcrd]![catgIndex!]
         
         performSegue(withIdentifier: "viewCatgory", sender: nil)
     }
@@ -430,7 +430,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         catgIndex = sender.tag
         if searchController.isActive
         {
-            catgIndex = mainView?.records[mainView!.currRcrd]?.firstIndex(where: {$0.id == filterdCats[sender.tag].id})
+            catgIndex = mainView?.record.records[mainView!.record.currRcrd]?.firstIndex(where: {$0.id == filterdCats[sender.tag].id})
         }
         
         performSegue(withIdentifier: "editCategory", sender: nil)
@@ -439,7 +439,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     
     override func viewWillAppear(_ animated: Bool) {
-        mainView!.catgChanged = false //reset if cat has been chnaged
+        mainView!.record.catgChanged = false //reset if cat has been chnaged
         tblView_Categories.reloadData()
         updateTheme()
         rfrshTbl()
@@ -488,7 +488,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         {
             let viewCatgView = segue.destination as! ViewCategoryViewController
             viewCatgView.retrivedCatg = category
-            viewCatgView.currancy = mainView!.currncy
+            viewCatgView.currancy = mainView!.record.currncy
             viewCatgView.mainColor = mainView!.mianColor
         }
     }

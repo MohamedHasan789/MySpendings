@@ -10,39 +10,22 @@ import UIKit
 class MainViewController: UITabBarController{
     
     // here is the file where most logic happens (calculations and stuffs)
-    
-    
-    var records: [String: [Category]] = [:]
-
-    var rcrdsList: [String] = []
-    
-    
-    var currRcrd: String = ""
-    var currIndex: Int = 0
-    
-    var favs: [Int: [Int]] = [:]
-    
-    var prmntCatgrs: [Category] = []
-
-    
-    var hasNext = false
-    var hasBefore = false
-    var catgChanged = false
-    
+    var record = Record()
     
     var mianColor = UIColor(red: 0.891, green: 0.999, blue: 0.856, alpha: 1.0)
     var scndColor = UIColor(red: 0.787, green: 0.998, blue: 0.718, alpha: 1.0)
     var itemsColor = UIColor.white
     
-    var currncy = "BHD د.ب"
-    var curIndex = 0
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if let savedRecord = Record.loadRecord()
+        {
+            record = savedRecord
+        }
+        
         
         // start a new record if its the first time to be opened
-        if rcrdsList.isEmpty
+        if record.rcrdsList.isEmpty
         {
             newRecord()
         }
@@ -62,7 +45,7 @@ class MainViewController: UITabBarController{
     // a function to see if the latest record availbe is not the currnt month
     func checkCurRcrd()
     {
-        if (rcrdsList.last != getCurrRecordName())
+        if (record.rcrdsList.last != getCurrRecordName())
         {
             newRecord()
         }
@@ -72,8 +55,8 @@ class MainViewController: UITabBarController{
     // sets the currant open record to be of the crnt month
     func setLatstRcrd()
     {
-        currRcrd = getCurrRecordName()
-        currIndex = rcrdsList.endIndex - 1
+        record.currRcrd = getCurrRecordName()
+        record.currIndex = record.rcrdsList.endIndex - 1
     }
     
     func getCurrRecordName() -> String
@@ -91,24 +74,24 @@ class MainViewController: UITabBarController{
     
     func newRecord()
     {
-        records[getCurrRecordName()] = []
-        rcrdsList.append(getCurrRecordName())
-        currRcrd = getCurrRecordName()
-        currIndex = rcrdsList.endIndex - 1
+        record.records[getCurrRecordName()] = []
+        record.rcrdsList.append(getCurrRecordName())
+        record.currRcrd = getCurrRecordName()
+        record.currIndex = record.rcrdsList.endIndex - 1
         
-        favs[curIndex] = []
+        record.favs[record.curIndex] = []
         
         checkList()
     }
     
     func goBack()
     {
-        if currIndex > 0
+        if record.currIndex > 0
         {
-            currRcrd = rcrdsList[currIndex-1]
-            currIndex -= 1
+            record.currRcrd = record.rcrdsList[record.currIndex-1]
+            record.currIndex -= 1
             
-            catgChanged = true
+            record.catgChanged = true
         }
         
         checkList()
@@ -116,12 +99,12 @@ class MainViewController: UITabBarController{
     
     func goForward()
     {
-        if currIndex < (rcrdsList.count - 1)
+        if record.currIndex < (record.rcrdsList.count - 1)
         {
-            currRcrd = rcrdsList[currIndex+1]
-            currIndex += 1
+            record.currRcrd = record.rcrdsList[record.currIndex+1]
+            record.currIndex += 1
             
-            catgChanged = true
+            record.catgChanged = true
         }
         
         checkList()
@@ -129,27 +112,27 @@ class MainViewController: UITabBarController{
     
     func checkList()
     {
-        if (rcrdsList.count == 1)
+        if (record.rcrdsList.count == 1)
         {
-            hasNext = false
-            hasBefore = false
+            record.hasNext = false
+            record.hasBefore = false
         }
         else
         {
-            if (currIndex == 0)
+            if (record.currIndex == 0)
             {
-                hasNext = true
-                hasBefore = false
+                record.hasNext = true
+                record.hasBefore = false
             }
-            else if (currIndex > 0 && currIndex < (rcrdsList.count - 1))
+            else if (record.currIndex > 0 && record.currIndex < (record.rcrdsList.count - 1))
             {
-                hasNext = true
-                hasBefore = true
+                record.hasNext = true
+                record.hasBefore = true
             }
-            else if (currIndex == (rcrdsList.count - 1))
+            else if (record.currIndex == (record.rcrdsList.count - 1))
             {
-                hasNext = false
-                hasBefore = true
+                record.hasNext = false
+                record.hasBefore = true
             }
         }
     }

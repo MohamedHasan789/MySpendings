@@ -31,7 +31,7 @@ class CurrancyViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         pkr_CurncSelect.delegate = self
         pkr_CurncSelect.dataSource = self
         
-        pkr_CurncSelect.selectRow(mainView!.curIndex, inComponent: 0, animated: true)
+        pkr_CurncSelect.selectRow(mainView!.record.curIndex, inComponent: 0, animated: true)
     }
     
     func pageLook() // to have the fancy look of the application
@@ -71,8 +71,8 @@ class CurrancyViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        mainView!.currncy = currancies[row]
-        mainView!.curIndex = row
+        mainView!.record.currncy = currancies[row]
+        mainView!.record.curIndex = row
     }
 
 }

@@ -10,7 +10,7 @@ import UIKit
 
 struct Item: Equatable, Comparable, Codable
 {
-    let id = UUID()
+    var id = UUID()
     var icon: String
     var name: String
     var isDeduct: Bool

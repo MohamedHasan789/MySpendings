@@ -50,7 +50,7 @@ class AddCategoryFormController: UIViewController {
             stch_fav.isEnabled = false
         }
         
-        if (mainView!.favs[mainView!.currIndex]?.count == 6)
+        if (mainView!.record.favs[mainView!.record.currIndex]?.count == 6)
         {
             stch_fav.isEnabled = false
         }
@@ -65,7 +65,7 @@ class AddCategoryFormController: UIViewController {
     
     func initCatg()
     {
-        let retrivedCatg = mainView!.records[mainView!.currRcrd]![catgIndex!]
+        let retrivedCatg = mainView!.record.records[mainView!.record.currRcrd]![catgIndex!]
         
         txt_CatgIcon.text = retrivedCatg.icon
         txt_CatgName.text = retrivedCatg.name
@@ -133,7 +133,7 @@ class AddCategoryFormController: UIViewController {
             txt_CatgBudget.backgroundColor = UIColor.quaternaryLabel
             if (stpr_Budget.value == 0)
             {
-                txt_CatgBudget.text = mainView!.currncy
+                txt_CatgBudget.text = mainView!.record.currncy
             }
             else
             {
@@ -155,7 +155,7 @@ class AddCategoryFormController: UIViewController {
 
     @IBAction func txt_CatgBudgetStart(_ sender: Any)
     {
-        if txt_CatgBudget.text == mainView!.currncy || txt_CatgBudget.text == "0.0"
+        if txt_CatgBudget.text == mainView!.record.currncy || txt_CatgBudget.text == "0.0"
         {
             txt_CatgBudget.text = ""
         }
@@ -223,7 +223,7 @@ class AddCategoryFormController: UIViewController {
         let budget = Double(txt_CatgBudget.text!) ?? nil // force unrawped as value will be 0.0 if user ignores warning, and it will be checked below
         
         
-        if (stch_Budget.isOn && (budget == 0.0 || txt_CatgBudget.text == mainView!.currncy))
+        if (stch_Budget.isOn && (budget == 0.0 || txt_CatgBudget.text == mainView!.record.currncy))
         {
             let alertController = UIAlertController(title: "Invalid Budget", message: "Please input a valid Budget", preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -238,16 +238,17 @@ class AddCategoryFormController: UIViewController {
                 
                 let newCategory = Category(icon: icon, name: name, description: description, budget: budget, permanentategory: permanentCategory, alowOverBudgt: alowOverBudgt, items: items)
                 
-                mainView?.records[mainView!.currRcrd]?.append(newCategory)
+                mainView?.record.records[mainView!.record.currRcrd]?.append(newCategory)
                 
                 if (permanentCategory)
                 {
-                    mainView?.prmntCatgrs.append(newCategory)
+                    mainView?.record.prmntCatgrs.append(newCategory)
                 }
                 
                 if (favCatg)
                 {
-                    mainView?.favs[mainView!.currIndex]?.append((mainView?.records[mainView!.currRcrd]!.count)! - 1)
+                    let indexOfFav = (mainView?.record.records[mainView!.record.currRcrd]!.count)!
+                    mainView?.record.favs[mainView!.record.currIndex]?.append(indexOfFav - 1)
                 }
 
                 performSegue(withIdentifier: "unwindToCategories", sender: nil)
@@ -256,27 +257,27 @@ class AddCategoryFormController: UIViewController {
             {
                 let alert = UIAlertController(title: "Are You Sure?", message: "You cannot undo this edit action.", preferredStyle: .actionSheet)
                 alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler:{action in
-                    self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].icon = icon
-                    self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].name = name
-                    self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].description = description
-                    self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].budget = budget
-                    self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].permanentategory = permanentCategory
-                    self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].alowOverBudgt = alowOverBudgt
+                    self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].icon = icon
+                    self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].name = name
+                    self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].description = description
+                    self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].budget = budget
+                    self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].permanentategory = permanentCategory
+                    self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].alowOverBudgt = alowOverBudgt
                     
-                    if (self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].permanentategory)
+                    if (self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].permanentategory)
                     {
-                        let catgId = self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].id
+                        let catgId = self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!].id
                         
-                        let permindex = self.mainView!.prmntCatgrs.firstIndex(where: {$0.id == catgId})
+                        let permindex = self.mainView!.record.prmntCatgrs.firstIndex(where: {$0.id == catgId})
                         
                         if let permindex = permindex
                         {
-                            self.mainView!.prmntCatgrs.remove(at: permindex)
-                            self.mainView!.prmntCatgrs.insert(self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!], at: permindex)
+                            self.mainView!.record.prmntCatgrs.remove(at: permindex)
+                            self.mainView!.record.prmntCatgrs.insert(self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!], at: permindex)
                         }
                         else
                         {
-                            self.mainView!.prmntCatgrs.append(self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!])
+                            self.mainView!.record.prmntCatgrs.append(self.mainView!.record.records[self.mainView!.record.currRcrd]![self.catgIndex!])
                         }
                     }
                     
@@ -291,7 +292,7 @@ class AddCategoryFormController: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        if (mainView!.catgChanged)
+        if (mainView!.record.catgChanged)
         {
             self.navigationController?.popToRootViewController(animated: false)
         }
