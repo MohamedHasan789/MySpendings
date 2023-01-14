@@ -84,9 +84,9 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
             stch_ItemType.selectedSegmentIndex = 1
         }
         
-        if let itemImage = retrivedItem.rcptImage {
-            self.itemImage = itemImage
-            btn_ImageSelect.configuration?.background.image = itemImage
+        if let itemImagedata = retrivedItem.rcptImage {
+            self.itemImage = UIImage(data: itemImagedata)
+            btn_ImageSelect.configuration?.background.image = self.itemImage
             btn_ImageSelect.tintColor = UIColor(red: 0.891, green: 0.999, blue: 0.856, alpha: 1.0)
         }
     }
@@ -236,9 +236,14 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
         
         let date = dat_ItemDate.date
         
+        
+        
         if (!itemEdit)
         {
-            let newItem = Item(icon: icon, name: name, isDeduct: isDeduct, price: price, amount: amount, dateTime: date, rcptImage: itemImage)
+            var newItem = Item(icon: icon, name: name, isDeduct: isDeduct, price: price, amount: amount, dateTime: date)
+            
+            if let imagedata = itemImage?.jpegData(compressionQuality: 0.9)
+            {newItem.rcptImage = imagedata }
             
             mainView?.records[mainView!.currRcrd]?[catgIndex!].items.append(newItem)
             
@@ -264,7 +269,7 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
                 self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].price = price
                 self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].amount = amount
                 self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].dateTime = date
-                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].rcptImage = self.itemImage
+                self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].rcptImage = self.itemImage?.jpegData(compressionQuality: 0.9)
                 
                 if (self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].permanentategory)
                 {

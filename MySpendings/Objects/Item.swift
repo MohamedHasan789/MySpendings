@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct Item: Equatable, Comparable
+struct Item: Equatable, Comparable, Codable
 {
     let id = UUID()
     var icon: String
@@ -17,7 +17,7 @@ struct Item: Equatable, Comparable
     var price: Double
     var amount: Int
     var dateTime: Date
-    var rcptImage: UIImage?
+    var rcptImage: Data?
     
 
     

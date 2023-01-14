@@ -19,15 +19,14 @@ class AddCategoryFormController: UIViewController {
     @IBOutlet weak var txt_CatgName: UITextField!
     @IBOutlet weak var txt_CatgDescription: UITextField!
     @IBOutlet weak var txt_CatgBudget: UITextField!
-    @IBOutlet weak var txt_CatgRst: UITextField!
+
     
     @IBOutlet weak var stch_Budget: UISwitch!
-    @IBOutlet weak var stch_Rst: UISwitch!
     @IBOutlet weak var stch_Prmnt: UISwitch!
     @IBOutlet weak var stch_OvBdgt: UISwitch!
+    @IBOutlet weak var stch_fav: UISwitch!
     
     @IBOutlet weak var stpr_Budget: UIStepper!
-    @IBOutlet weak var stpr_Rst: UIStepper!
     
     @IBOutlet weak var btn_Add: UIBarButtonItem!
     
@@ -48,6 +47,12 @@ class AddCategoryFormController: UIViewController {
         {
             initCatg()
             btn_Add.title = "Edit"
+            stch_fav.isEnabled = false
+        }
+        
+        if (mainView!.favs[mainView!.currIndex]?.count == 6)
+        {
+            stch_fav.isEnabled = false
         }
         
         updateTheme()
@@ -79,14 +84,6 @@ class AddCategoryFormController: UIViewController {
             stpr_Budget.isEnabled = true
         }
         
-        if let reset = retrivedCatg.resetCEvery
-        {
-            txt_CatgRst.backgroundColor = UIColor.quaternaryLabel
-            txt_CatgRst.text = "\(reset) Month"
-            stpr_Rst.value = Double(reset)
-            stch_Rst.isOn = true
-            stpr_Rst.isEnabled = true
-        }
         
         if (retrivedCatg.permanentategory)
         {
@@ -119,30 +116,6 @@ class AddCategoryFormController: UIViewController {
         }
     }
     
-    @IBAction func stch_Rst(_ sender: Any)
-    {
-        if(stch_Rst.isOn)
-        {
-            enableRest(true)
-            if (!stch_Prmnt.isOn)
-            {
-                stch_Prmnt.setOn(true, animated: true)
-            }
-        }
-        else
-        {
-            enableRest(false)
-        }
-    }
-    
-    @IBAction func stch_Prmnt(_ sender: Any)
-    {
-        if (!stch_Prmnt.isOn && stch_Rst.isOn)
-        {
-            enableRest(false)
-            stch_Rst.setOn(false, animated: true)
-        }
-    }
     
     @IBAction func stch_OvBdgt(_ sender: Any)
     {
@@ -178,29 +151,6 @@ class AddCategoryFormController: UIViewController {
         }
     }
     
-    func enableRest(_ state: Bool)
-    {
-        if (state)
-        {
-            txt_CatgRst.backgroundColor = UIColor.quaternaryLabel
-            if (stpr_Rst.value == 1.0)
-            {
-                txt_CatgRst.text = "\(Int(stpr_Rst.value)) Month"
-            }
-            else
-            {
-                txt_CatgRst.text = "\(Int(stpr_Rst.value)) Months"
-            }
-            
-            stpr_Rst.isEnabled = true
-        }
-        else
-        {
-            txt_CatgRst.backgroundColor = UIColor.quaternarySystemFill
-            txt_CatgRst.text = ""
-            stpr_Rst.isEnabled = false
-        }
-    }
     
 
     @IBAction func txt_CatgBudgetStart(_ sender: Any)
@@ -247,18 +197,6 @@ class AddCategoryFormController: UIViewController {
     }
     
     
-    @IBAction func stpr_Rst(_ sender: Any)
-    {
-        if (stpr_Rst.value == 1.0)
-        {
-            txt_CatgRst.text = "\(Int(stpr_Rst.value)) Month"
-        }
-        else
-        {
-            txt_CatgRst.text = "\(Int(stpr_Rst.value)) Months"
-        }
-    }
-    
     
     @IBAction func btn_AddCategory(_ sender: Any)
     {
@@ -280,15 +218,10 @@ class AddCategoryFormController: UIViewController {
         
         let permanentCategory = stch_Prmnt.isOn
         let alowOverBudgt = stch_OvBdgt.isOn
+        let favCatg = stch_fav.isOn
         
         let budget = Double(txt_CatgBudget.text!) ?? nil // force unrawped as value will be 0.0 if user ignores warning, and it will be checked below
         
-        var resetEvery: Int? = nil
-        
-        if (stch_Rst.isOn)
-        {
-            resetEvery = Int(stpr_Rst.value)
-        }
         
         if (stch_Budget.isOn && (budget == 0.0 || txt_CatgBudget.text == mainView!.currncy))
         {
@@ -303,7 +236,7 @@ class AddCategoryFormController: UIViewController {
             {
                 let items: [Item] = []
                 
-                let newCategory = Category(icon: icon, name: name, description: description, budget: budget, resetCEvery: resetEvery, permanentategory: permanentCategory, alowOverBudgt: alowOverBudgt, items: items)
+                let newCategory = Category(icon: icon, name: name, description: description, budget: budget, permanentategory: permanentCategory, alowOverBudgt: alowOverBudgt, items: items)
                 
                 mainView?.records[mainView!.currRcrd]?.append(newCategory)
                 
@@ -312,6 +245,10 @@ class AddCategoryFormController: UIViewController {
                     mainView?.prmntCatgrs.append(newCategory)
                 }
                 
+                if (favCatg)
+                {
+                    mainView?.favs[mainView!.currIndex]?.append((mainView?.records[mainView!.currRcrd]!.count)! - 1)
+                }
 
                 performSegue(withIdentifier: "unwindToCategories", sender: nil)
             }
@@ -323,7 +260,6 @@ class AddCategoryFormController: UIViewController {
                     self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].name = name
                     self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].description = description
                     self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].budget = budget
-                    self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].resetCEvery = resetEvery
                     self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].permanentategory = permanentCategory
                     self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].alowOverBudgt = alowOverBudgt
                     
@@ -342,10 +278,8 @@ class AddCategoryFormController: UIViewController {
                         {
                             self.mainView!.prmntCatgrs.append(self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!])
                         }
-                        
-                        
-                        
                     }
+                    
                     
                     self.performSegue(withIdentifier: "unwindToCategories", sender: nil)
                 }))

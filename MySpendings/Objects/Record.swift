@@ -7,24 +7,15 @@
 
 import Foundation
 
-struct Record
+struct Record: Codable
 {
-    var month: Date
-    var categories: [Category]
+    var records: [String: [Category]] = [:]
+
+    var rcrdsList: [String] = []
     
-    // has to be fixed
-    func getTotal() -> Double
-    {
-        var total: Double = 0
-        
-        for category in categories
-        {
-            for item in category.items
-            {
-                total += item.getPrice()
-            }
-        }
-        
-        return total
-    }
+    var favs: [Int: [Int]] = [:]
+    
+    var prmntCatgrs: [Category] = []
+
+
 }

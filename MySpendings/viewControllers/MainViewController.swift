@@ -20,6 +20,8 @@ class MainViewController: UITabBarController{
     var currRcrd: String = ""
     var currIndex: Int = 0
     
+    var favs: [Int: [Int]] = [:]
+    
     var prmntCatgrs: [Category] = []
 
     
@@ -53,7 +55,6 @@ class MainViewController: UITabBarController{
         
         // please note that the "reset catgory" was not implemented yet, for now that feture is not implemnted
         checkList()
-        
         
     }
     
@@ -94,6 +95,8 @@ class MainViewController: UITabBarController{
         rcrdsList.append(getCurrRecordName())
         currRcrd = getCurrRecordName()
         currIndex = rcrdsList.endIndex - 1
+        
+        favs[curIndex] = []
         
         checkList()
     }

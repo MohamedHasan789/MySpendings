@@ -19,7 +19,6 @@ class ViewCategoryViewController: UIViewController {
     @IBOutlet weak var txt_Icon: UITextField!
     @IBOutlet weak var txt_Desc: UITextField!
     @IBOutlet weak var txt_Budget: UITextField!
-    @IBOutlet weak var txt_Rst: UITextField!
     @IBOutlet weak var txt_Prmnnt: UITextField!
     @IBOutlet weak var txt_AlertOvBdg: UITextField!
     
@@ -55,18 +54,6 @@ class ViewCategoryViewController: UIViewController {
             txt_Budget.backgroundColor = UIColor.quaternaryLabel
         }
         
-        if let rst = retrivedCatg?.resetCEvery
-        {
-            if rst == 1
-            {
-                txt_Rst.text = "\(rst) Month"
-            }
-            else
-            {
-                txt_Rst.text = "\(rst) Months"
-            }
-            txt_Rst.backgroundColor = UIColor.quaternaryLabel
-        }
         
         if retrivedCatg!.permanentategory
         {

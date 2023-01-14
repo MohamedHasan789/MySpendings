@@ -8,14 +8,13 @@
 import Foundation
 import UIKit
 
-struct Category {
+struct Category: Codable {
     var id = UUID()
     var icon:String
     var name: String
     var description: String?
     
     var budget: Double?
-    var resetCEvery: Int?
     
     var permanentategory: Bool
     var alowOverBudgt: Bool

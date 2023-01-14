@@ -50,9 +50,9 @@ class ViewItemViewController: UIViewController, UIScrollViewDelegate {
         txt_Total.text = "\(retrivedItem!.getPrice())"
         dat_Date.date = retrivedItem!.dateTime
         
-        if let image = retrivedItem?.rcptImage
+        if let imagedata = retrivedItem?.rcptImage
         {
-            imgView.image = image
+            imgView.image = UIImage(data: imagedata)
         }
     }
     
