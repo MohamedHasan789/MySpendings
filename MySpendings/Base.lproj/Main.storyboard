@@ -1029,7 +1029,11 @@
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem image="questionmark.circle" catalog="system" id="Eod-pL-f8P"/>
+                            <barButtonItem image="questionmark.circle" catalog="system" id="Eod-pL-f8P">
+                                <connections>
+                                    <segue destination="1X8-4k-oYg" kind="show" id="n5W-Cj-cav"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem image="arrow.up.arrow.down.circle" catalog="system" id="FbA-Pe-GCN"/>
                         </rightBarButtonItems>
                     </navigationItem>
@@ -1104,6 +1108,18 @@
                     <tabBarItem key="tabBarItem" title="Settings" image="gear" catalog="system" id="xQo-Qk-Y2V"/>
                     <navigationItem key="navigationItem" title="Settings" id="vNx-yR-nfU">
                         <barButtonItem key="backBarButtonItem" title="Back" id="Spe-vI-03k"/>
+                        <rightBarButtonItems>
+                            <barButtonItem image="heart.circle" catalog="system" id="yd2-1s-eyI">
+                                <connections>
+                                    <action selector="btn_Heart:" destination="qe8-Ar-6Xn" id="9qQ-Zb-yd0"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="message.circle" catalog="system" id="hiT-on-vVe">
+                                <connections>
+                                    <action selector="btn_MsgUs:" destination="qe8-Ar-6Xn" id="CtK-3W-Qme"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="tblView_Settings" destination="Oi2-H1-H19" id="7jz-W0-dMe"/>
@@ -1993,7 +2009,7 @@
                                                                 <rect key="frame" x="129" y="46.666666666666629" width="209" height="34"/>
                                                                 <color key="backgroundColor" systemColor="quaternaryLabelColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <textInputTraits key="textInputTraits"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                                 <connections>
                                                                     <action selector="txt_SalaryDone:" destination="6q9-Q7-Es2" eventType="editingDidEnd" id="4ze-gi-s2f"/>
                                                                     <action selector="txt_SalaryEdit:" destination="6q9-Q7-Es2" eventType="editingChanged" id="dEP-NN-YAM"/>
@@ -2031,7 +2047,7 @@
                                                                 <rect key="frame" x="129" y="46.333333333333314" width="209" height="34"/>
                                                                 <color key="backgroundColor" systemColor="quaternaryLabelColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <textInputTraits key="textInputTraits"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                                 <connections>
                                                                     <action selector="txt_SalaryCitDone:" destination="6q9-Q7-Es2" eventType="editingDidEnd" id="u3o-kN-DRa"/>
                                                                     <action selector="txt_SalaryCutEdit:" destination="6q9-Q7-Es2" eventType="editingChanged" id="XUC-Mn-hus"/>
@@ -2069,7 +2085,7 @@
                                                                 <rect key="frame" x="129" y="46.333333333333258" width="155" height="34"/>
                                                                 <color key="backgroundColor" systemColor="quaternarySystemFillColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <textInputTraits key="textInputTraits"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                                 <connections>
                                                                     <action selector="txt_SalIncDone:" destination="6q9-Q7-Es2" eventType="editingDidEnd" id="4ig-bP-i2s"/>
                                                                     <action selector="txt_SalIncEdit:" destination="6q9-Q7-Es2" eventType="editingChanged" id="Hex-LM-Z96"/>
@@ -2461,7 +2477,7 @@
                         <rightBarButtonItems>
                             <barButtonItem title="Help" image="questionmark.circle" catalog="system" id="Nw5-GQ-sfn">
                                 <connections>
-                                    <action selector="hlp:" destination="1bx-XX-kpH" id="iC4-Vd-aUV"/>
+                                    <segue destination="1X8-4k-oYg" kind="show" id="Q0S-PO-TWb"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Sort" image="arrow.up.arrow.down.circle" catalog="system" id="gGR-UW-Hlo"/>
@@ -3178,6 +3194,11 @@
                                                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="70"/>
                                                                     <directionalEdgeInsets key="contentInsets" top="5" leading="5" bottom="5" trailing="5"/>
                                                                 </buttonConfiguration>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                        <integer key="value" value="20"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
                                                                 <connections>
                                                                     <action selector="btn_ImageSelect:" destination="a1V-eU-qIN" eventType="touchUpInside" id="M15-xJ-sEv"/>
                                                                 </connections>
@@ -3491,7 +3512,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="qyj-de-SgQ"/>
         <segue reference="IrI-bd-0tF"/>
-        <segue reference="WG6-Fx-wG5"/>
+        <segue reference="Q0S-PO-TWb"/>
+        <segue reference="htF-gm-SYc"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.up.arrow.down.circle" catalog="system" width="128" height="121"/>
@@ -3502,8 +3524,10 @@
         <image name="doc.plaintext" catalog="system" width="115" height="128"/>
         <image name="dollarsign.square" catalog="system" width="128" height="114"/>
         <image name="gear" catalog="system" width="128" height="119"/>
+        <image name="heart.circle" catalog="system" width="128" height="121"/>
         <image name="homekit" catalog="system" width="128" height="106"/>
         <image name="info.circle" catalog="system" width="128" height="121"/>
+        <image name="message.circle" catalog="system" width="128" height="121"/>
         <image name="minus.circle" catalog="system" width="128" height="121"/>
         <image name="pencil.circle" catalog="system" width="128" height="121"/>
         <image name="photo.fill.on.rectangle.fill" catalog="system" width="128" height="97"/>

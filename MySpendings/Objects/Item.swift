@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+// item within category, has an image for the reciept that will be saved as data (for data saving nd getting)
 struct Item: Equatable, Comparable, Codable
 {
     var id = UUID()

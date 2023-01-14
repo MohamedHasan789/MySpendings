@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+// help item definition - for the help tableview
 struct hlpItem
 {
     var itmTitle: String

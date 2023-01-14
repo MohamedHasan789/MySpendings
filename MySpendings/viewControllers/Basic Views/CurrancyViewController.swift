@@ -5,6 +5,10 @@
 //  Created by Mohamed on 13/01/2023.
 //
 
+// **PLEASE NOTE** //
+// as that "mainView" is the tabbar controller and will always be present no matter which view the user is in, it will be force unrapwd for the entirity if the application, this is done to nigate the extra "14251" lines of code requiried for each entry of the "mainView!"
+// **PLEASE NOTE** //
+
 import UIKit
 
 class CurrancyViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -31,7 +35,7 @@ class CurrancyViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         pkr_CurncSelect.delegate = self
         pkr_CurncSelect.dataSource = self
         
-        pkr_CurncSelect.selectRow(mainView!.record.curIndex, inComponent: 0, animated: true)
+        pkr_CurncSelect.selectRow(mainView!.record.currncyIndex, inComponent: 0, animated: true)
     }
     
     func pageLook() // to have the fancy look of the application
@@ -55,6 +59,8 @@ class CurrancyViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     override func viewWillAppear(_ animated: Bool)
     {
         updateTheme()
+        
+        updateTheme()
     }
     
     
@@ -72,7 +78,9 @@ class CurrancyViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         mainView!.record.currncy = currancies[row]
-        mainView!.record.curIndex = row
+        mainView!.record.currncyIndex = row
     }
+    
+    
 
 }

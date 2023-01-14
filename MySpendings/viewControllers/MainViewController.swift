@@ -9,40 +9,51 @@ import UIKit
 
 class MainViewController: UITabBarController{
     
-    // here is the file where most logic happens (calculations and stuffs)
+    // **PLEASE NOTE** //
+    // as that "mainView" is the tabbar controller and will always be present no matter which view the user is in, it will be force unrapwd for the entirity if the application, this is done to nigate the extra "14251" lines of code requiried for each entry of the "mainView!"
+    // **PLEASE NOTE** //
+    
+    // here is the file where most logic happens (calculations and stuffs), creating records, and the connection to the database
     var record = Record()
     
+    // user color selection, placed here to make them global to the application, none codable
     var mianColor = UIColor(red: 0.891, green: 0.999, blue: 0.856, alpha: 1.0)
     var scndColor = UIColor(red: 0.787, green: 0.998, blue: 0.718, alpha: 1.0)
     var itemsColor = UIColor.white
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // if there is a saved record file, use it
         if let savedRecord = Record.loadRecord()
         {
             record = savedRecord
         }
+        else
+        {
+            record = Record.loadSampleData() // examble data rather than new data
+        }
         
-        
-        // start a new record if its the first time to be opened
+        /*
+        // start a new record if its the app's first time to be opened
         if record.rcrdsList.isEmpty
         {
             newRecord()
         }
+        */
+        
+        
         
         
         checkCurRcrd()
         
         setLatstRcrd()
         
-        
-        // please note that the "reset catgory" was not implemented yet, for now that feture is not implemnted
         checkList()
-        
     }
     
     
-    // a function to see if the latest record availbe is not the currnt month
+    // a function to see if the latest record is the crnt month or not, if so, create a new record
     func checkCurRcrd()
     {
         if (record.rcrdsList.last != getCurrRecordName())
@@ -52,13 +63,14 @@ class MainViewController: UITabBarController{
     }
     
     
-    // sets the currant open record to be of the crnt month
+    // to open the application on the crnt record
     func setLatstRcrd()
     {
         record.currRcrd = getCurrRecordName()
         record.currIndex = record.rcrdsList.endIndex - 1
     }
     
+    // a function to format and create a record name (this month, this year)
     func getCurrRecordName() -> String
     {
         let year = Calendar.current.component(.year, from: Date())
@@ -72,6 +84,7 @@ class MainViewController: UITabBarController{
         return "\(month), \(year)"
     }
     
+    // create a new record and initilize its req parameters
     func newRecord()
     {
         record.records[getCurrRecordName()] = []
@@ -79,11 +92,20 @@ class MainViewController: UITabBarController{
         record.currRcrd = getCurrRecordName()
         record.currIndex = record.rcrdsList.endIndex - 1
         
-        record.favs[record.curIndex] = []
+        if record.prmntCatgrs.count <= 1
+        {
+            for catgory in record.prmntCatgrs
+            {
+                record.records[record.currRcrd]?.append(catgory)
+            }
+        }
+        
+        record.favs[record.currIndex] = []
         
         checkList()
     }
     
+    // make the curr record the prev avaible one
     func goBack()
     {
         if record.currIndex > 0
@@ -97,6 +119,7 @@ class MainViewController: UITabBarController{
         checkList()
     }
     
+    // make the curr record the next avaible one
     func goForward()
     {
         if record.currIndex < (record.rcrdsList.count - 1)
@@ -110,6 +133,7 @@ class MainViewController: UITabBarController{
         checkList()
     }
     
+    // check if there is next items in the list (forwardm backward)
     func checkList()
     {
         if (record.rcrdsList.count == 1)
@@ -135,5 +159,11 @@ class MainViewController: UITabBarController{
                 record.hasBefore = true
             }
         }
+    }
+    
+    
+    //save information on closre - not really functional
+    override func viewWillDisappear(_ animated: Bool) {
+        Record.saveRocrd(record)
     }
 }

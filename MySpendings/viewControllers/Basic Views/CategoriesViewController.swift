@@ -5,6 +5,11 @@
 //  Created by Mohamed on 06/01/2023.
 //
 
+
+// **PLEASE NOTE** //
+// as that "mainView" is the tabbar controller and will always be present no matter which view the user is in, it will be force unrapwd for the entirity if the application, this is done to nigate the extra "14251" lines of code requiried for each entry of the "mainView!"
+// **PLEASE NOTE** //
+
 import UIKit
 
 
@@ -25,8 +30,10 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     var catgIndex: Int? // to send to other views
     var category: Category? // to send to other views
     
+    // search box catgs
     var filterdCats: [Category] = []
     
+    // sorting booleans and actions
     var srt_bAlph: Bool = false
     var srt_bPrc: Bool = false
     var srt_bNoi: Bool = false
@@ -34,10 +41,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     var srt_Asc: Bool = true
     var srt_Desc: Bool = false
 
-    
-    
-    
-    
+        
     var actn_bAlph: UIAction? = nil
     var actn_bPrc: UIAction? = nil
     var actn_bNoi: UIAction? = nil
@@ -66,6 +70,8 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         initSearchController()
     }
     
+    // known bug - menu uicollectionview, bug by apple
+    // methods to init and use sorting functions
     func initSortMenu()
     {
         let optionClosure = {(action: UIAction) in self.sortCats(typeName: action.title)}
@@ -78,6 +84,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         actn_Desc = UIAction(title: "Descending", image: UIImage(systemName: "arrow.down.circle"), handler: optionClosure)
     }
     
+    // refresh he values and states of the sorting menu
     func rfrshSortMenu()
     {
         let sortingMenu = UIMenu(options: .displayInline, children: [actn_bAlph!,actn_bPrc!,actn_bNoi!])
@@ -114,6 +121,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         // please note that the warning present during viewing the menu is a known bug https://developer.apple.com/forums/thread/654647, if title is removed it goes :E
     }
     
+    // set the setting booleans based on input from menu
     func sortCats(typeName: String)
     {
         
@@ -153,7 +161,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         rfrshTbl()
     }
     
-    
+    // refres table data with sorting information
     func rfrshTbl()
     {
         // sorting function (actully sort the list)
@@ -197,7 +205,6 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     
-    // testing for categories
     func poupCategories()
     {
         
@@ -206,8 +213,8 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
 
     }
     
-    
-    func pageLook() // to have the fancy look of the application
+    // to have the fancy look of the application
+    func pageLook()
     {
         view_MainBody.layer.cornerRadius = 45
         view_MainBody.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
@@ -225,6 +232,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         view_MainBody.backgroundColor = mainView!.mianColor
     }
     
+    // searching functions
     // implemented from https://www.youtube.com/watch?v=DAHG0orOxKo
     func initSearchController()
     {
@@ -240,7 +248,6 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         searchController.searchBar.delegate = self
     }
     
-    
     func updateSearchResults(for searchController: UISearchController)
     {
         let searchBar = searchController.searchBar
@@ -248,7 +255,6 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         
         filterCats(searchText: searchText)
     }
-    
     
     func filterCats(searchText: String)
     {
@@ -280,7 +286,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         return ((mainView?.record.records[mainView!.record.currRcrd]?.count) ?? 0) + 1 //for the add button
     }
     
-    // actual cells and their info
+    // display actual cells and their info
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         var categoriesLsit = mainView?.record.records[mainView!.record.currRcrd]
@@ -317,7 +323,6 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         
     }
     
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
@@ -341,6 +346,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         tblView_Categories.reloadData()
     }
     
+    // swiping to delete a catg
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete
         {
@@ -351,13 +357,24 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
                 if (self.searchController.isActive)
                 {
                     let obj = self.filterdCats.remove(at: indexPath.row);
-                    let indx = self.mainView?.record.records[self.mainView!.record.currRcrd]?.firstIndex(where: {$0 == obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
+                    let indx = self.mainView?.record.records[self.mainView!.record.currRcrd]?.firstIndex(where: {$0 == obj})
+                    
+                    if let isFaveIndx = self.mainView!.record.favs[self.mainView!.record.currIndex]?.firstIndex(of: indx!)
+                    {
+                        self.mainView!.record.favs[self.mainView!.record.currIndex]!.remove(at: isFaveIndx)
+                    }
+                    
                     self.mainView?.record.records[self.mainView!.record.currRcrd]?.remove(at: indx!);
                     self.tblView_Categories.deleteRows(at: [indexPath], with: .fade);
                     self.tblView_Categories.reloadData()
                 }
                 else
                 {
+                    if let isFaveIndx = self.mainView!.record.favs[self.mainView!.record.currIndex]?.firstIndex(of: indexPath.row)
+                    {
+                        self.mainView!.record.favs[self.mainView!.record.currIndex]!.remove(at: isFaveIndx)
+                    }
+                    
                     self.mainView?.record.records[self.mainView!.record.currRcrd]?.remove(at: indexPath.row);
                     tableView.deleteRows(at: [indexPath], with: .fade);
                     self.tblView_Categories.reloadData()
@@ -409,6 +426,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         
     }
     
+    // special obj c methods to create action buttons (info & edit) for each cell in addition to the swipe actions
     @objc
     func infoCat(sender:UIButton)
     {
@@ -443,27 +461,10 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         tblView_Categories.reloadData()
         updateTheme()
         rfrshTbl()
+        
+        Record.saveRocrd(mainView!.record)
     }
     
-    // footer for table (easy add button) - deprectaed
-    /*
-    // the add button at the end - removed as it has a bug when using cells - apple issue, implemented within each function (view, edit delet)
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-            
-            let cell = tblView_Categories.dequeueReusableCell(withIdentifier: "addCard")
-            return cell
-    }
-
-
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 150
-    }
-     */
-
-    @objc
-    func handle(sender: UIButton) {
-        print("Tapped")
-    }
     
     @IBAction func unwindToCategories(_ segue: UIStoryboardSegue) {
 
@@ -492,5 +493,22 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
             viewCatgView.mainColor = mainView!.mianColor
         }
     }
+    
+    
+    // footer for table (easy add button) - deprectaed
+    /*
+    // the add button at the end - removed as it has a bug when using cells - apple issue, implemented within each function (view, edit delet)
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+            
+            let cell = tblView_Categories.dequeueReusableCell(withIdentifier: "addCard")
+            return cell
+    }
+
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 150
+    }
+     */
+
     
 }

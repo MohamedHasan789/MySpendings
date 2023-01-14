@@ -5,6 +5,11 @@
 //  Created by Mohamed on 06/01/2023.
 //
 
+
+// **PLEASE NOTE** //
+// as that "mainView" is the tabbar controller and will always be present no matter which view the user is in, it will be force unrapwd for the entirity if the application, this is done to nigate the extra "14251" lines of code requiried for each entry of the "mainView!"
+// **PLEASE NOTE** //
+
 import UIKit
 
 
@@ -161,30 +166,31 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
-    @IBAction func btn_Edit(_ sender: Any)
+    // edit an item with a button
+    @IBAction func btn_Edit(_ sender: Any) {
+    if editEnable
     {
-        if editEnable
-        {
-            editEnable = false
-            
-            btn_Edit.configuration?.baseForegroundColor = UIColor(red: 0.862, green: 0.601, blue: 0.0, alpha: 1.0)
-            btn_Edit.backgroundColor = UIColor.white
-            
-            tblView_Items.reloadData()
-        }
-        else
-        {
-            editEnable = true
-            
-            btn_Edit.configuration?.baseForegroundColor = UIColor.white
-            btn_Edit.backgroundColor = UIColor(red: 0.862, green: 0.601, blue: 0.0, alpha: 1.0)
-            
-            tblView_Items.reloadData()
-        }
+        editEnable = false
+        
+        btn_Edit.configuration?.baseForegroundColor = UIColor(red: 0.862, green: 0.601, blue: 0.0, alpha: 1.0)
+        btn_Edit.backgroundColor = UIColor.white
+        
+        tblView_Items.reloadData()
     }
+    else
+    {
+        editEnable = true
+        
+        btn_Edit.configuration?.baseForegroundColor = UIColor.white
+        btn_Edit.backgroundColor = UIColor(red: 0.862, green: 0.601, blue: 0.0, alpha: 1.0)
+        
+        tblView_Items.reloadData()
+    }
+}
     
     
-    
+    // known bug - menu uicollectionview, bug by apple
+    // methods to init and use sorting functions
     func initSortMenu()
     {
         let optionClosure = {(action: UIAction) in self.sortItems(typeName: action.title)}
@@ -198,6 +204,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         actn_Desc = UIAction(title: "Descending", image: UIImage(systemName: "arrow.down.circle"), handler: optionClosure)
     }
     
+    // refresh he values and states of the sorting menu
     func rfrshSortMenu()
     {
         let sortingMenu = UIMenu(options: .displayInline, children: [actn_bDate!,actn_bAlph!,actn_bPrc!,actn_bNoi!])
@@ -239,6 +246,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         // please note that the warning present during viewing the menu is a known bug https://developer.apple.com/forums/thread/654647, if title is removed it goes :E
     }
     
+    // set the setting booleans based on input from menu
     func sortItems(typeName: String)
     {
         
@@ -288,7 +296,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         rfrshTbl()
     }
     
-    
+    // refres table data with sorting information
     func rfrshTbl()
     {
         // sorting function (actully sort the list) - edits the main lists to nigate any idiotic behavior when accsesing index
@@ -344,7 +352,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     
-    
+    // searching functions
     // implemented from https://www.youtube.com/watch?v=DAHG0orOxKo
     func initSearchController()
     {
@@ -359,9 +367,6 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.searchBar.delegate = self
     }
-    
-    
-    
     
     func updateSearchResults(for searchController: UISearchController)
     {
@@ -421,6 +426,8 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     {
         view_MainBody.backgroundColor = mainView!.mianColor
     }
+    
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (searchController.isActive)
@@ -513,8 +520,6 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     
-    
-    
     // editing functonanilty
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let edit = UIContextualAction(style: .normal, title: "Edit") {(action, view, completionHandler) in
@@ -534,7 +539,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         return swipe
     }
     
-    
+    // selecion of item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
@@ -566,6 +571,8 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         //go to the view items page info thing
     }
     
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         if (mainView!.record.catgChanged)
         {
@@ -577,6 +584,8 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         updateTheme()
         rfrshTbl()
+        
+        Record.saveRocrd(mainView!.record)
     }
     
     
@@ -618,12 +627,5 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
             viewItemsView.mainColor = mainView!.mianColor
         }
     }
-    
-    @IBAction func hlp(_ sender: Any)
-    {
-        //self.navigationController?.popToRootViewController(animated: false)
-
-    }
-    
     
 }

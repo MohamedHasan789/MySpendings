@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-//setting items class definitation
+//setting items class definitation - for the settings page tableview 
 struct stgItem
 {
     var itmName: String

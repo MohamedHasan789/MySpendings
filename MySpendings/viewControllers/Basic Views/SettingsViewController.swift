@@ -5,6 +5,10 @@
 //  Created by Mohamed on 06/01/2023.
 //
 
+// **PLEASE NOTE** //
+// as that "mainView" is the tabbar controller and will always be present no matter which view the user is in, it will be force unrapwd for the entirity if the application, this is done to nigate the extra "14251" lines of code requiried for each entry of the "mainView!"
+// **PLEASE NOTE** //
+
 import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
@@ -50,11 +54,30 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         stngItems.append(stgItem(itmName: "Theme", itmIcon: UIImage(systemName: "paintpalette")!))
         stngItems.append(stgItem(itmName: "Currancy", itmIcon: UIImage(systemName: "dollarsign.circle")!))
         stngItems.append(stgItem(itmName: "Help", itmIcon: UIImage(systemName: "questionmark.circle")!))
-        stngItems.append(stgItem(itmName: "Demo", itmIcon: UIImage(systemName: "purchased.circle")!))
         
         tblView_Settings.dataSource = self
         tblView_Settings.delegate = self
     }
+    
+    
+    @IBAction func btn_Heart(_ sender: Any)
+    {
+        let alertController = UIAlertController(title: "Rate Us", message: "so 5 star review?", preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let canAction = UIAlertAction(title: "NO", style: .destructive, handler: nil)
+        alertController.addAction(defaultAction)
+        alertController.addAction(canAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    @IBAction func btn_MsgUs(_ sender: Any)
+    {
+        let alertController = UIAlertController(title: "Contact Us", message: "Email 202002789", preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(defaultAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     
     // number of items in table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -81,6 +104,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewWillAppear(_ animated: Bool) {
         updateTheme()
+        
+        Record.saveRocrd(mainView!.record)
     }
     
     

@@ -5,6 +5,10 @@
 //  Created by Mohamed on 06/01/2023.
 //
 
+// **PLEASE NOTE** //
+// as that "mainView" is the tabbar controller and will always be present no matter which view the user is in, it will be force unrapwd for the entirity if the application, this is done to nigate the extra "14251" lines of code requiried for each entry of the "mainView!"
+// **PLEASE NOTE** //
+
 import UIKit
 
 class AddCategoryFormController: UIViewController {

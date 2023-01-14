@@ -5,6 +5,10 @@
 //  Created by Mohamed on 06/01/2023.
 //
 
+// **PLEASE NOTE** //
+// as that "mainView" is the tabbar controller and will always be present no matter which view the user is in, it will be force unrapwd for the entirity if the application, this is done to nigate the extra "14251" lines of code requiried for each entry of the "mainView!"
+// **PLEASE NOTE** //
+
 import UIKit
 
 class HomeViewController: UIViewController {
@@ -78,25 +82,67 @@ class HomeViewController: UIViewController {
     }
     
     
+    // methods to move records - linked to main page
     @IBAction func btn_NextRcrd(_ sender: Any)
     {
-        mainView!.goForward()
+        if let mainView = mainView {
+            mainView.goForward()
+        }
         refreshPage()
     }
     
     @IBAction func btn_PrevRcrd(_ sender: Any)
     {
-        mainView!.goBack()
+        if let mainView = mainView {
+            mainView.goBack()
+        }
         refreshPage()
     }
     
-    
+    // method to get the fav catgs for this record
     func initFavs()
     {
-        if mainView!.record.favs[mainView!.record.curIndex]!.count >= 1
+        // set all items to false first (when updating)
+        fav1 = false
+        fav2 = false
+        fav3 = false
+        fav4 = false
+        fav5 = false
+        fav6 = false
+        
+        view_Fav1.backgroundColor = UIColor.quaternaryLabel
+        view_Fav2.backgroundColor = UIColor.quaternaryLabel
+        view_Fav3.backgroundColor = UIColor.quaternaryLabel
+        view_Fav4.backgroundColor = UIColor.quaternaryLabel
+        view_Fav5.backgroundColor = UIColor.quaternaryLabel
+        view_Fav6.backgroundColor = UIColor.quaternaryLabel
+        
+        icon_Fav1.text = "+"
+        icon_Fav2.text = "+"
+        icon_Fav3.text = "+"
+        icon_Fav4.text = "+"
+        icon_Fav5.text = "+"
+        icon_Fav5.text = "+"
+        
+        btn_Fav1.configuration?.title = "Add"
+        btn_Fav2.configuration?.title = "Add"
+        btn_Fav3.configuration?.title = "Add"
+        btn_Fav4.configuration?.title = "Add"
+        btn_Fav5.configuration?.title = "Add"
+        btn_Fav6.configuration?.title = "Add"
+        
+        wrn_Fav1.isHidden = true
+        wrn_Fav2.isHidden = true
+        wrn_Fav3.isHidden = true
+        wrn_Fav4.isHidden = true
+        wrn_Fav5.isHidden = true
+        wrn_Fav6.isHidden = true
+        
+        
+        if mainView!.record.favs[mainView!.record.currIndex]!.count >= 1
         {
             fav1 = true
-            view_Fav1.backgroundColor = UIColor.white
+            view_Fav1.backgroundColor = mainView!.itemsColor
             icon_Fav1.text = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![0]].icon
             btn_Fav1.configuration?.title = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![0]].name
             
@@ -106,10 +152,10 @@ class HomeViewController: UIViewController {
             }
         }
         
-        if mainView!.record.favs[mainView!.record.curIndex]!.count >= 2
+        if mainView!.record.favs[mainView!.record.currIndex]!.count >= 2
         {
             fav2 = true
-            view_Fav2.backgroundColor = UIColor.white
+            view_Fav2.backgroundColor = mainView!.itemsColor
             icon_Fav2.text = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![1]].icon
             btn_Fav2.configuration?.title = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![1]].name
             
@@ -119,10 +165,10 @@ class HomeViewController: UIViewController {
             }
         }
         
-        if mainView!.record.favs[mainView!.record.curIndex]!.count >= 3
+        if mainView!.record.favs[mainView!.record.currIndex]!.count >= 3
         {
             fav3 = true
-            view_Fav3.backgroundColor = UIColor.white
+            view_Fav3.backgroundColor = mainView!.itemsColor
             icon_Fav3.text = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![2]].icon
             btn_Fav3.configuration?.title = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![2]].name
             
@@ -132,10 +178,10 @@ class HomeViewController: UIViewController {
             }
         }
         
-        if mainView!.record.favs[mainView!.record.curIndex]!.count >= 4
+        if mainView!.record.favs[mainView!.record.currIndex]!.count >= 4
         {
             fav4 = true
-            view_Fav4.backgroundColor = UIColor.white
+            view_Fav4.backgroundColor = mainView!.itemsColor
             icon_Fav4.text = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![3]].icon
             btn_Fav4.configuration?.title = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![3]].name
             
@@ -145,10 +191,10 @@ class HomeViewController: UIViewController {
             }
         }
         
-        if mainView!.record.favs[mainView!.record.curIndex]!.count >= 5
+        if mainView!.record.favs[mainView!.record.currIndex]!.count >= 5
         {
             fav5 = true
-            view_Fav5.backgroundColor = UIColor.white
+            view_Fav5.backgroundColor = mainView!.itemsColor
             icon_Fav5.text = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![4]].icon
             btn_Fav5.configuration?.title = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![4]].name
             
@@ -158,10 +204,10 @@ class HomeViewController: UIViewController {
             }
         }
         
-        if mainView!.record.favs[mainView!.record.curIndex]!.count == 6
+        if mainView!.record.favs[mainView!.record.currIndex]!.count == 6
         {
             fav6 = true
-            view_Fav6.backgroundColor = UIColor.white
+            view_Fav6.backgroundColor = mainView!.itemsColor
             icon_Fav6.text = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![5]].icon
             btn_Fav6.configuration?.title = mainView!.record.records[mainView!.record.currRcrd]![mainView!.record.favs[mainView!.record.currIndex]![5]].name
             
@@ -268,10 +314,10 @@ class HomeViewController: UIViewController {
         }
     }
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "quickItem")
         {
+            //mainView!.record.catgChanged = false
             let itemsView = segue.destination as! ItemsViewController
             itemsView.catgIndex = catgIndex
         }
@@ -333,13 +379,15 @@ class HomeViewController: UIViewController {
         lbl_RcrdTotal.text = "\(totalRcrd!) \(carncRcrd!)"
         lbl_CurrRcrd.text = mainView?.record.currRcrd
         initFavs()
+        updateTheme()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        updateTheme()
-        initFavs()
+        
+        refreshPage()
         
         Record.saveRocrd(mainView!.record)
     }
+    
 }

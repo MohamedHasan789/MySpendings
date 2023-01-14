@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+
+// the main category type, has an opt description and cmprsn methods (for name)
 struct Category: Codable {
     var id = UUID()
     var icon:String
