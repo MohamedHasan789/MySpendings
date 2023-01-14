@@ -242,6 +242,16 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
             
             mainView?.records[mainView!.currRcrd]?[catgIndex!].items.append(newItem)
             
+            if (mainView!.records[mainView!.currRcrd]![catgIndex!].permanentategory)
+            {
+                let catgId = mainView!.records[mainView!.currRcrd]![catgIndex!].id
+                
+                let permindex = mainView!.prmntCatgrs.firstIndex(where: {$0.id == catgId})
+                
+                mainView!.prmntCatgrs.remove(at: permindex!)
+                mainView!.prmntCatgrs.insert(mainView!.records[mainView!.currRcrd]![catgIndex!], at: permindex!)
+            }
+            
             performSegue(withIdentifier: "unwindToItems", sender: nil)
         }
         else
@@ -255,6 +265,16 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
                 self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].amount = amount
                 self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].dateTime = date
                 self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].items[self.itemIndex!].rcptImage = self.itemImage
+                
+                if (self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].permanentategory)
+                {
+                    let catgId = self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].id
+                    
+                    let permindex = self.mainView!.prmntCatgrs.firstIndex(where: {$0.id == catgId})
+                    
+                    self.mainView!.prmntCatgrs.remove(at: permindex!)
+                    self.mainView!.prmntCatgrs.insert(self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!], at: permindex!)
+                }
                 
                 self.performSegue(withIdentifier: "unwindToItems", sender: nil)
             }))

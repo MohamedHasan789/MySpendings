@@ -10,6 +10,7 @@ import UIKit
 class ViewCategoryViewController: UIViewController {
     
     var retrivedCatg: Category?
+    var currancy: String?
     var mainColor: UIColor?
     
     @IBOutlet var view_MainBody: UIView!
@@ -50,7 +51,7 @@ class ViewCategoryViewController: UIViewController {
         
         if let bdgt = retrivedCatg?.budget
         {
-            txt_Budget.text = "\(bdgt)"
+            txt_Budget.text = "\(bdgt) \(currancy!)"
             txt_Budget.backgroundColor = UIColor.quaternaryLabel
         }
         

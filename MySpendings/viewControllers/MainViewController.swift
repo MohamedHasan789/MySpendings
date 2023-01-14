@@ -7,11 +7,10 @@
 
 import UIKit
 
-class MainViewController: UITabBarController {
+class MainViewController: UITabBarController{
     
     // here is the file where most logic happens (calculations and stuffs)
     
-    var viewDemo: Bool = true
     
     var records: [String: [Category]] = [:]
 
@@ -40,30 +39,41 @@ class MainViewController: UITabBarController {
         super.viewDidLoad()
 
         
-        
+        // start a new record if its the first time to be opened
         if rcrdsList.isEmpty
         {
             newRecord()
         }
         
         
-        //some extra additions for testing
-        records["Febray, 2023"] = []
-        rcrdsList.append("Febray, 2023")
+        checkCurRcrd()
         
-        records["March, 2023"] = []
-        rcrdsList.append("March, 2023")
+        setLatstRcrd()
         
-        records["Apr, 2023"] = []
-        rcrdsList.append("Apr, 2023")
-        //currRcrd = getCurrRecordName()
-        //currIndex = rcrdsList.endIndex - 1
         
+        // please note that the "reset catgory" was not implemented yet, for now that feture is not implemnted
         checkList()
         
         
     }
     
+    
+    // a function to see if the latest record availbe is not the currnt month
+    func checkCurRcrd()
+    {
+        if (rcrdsList.last != getCurrRecordName())
+        {
+            newRecord()
+        }
+    }
+    
+    
+    // sets the currant open record to be of the crnt month
+    func setLatstRcrd()
+    {
+        currRcrd = getCurrRecordName()
+        currIndex = rcrdsList.endIndex - 1
+    }
     
     func getCurrRecordName() -> String
     {

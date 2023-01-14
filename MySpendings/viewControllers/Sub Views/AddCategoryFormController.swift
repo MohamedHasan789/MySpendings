@@ -160,7 +160,7 @@ class AddCategoryFormController: UIViewController {
             txt_CatgBudget.backgroundColor = UIColor.quaternaryLabel
             if (stpr_Budget.value == 0)
             {
-                txt_CatgBudget.text = "BHD"
+                txt_CatgBudget.text = mainView!.currncy
             }
             else
             {
@@ -205,7 +205,7 @@ class AddCategoryFormController: UIViewController {
 
     @IBAction func txt_CatgBudgetStart(_ sender: Any)
     {
-        if txt_CatgBudget.text == "BHD" || txt_CatgBudget.text == "0.0"
+        if txt_CatgBudget.text == mainView!.currncy || txt_CatgBudget.text == "0.0"
         {
             txt_CatgBudget.text = ""
         }
@@ -290,7 +290,7 @@ class AddCategoryFormController: UIViewController {
             resetEvery = Int(stpr_Rst.value)
         }
         
-        if (stch_Budget.isOn && (budget == 0.0 || txt_CatgBudget.text == "BHD"))
+        if (stch_Budget.isOn && (budget == 0.0 || txt_CatgBudget.text == mainView!.currncy))
         {
             let alertController = UIAlertController(title: "Invalid Budget", message: "Please input a valid Budget", preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -327,6 +327,25 @@ class AddCategoryFormController: UIViewController {
                     self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].permanentategory = permanentCategory
                     self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].alowOverBudgt = alowOverBudgt
                     
+                    if (self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].permanentategory)
+                    {
+                        let catgId = self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!].id
+                        
+                        let permindex = self.mainView!.prmntCatgrs.firstIndex(where: {$0.id == catgId})
+                        
+                        if let permindex = permindex
+                        {
+                            self.mainView!.prmntCatgrs.remove(at: permindex)
+                            self.mainView!.prmntCatgrs.insert(self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!], at: permindex)
+                        }
+                        else
+                        {
+                            self.mainView!.prmntCatgrs.append(self.mainView!.records[self.mainView!.currRcrd]![self.catgIndex!])
+                        }
+                        
+                        
+                        
+                    }
                     
                     self.performSegue(withIdentifier: "unwindToCategories", sender: nil)
                 }))

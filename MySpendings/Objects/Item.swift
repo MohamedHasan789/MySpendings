@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class Item: Equatable
+struct Item: Equatable, Comparable
 {
     let id = UUID()
     var icon: String
@@ -19,18 +19,7 @@ class Item: Equatable
     var dateTime: Date
     var rcptImage: UIImage?
     
-    init(icon: String, name: String, isDeduct: Bool, price: Double, amount: Int, dateTime: Date, rcptImage: UIImage?)
-    {
-        self.icon = icon
-        self.name = name
-        self.isDeduct = isDeduct
-        self.price = price
-        self.amount = amount
-        self.dateTime = dateTime
-        self.rcptImage = rcptImage
-    }
-    
-    //reciept part
+
     
     func getPrice() -> Double
     {
@@ -43,16 +32,20 @@ class Item: Equatable
     }
     
     
-    // might not need
-    static let dueDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
-        return formatter
-    }()
+    static func ==(lhs: Item, rhs: Item) -> Bool
+    {
+        return lhs.id == rhs.id
+    }
     
+    static func < (lhs: Item, rhs: Item) -> Bool
+    {
+        return lhs.name < rhs.name
+    }
+    
+    static func > (lhs: Item, rhs: Item) -> Bool
+    {
+        return lhs.name > rhs.name
+    }
 }
 
-func == (lhs: Item, rhs: Item) -> Bool {
-    return lhs.id == rhs.id
-}
+

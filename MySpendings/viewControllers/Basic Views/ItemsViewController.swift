@@ -38,7 +38,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
      
     
     
-    var srt_bDate: Bool = true
+    var srt_bDate: Bool = false
     var srt_bAlph: Bool = false
     var srt_bPrc: Bool = false
     var srt_bNoi: Bool = false
@@ -105,7 +105,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
                         if (self.searchController.isActive)
                         {
                             let obj = self.filterdItems.remove(at: indexPath.row);
-                            let indx = self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.firstIndex(where: {$0 === obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
+                            let indx = self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.firstIndex(where: {$0 == obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
                             self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indx!);
                             self.tblView_Items.deleteRows(at: [indexPath], with: .fade);
                         }
@@ -114,7 +114,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
                             self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indexPath.row)
                             self.tblView_Items.deleteRows(at: [indexPath], with: .fade);
                         }
-                        self.tblView_Items.reloadData()
+                        
                         
                     };
                     self.deleteEnable = false
@@ -123,6 +123,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
                     self.tblView_Items.reloadData()
                 
                 }))
+                self.tblView_Items.reloadData()
                 alert.addAction(UIAlertAction(title: "Cancle", style: .cancel, handler: {action in
                     self.deleteEnable = false;
                     self.tblView_Items.isEditing = false;
@@ -290,27 +291,27 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func rfrshTbl()
     {
-        // sorting function (actully sort the list)
+        // sorting function (actully sort the list) - edits the main lists to nigate any idiotic behavior when accsesing index
         if (srt_bDate)
         {
             if(srt_Asc)
             {
-                
+                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.dateTime < $1.dateTime}))!
             }
             else if (srt_Desc)
             {
-                
+                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.dateTime > $1.dateTime}))!
             }
         }
         if (srt_bAlph)
         {
             if(srt_Asc)
             {
-                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.name < $1.name}))!
+                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: <))!
             }
             else if (srt_Desc)
             {
-                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.name > $1.name}))!
+                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: >))!
             }
         }
         
@@ -318,11 +319,11 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             if(srt_Asc)
             {
-                
+                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.getPrice() < $1.getPrice()}))!
             }
             else if (srt_Desc)
             {
-                
+                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.getPrice() > $1.getPrice()}))!
             }
         }
         
@@ -330,11 +331,11 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             if(srt_Asc)
             {
-                
+                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.amount < $1.amount}))!
             }
             else if (srt_Desc)
             {
-                
+                mainView?.records[mainView!.currRcrd]![catgIndex!].items = (mainView?.records[mainView!.currRcrd]![catgIndex!].items.sorted(by: {$0.amount > $1.amount}))!
             }
         }
         
@@ -444,8 +445,19 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCard") as! ItemTableViewCell
         
         cell.lbl_Name.text = itemsList![indexPath.row].name
-        //cell.img_ItemIcon.image = itemsList[indexPath.row].itemImage
-        cell.lbl_Price.text = "\(itemsList![indexPath.row].getPrice())"
+        
+        if (!itemsList![indexPath.row].isDeduct)
+        {
+            cell.img_ItemIcon.image = UIImage(systemName: "cart.badge.plus")
+            cell.img_ItemIcon.tintColor = UIColor.systemGreen
+        }
+        else
+        {
+            cell.img_ItemIcon.image = UIImage(systemName: "cart.badge.minus")
+            cell.img_ItemIcon.tintColor = UIColor.systemRed
+        }
+        
+        cell.lbl_Price.text = "\(itemsList![indexPath.row].getPrice()) \(mainView!.currncy)"
         cell.view_CellBody.backgroundColor = mainView!.itemsColor
         
         if editEnable
@@ -476,7 +488,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
                 if (self.searchController.isActive)
                 {
                     let obj = self.filterdItems.remove(at: indexPath.row);
-                    let indx = self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.firstIndex(where: {$0 === obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
+                    let indx = self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.firstIndex(where: {$0 == obj}) // fix with opt not ! -- also revert back to the normal list if not avalible
                     self.mainView?.records[self.mainView!.currRcrd]?[self.catgIndex!].items.remove(at: indx!);
                     self.tblView_Items.deleteRows(at: [indexPath], with: .fade);
                     self.tblView_Items.reloadData()
@@ -564,6 +576,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
             tblView_Items.reloadData()
         }
         updateTheme()
+        rfrshTbl()
     }
     
     
@@ -579,6 +592,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         tblView_Items.reloadData()
+        rfrshTbl()
     }
     
     

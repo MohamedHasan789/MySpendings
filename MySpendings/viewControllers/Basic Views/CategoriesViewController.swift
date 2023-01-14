@@ -27,7 +27,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     var filterdCats: [Category] = []
     
-    var srt_bAlph: Bool = true
+    var srt_bAlph: Bool = false
     var srt_bPrc: Bool = false
     var srt_bNoi: Bool = false
     
@@ -161,11 +161,11 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         {
             if(srt_Asc)
             {
-                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: {$0.name < $1.name}))!
+                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: <))!
             }
             else if (srt_Desc)
             {
-                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: {$0.name > $1.name}))!
+                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: >))!
             }
         }
         
@@ -173,11 +173,11 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         {
             if(srt_Asc)
             {
-                
+                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: {$0.getTotal() < $1.getTotal()}))!
             }
             else if (srt_Desc)
             {
-                
+                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: {$0.getTotal() > $1.getTotal()}))!
             }
         }
         
@@ -185,11 +185,11 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         {
             if(srt_Asc)
             {
-                
+                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: {$0.items.count < $1.items.count}))!
             }
             else if (srt_Desc)
             {
-                
+                mainView?.records[mainView!.currRcrd]! = (mainView?.records[mainView!.currRcrd]!.sorted(by: {$0.items.count > $1.items.count}))!
             }
         }
         
@@ -303,7 +303,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         cell.lbl_Name.text = categoriesLsit![indexPath.row].name.capitalized
         cell.img_CatIcon.text = categoriesLsit![indexPath.row].icon
         cell.lbl_Items.text = "Items: \(categoriesLsit![indexPath.row].items.count)"
-        cell.lbl_Total.text = "Total: \(categoriesLsit![indexPath.row].getTotal())"
+        cell.lbl_Total.text = "Total: \(categoriesLsit![indexPath.row].getTotal()) \(mainView!.currncy)"
              
         cell.btn_Info.addTarget(self, action: #selector(infoCat(sender:)), for: .touchUpInside)
         cell.btn_Edit.addTarget(self, action: #selector(editCat(sender:)), for: .touchUpInside)
@@ -442,6 +442,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         mainView!.catgChanged = false //reset if cat has been chnaged
         tblView_Categories.reloadData()
         updateTheme()
+        rfrshTbl()
     }
     
     // footer for table (easy add button) - deprectaed
@@ -465,10 +466,10 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     @IBAction func unwindToCategories(_ segue: UIStoryboardSegue) {
-        //categories = mainView!.currCatgrs
+
         tblView_Categories.reloadData()
-        
-        //print((mainView?.currCatgrs[0])! as Category)
+        rfrshTbl()
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -487,6 +488,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         {
             let viewCatgView = segue.destination as! ViewCategoryViewController
             viewCatgView.retrivedCatg = category
+            viewCatgView.currancy = mainView!.currncy
             viewCatgView.mainColor = mainView!.mianColor
         }
     }
