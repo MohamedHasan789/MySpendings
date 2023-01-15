@@ -323,8 +323,11 @@ class HomeViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "quickItem")
         {
-            mainView!.record.catgChanged = false
-            tmpCatDisable = true
+            if (mainView!.record.catgChanged)
+            {
+                mainView!.record.catgChanged = false
+                tmpCatDisable = true
+            }
             let itemsView = segue.destination as! ItemsViewController
             itemsView.catgIndex = catgIndex
         }
