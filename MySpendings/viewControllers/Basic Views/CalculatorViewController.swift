@@ -234,7 +234,7 @@ class CalculatorViewController: UIViewController {
     
     
     
-    // savings calc functions
+    // savings calc functions (edits of boxes/ steppers)
     @IBAction func txt_AmntSavedEdit(_ sender: Any)
     {
         if let text = txt_AmntSave.text, let value = Double(text)
@@ -408,7 +408,7 @@ class CalculatorViewController: UIViewController {
     }
     
     
-    
+    // function to display the period time
     func calcSaving()
     {
         lbl_Period.text = "inf Month"
@@ -445,8 +445,8 @@ class CalculatorViewController: UIViewController {
     }
     
     
-    
-    func pageLook() // to have the fancy look of the application
+    // to have the fancy look of the application
+    func pageLook()
     {
         view_MainBody.layer.cornerRadius = 45
         view_MainBody.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
@@ -459,11 +459,13 @@ class CalculatorViewController: UIViewController {
         updateTheme()
     }
     
+    // update the colors of the page
     func updateTheme()
     {
         view_MainBody.backgroundColor = mainView!.mianColor
     }
     
+    // call the refresh methods whenever the page is loaded
     override func viewWillAppear(_ animated: Bool) {
         updateTheme()
         

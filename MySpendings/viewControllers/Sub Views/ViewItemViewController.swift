@@ -36,11 +36,13 @@ class ViewItemViewController: UIViewController, UIScrollViewDelegate {
         updateTheme()
     }
     
+    // update the colors of the page
     func updateTheme()
     {
         view_MainBody.backgroundColor = mainColor!
     }
     
+    // get the proprties of the object and populate the view
     func getItem()
     {
         lbl_Name.text = retrivedItem!.name
@@ -56,15 +58,19 @@ class ViewItemViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    // zzoming functions
+    // setup scrollview sizing
     func setUpScrollView()
     {
         scrollView.delegate = self
     }
     
+    // allow zooming for imageview
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imgView
     }
     
+    // chnage the zoom values based on scroll value
     func updateZoomFor(size: CGSize)
     {
         let widthScale = size.width / imgView.bounds.width
@@ -74,6 +80,7 @@ class ViewItemViewController: UIViewController, UIScrollViewDelegate {
         scrollView.zoomScale = scale
     }
     
+    // call the refresh methods whenever the page is loaded
     override func viewWillAppear(_ animated: Bool) {
         updateZoomFor(size: view.bounds.size)
     }

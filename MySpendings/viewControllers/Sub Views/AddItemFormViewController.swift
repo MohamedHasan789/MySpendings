@@ -63,11 +63,13 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
         updateTheme()
     }
     
+    // update the colors of the page
     func updateTheme()
     {
         view_MainBody.backgroundColor = mainView!.mianColor
     }
     
+    // get the proprties of the object and populate the view if edit
     func initItem()
     {
         let retrivedItem = mainView!.record.records[mainView!.record.currRcrd]![catgIndex!].items[itemIndex!]
@@ -95,7 +97,7 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
         }
     }
     
-    
+    // functions for inputs (edit, done edditing of boxes, stepers)
     @IBAction func txt_ItemPriceEdit(_ sender: Any)
     {
         if let text = txt_ItemPrice.text, let value = Double(text)
@@ -123,7 +125,7 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     
-    
+    // functions for inputs (edit, done edditing of boxes, stepers)
     @IBAction func txt_ItemAmountEdit(_ sender: Any)
     {
         if let text = txt_ItemAmount.text, let value = Double(text)
@@ -147,7 +149,7 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     
-    
+    // functions for inputs (edit, done edditing of boxes, stepers)
     @IBAction func stpr_Price(_ sender: Any)
     {
         txt_ItemPrice.text = "\(stpr_Price.value)"
@@ -159,7 +161,7 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     
-    
+    // image selection functions
     @IBAction func btn_ImageSelect(_ sender: Any)
     {
         let imagePicker = UIImagePickerController()
@@ -189,6 +191,7 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
         present(alertController, animated: true, completion: nil)
     }
     
+    // display image picker and retrive the image
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
         guard let image = info[.originalImage] as? UIImage else { return }
@@ -201,11 +204,12 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
         }
     }
     
+    // cancle image view
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
     
-    
+    // add the item to the database (edit if edit), verification
     @IBAction func btn_AddItem(_ sender: Any)
     {
         guard let icon = txt_ItemIcon.text,  txt_ItemIcon.text != "" else {
@@ -298,7 +302,7 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
     
     
     
-    
+    // call the refresh methods whenever the page is loaded
     override func viewWillAppear(_ animated: Bool) {
         if (mainView!.record.catgChanged)
         {
@@ -306,6 +310,8 @@ class AddItemFormViewController: UIViewController, UIImagePickerControllerDelega
         }
     }
     
+    
+    // functions to chnage scroll when keyboard is on
     func keyboardLsnr(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
 

@@ -204,9 +204,6 @@
 				D9AE7182296858F900BDE7DD /* ItemsViewController.swift */,
 				D9AE717B2968503100BDE7DD /* CalculatorViewController.swift */,
 				D9AE717D296850AE00BDE7DD /* SettingsViewController.swift */,
-				D9B333B229719278005381D7 /* HelpViewController.swift */,
-				D9B333B62971BAB0005381D7 /* ThemeViewController.swift */,
-				D9B333B82971C8F8005381D7 /* CurrancyViewController.swift */,
 			);
 			path = "Basic Views";
 			sourceTree = "<group>";
@@ -214,6 +211,9 @@
 		D9AE7181296858A000BDE7DD /* Sub Views */ = {
 			isa = PBXGroup;
 			children = (
+				D9B333B229719278005381D7 /* HelpViewController.swift */,
+				D9B333B62971BAB0005381D7 /* ThemeViewController.swift */,
+				D9B333B82971C8F8005381D7 /* CurrancyViewController.swift */,
 				D9B333AC2971796A005381D7 /* ViewCategoryViewController.swift */,
 				D9B333AA2970F0C8005381D7 /* ViewItemViewController.swift */,
 				D9AE718429685B2D00BDE7DD /* AddCategoryFormController.swift */,

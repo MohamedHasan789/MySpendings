@@ -30,6 +30,7 @@ class CurrancyViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         poupPicker()
     }
     
+    
     func poupPicker()
     {
         pkr_CurncSelect.delegate = self
@@ -38,7 +39,8 @@ class CurrancyViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         pkr_CurncSelect.selectRow(mainView!.record.currncyIndex, inComponent: 0, animated: true)
     }
     
-    func pageLook() // to have the fancy look of the application
+    // to have the fancy look of the application
+    func pageLook()
     {
         view_MainBody.layer.cornerRadius = 45
         view_MainBody.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
@@ -51,11 +53,13 @@ class CurrancyViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         updateTheme()
     }
     
+    // update the colors of the page
     func updateTheme()
     {
         view_MainBody.backgroundColor = mainView!.mianColor
     }
     
+    // call the refresh methods whenever the page is loaded
     override func viewWillAppear(_ animated: Bool)
     {
         updateTheme()
@@ -63,19 +67,22 @@ class CurrancyViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         updateTheme()
     }
     
-    
+    // number of comp in picker
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
+    // number of items in pickrt
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return currancies.count
     }
     
+    // title for each row (get from list)
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return currancies[row]
     }
     
+    // get the selected item in the picker
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         mainView!.record.currncy = currancies[row]
         mainView!.record.currncyIndex = row

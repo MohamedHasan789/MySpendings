@@ -37,7 +37,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     var editEnable: Bool = false
     var deleteEnable: Bool = false
     
-    
+    // search box items
     var filterdItems: [Item] = []
     
      
@@ -85,7 +85,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     
-    
+    // add buton action (go to add page)
     @IBAction func btn_Add(_ sender: Any)
     {
         performSegue(withIdentifier: "addItem", sender: nil)
@@ -354,6 +354,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     // searching functions
     // implemented from https://www.youtube.com/watch?v=DAHG0orOxKo
+    // create controller
     func initSearchController()
     {
         searchController.loadViewIfNeeded()
@@ -368,6 +369,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         searchController.searchBar.delegate = self
     }
     
+    // update filter list
     func updateSearchResults(for searchController: UISearchController)
     {
         let searchBar = searchController.searchBar
@@ -376,6 +378,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         filterItems(searchText: searchText)
     }
     
+    // method to create filtiring
     func filterItems(searchText: String)
     {
         filterdItems = (mainView?.record.records[mainView!.record.currRcrd]?[catgIndex!].items.filter {
@@ -403,8 +406,8 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         tblView_Items.delegate = self
     }
     
-    
-    func pageLook() // to have the fancy look of the application - global - might be chnaged - for the theme options
+    // to have the fancy look of the application - global - might be chnaged - for the theme options
+    func pageLook()
     {
         view_MainBody.layer.cornerRadius = 45
         view_MainBody.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
@@ -422,13 +425,14 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         updateTheme()
     }
     
+    // update the colors of the page
     func updateTheme()
     {
         view_MainBody.backgroundColor = mainView!.mianColor
     }
     
     
-    
+    // number of items in table - diff if search is on
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (searchController.isActive)
         {
@@ -441,6 +445,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
+    // display actual cells and their info
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var itemsList = mainView?.record.records[mainView!.record.currRcrd]?[catgIndex!].items
@@ -479,6 +484,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         return cell
     }
     
+    // height of the row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
@@ -515,6 +521,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
+    // edit style types - delete
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
@@ -572,7 +579,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     
-    
+    // call the refresh methods whenever the page is loaded
     override func viewWillAppear(_ animated: Bool) {
         if (mainView!.record.catgChanged)
         {
@@ -588,7 +595,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         Record.saveRocrd(mainView!.record)
     }
     
-    
+    // function to return back to this page after add/edit
     @IBAction func unwindToItems(_ segue: UIStoryboardSegue)
     {
         
@@ -604,7 +611,7 @@ class ItemsViewController: UIViewController, UITableViewDataSource, UITableViewD
         rfrshTbl()
     }
     
-    
+    // function to send item index to nex view (add/edit), or an item object to view page
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "addItem")
         {

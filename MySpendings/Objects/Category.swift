@@ -21,8 +21,10 @@ struct Category: Codable {
     var permanentategory: Bool
     var alowOverBudgt: Bool
     
+    // the list of items for this category
     var items: [Item]
     
+    // function to get the total price of all items in the category
     func getTotal() -> Double
     {
         var sum: Double = 0.0
@@ -32,6 +34,7 @@ struct Category: Codable {
         return sum
     }
     
+    // compar functions (sorting, searching)
     static func == (lhs: Category, rhs: Category) -> Bool {
         return lhs.id == rhs.id
     }

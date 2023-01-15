@@ -46,6 +46,7 @@ class HelpViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     // implemented from https://www.youtube.com/watch?v=DAHG0orOxKo
+    // create controller
     func initSearchController()
     {
         searchController.loadViewIfNeeded()
@@ -60,7 +61,7 @@ class HelpViewController: UIViewController, UITableViewDataSource, UITableViewDe
         searchController.searchBar.delegate = self
     }
     
-    
+    // create controller
     func updateSearchResults(for searchController: UISearchController)
     {
         let searchBar = searchController.searchBar
@@ -69,7 +70,7 @@ class HelpViewController: UIViewController, UITableViewDataSource, UITableViewDe
         filterHelps(searchText: searchText)
     }
     
-    
+    // method to create filtiring
     func filterHelps(searchText: String)
     {
         filterdHelps = hlpItems.filter
@@ -92,7 +93,7 @@ class HelpViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     
-    
+    // function to declare tableview datasources
     func poupHelp()
     {
         hlpItems.append(hlpItem(itmTitle: "Adding a Category", itmBody: "Click on the + sign in the categories page to be able to add new categories to the application. You can select permanent to automatically add the category every month. each category can have a budget or can even be reset for a spisific amount of months if you selcted it as a permanent category"))
@@ -112,7 +113,8 @@ class HelpViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tblView_Help.delegate = self
     }
     
-    func pageLook() // to have the fancy look of the application
+    // to have the fancy look of the application
+    func pageLook()
     {
         view_MainBody.layer.cornerRadius = 45
         view_MainBody.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
@@ -124,12 +126,14 @@ class HelpViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         updateTheme()
     }
-
+    
+    // update the colors of the page
     func updateTheme()
     {
         view_MainBody.backgroundColor = mainView!.mianColor
     }
     
+    // number of items in table - diff if search is on
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (searchController.isActive)
         {
@@ -138,6 +142,7 @@ class HelpViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return hlpItems.count
     }
     
+    // display actual cells and their info
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var helpList = hlpItems
@@ -165,6 +170,7 @@ class HelpViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return cell
     }
     
+    // height of the row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if (selectedRow == indexPath)
         {
@@ -176,6 +182,7 @@ class HelpViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    // selecion of item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         prevRow = selectedRow
@@ -188,6 +195,7 @@ class HelpViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
+    // call the refresh methods whenever the page is loaded
     override func viewWillAppear(_ animated: Bool) {
         updateTheme()
         

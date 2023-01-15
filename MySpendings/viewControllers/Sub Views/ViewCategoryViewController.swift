@@ -9,7 +9,7 @@ import UIKit
 
 class ViewCategoryViewController: UIViewController {
     
-    var retrivedCatg: Category?
+    var retrivedCatg: Category? // from prev page (object)
     var currancy: String?
     var mainColor: UIColor?
     
@@ -31,11 +31,13 @@ class ViewCategoryViewController: UIViewController {
         updateTheme()
     }
     
+    // update the colors of the page
     func updateTheme()
     {
         view_MainBody.backgroundColor = mainColor!
     }
     
+    // get the proprties of the object and populate the view
     func getCatgeory()
     {
         

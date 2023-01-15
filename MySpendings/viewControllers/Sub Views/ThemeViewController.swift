@@ -36,8 +36,8 @@ class ThemeViewController: UIViewController, UIColorPickerViewControllerDelegate
     }
     
     
-    
-    func pageLook() // to have the fancy look of the application
+    // to have the fancy look of the application
+    func pageLook()
     {
         view_MainBody.layer.cornerRadius = 45
         view_MainBody.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
@@ -50,6 +50,7 @@ class ThemeViewController: UIViewController, UIColorPickerViewControllerDelegate
         updateTheme()
     }
     
+    // update the colors of the page
     func updateTheme()
     {
         btn_MainColor.tintColor = mainView!.mianColor
@@ -61,6 +62,7 @@ class ThemeViewController: UIViewController, UIColorPickerViewControllerDelegate
         view_MainBody.backgroundColor = mainView!.mianColor
     }
     
+    // color button actions
     @IBAction func btn_MainColor(_ sender: Any)
     {
         mainColorEdit = true
@@ -77,6 +79,7 @@ class ThemeViewController: UIViewController, UIColorPickerViewControllerDelegate
         self.present(picker, animated: true, completion: {})
     }
     
+    // color button actions
     @IBAction func btn_ScndColor(_ sender: Any)
     {
         scndColorEdit = true
@@ -88,6 +91,7 @@ class ThemeViewController: UIViewController, UIColorPickerViewControllerDelegate
         self.present(picker, animated: true, completion: nil)
     }
     
+    // color button actions
     @IBAction func btn_ItmsColor(_ sender: Any)
     {
         itmColorEdit = true
@@ -99,7 +103,7 @@ class ThemeViewController: UIViewController, UIColorPickerViewControllerDelegate
         self.present(picker, animated: true, completion: nil)
     }
     
-    
+    // reset all buttons
     @IBAction func btn_ResetAll(_ sender: Any)
     {
         mainView!.mianColor = UIColor(red: 0.891, green: 0.999, blue: 0.856, alpha: 1.0)
@@ -110,7 +114,7 @@ class ThemeViewController: UIViewController, UIColorPickerViewControllerDelegate
     }
     
     
-    
+    // preform color change based on button selection
     func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
         if mainColorEdit
         {
@@ -131,6 +135,7 @@ class ThemeViewController: UIViewController, UIColorPickerViewControllerDelegate
         updateTheme()
     }
     
+    // call the refresh methods whenever the page is loaded
     override func viewWillAppear(_ animated: Bool) {
         
         updateTheme()

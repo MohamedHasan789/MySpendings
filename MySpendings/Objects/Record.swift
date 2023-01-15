@@ -70,6 +70,7 @@ struct Record: Codable
         return try? propertyListDecoder.decode(Record.self, from: codedRecord)
     }
     
+    // sample data entries
     static func loadSampleData() -> Record {
         let item1 = Item(icon: "🫒", name: "olives", isDeduct: true, price: 0.4, amount: 4, dateTime: Date())
         let item2 = Item(icon: "🍔", name: "micides", isDeduct: true, price: 2.4, amount: 1, dateTime: Date(), rcptImage: UIImage(named: "raseed")?.jpegData(compressionQuality: 0.9))

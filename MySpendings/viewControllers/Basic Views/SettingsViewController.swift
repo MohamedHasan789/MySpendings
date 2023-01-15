@@ -31,7 +31,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
-    func pageLook() // to have the fancy look of the application
+    // to have the fancy look of the application
+    func pageLook()
     {
         view_MainBody.layer.cornerRadius = 45
         view_MainBody.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
@@ -44,11 +45,13 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         updateTheme()
     }
     
+    // update the colors of the page
     func updateTheme()
     {
         view_MainBody.backgroundColor = mainView!.mianColor
     }
     
+    // function to declare tableview datasources
     func poupSettings()
     {
         stngItems.append(stgItem(itmName: "Theme", itmIcon: UIImage(systemName: "paintpalette")!))
@@ -59,7 +62,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         tblView_Settings.delegate = self
     }
     
-    
+    // rate and msg btns actions
     @IBAction func btn_Heart(_ sender: Any)
     {
         let alertController = UIAlertController(title: "Rate Us", message: "so 5 star review?", preferredStyle: .alert)
@@ -102,11 +105,10 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         performSegue(withIdentifier: stngItems[indexPath.row].itmName, sender: self)
     }
     
+    // call the refresh methods whenever the page is loaded
     override func viewWillAppear(_ animated: Bool) {
         updateTheme()
         
         Record.saveRocrd(mainView!.record)
     }
-    
-    
 }

@@ -204,7 +204,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         tblView_Categories.reloadData()
     }
     
-    
+    // function to declare tableview datasources
     func poupCategories()
     {
         
@@ -226,7 +226,8 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         
         updateTheme()
     }
-
+    
+    // update the colors of the page
     func updateTheme()
     {
         view_MainBody.backgroundColor = mainView!.mianColor
@@ -234,6 +235,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     
     // searching functions
     // implemented from https://www.youtube.com/watch?v=DAHG0orOxKo
+    // create controller
     func initSearchController()
     {
         searchController.loadViewIfNeeded()
@@ -248,6 +250,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         searchController.searchBar.delegate = self
     }
     
+    // create controller
     func updateSearchResults(for searchController: UISearchController)
     {
         let searchBar = searchController.searchBar
@@ -256,6 +259,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         filterCats(searchText: searchText)
     }
     
+    // method to create filtiring
     func filterCats(searchText: String)
     {
         filterdCats = (mainView?.record.records[mainView!.record.currRcrd]?.filter
@@ -277,7 +281,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     
-    // number of items in table
+    // number of items in table - diff if search is on
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (searchController.isActive)
         {
@@ -286,7 +290,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         return ((mainView?.record.records[mainView!.record.currRcrd]?.count) ?? 0) + 1 //for the add button
     }
     
-    // display actual cells and their info
+    // display actual cells and their info - diff cell if its the last row (add button)
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         var categoriesLsit = mainView?.record.records[mainView!.record.currRcrd]
@@ -323,6 +327,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         
     }
     
+    // height of the row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
@@ -389,6 +394,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
+    // edit style types - delete
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         if (indexPath.row == mainView?.record.records[mainView!.record.currRcrd]?.count)
         {
@@ -455,7 +461,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
          
     }
     
-    
+    // call the refresh methods whenever the page is loaded
     override func viewWillAppear(_ animated: Bool) {
         mainView!.record.catgChanged = false //reset if cat has been chnaged
         tblView_Categories.reloadData()
@@ -465,7 +471,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
         Record.saveRocrd(mainView!.record)
     }
     
-    
+    // function to return back to this page after add/edit
     @IBAction func unwindToCategories(_ segue: UIStoryboardSegue) {
 
         tblView_Categories.reloadData()
@@ -473,6 +479,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource, UITable
 
     }
     
+    // function to send category index to nex view (add/edit), or catgory object to view page
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showCategoryItems")
         {

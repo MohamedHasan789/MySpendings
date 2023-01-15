@@ -14,7 +14,8 @@ import UIKit
 class HomeViewController: UIViewController {
     
     var mainView: MainViewController?
-
+    
+    // oulets of the view
     @IBOutlet weak var view_HomeTop: UIView!
     @IBOutlet weak var view_HomeBody: UIView!
     
@@ -56,7 +57,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var btn_Fav6: UIButton!
     @IBOutlet weak var wrn_Fav6: UIView!
     
-    
+    // booleans (to check if there is a fav for each button - extra)
     var fav1 = false
     var fav2 = false
     var fav3 = false
@@ -64,7 +65,10 @@ class HomeViewController: UIViewController {
     var fav5 = false
     var fav6 = false
     
+    // to send to the view items view (quick acc - extra)
     var catgIndex: Int?
+    
+    var tmpCatDisable = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +86,7 @@ class HomeViewController: UIViewController {
     }
     
     
-    // methods to move records - linked to main page
+    // methods to move records (prev/next month) - linked to main page
     @IBAction func btn_NextRcrd(_ sender: Any)
     {
         if let mainView = mainView {
@@ -218,6 +222,7 @@ class HomeViewController: UIViewController {
         }
     }
     
+    // btn actions for each fav menu - extra
     @IBAction func btn_1Fav(_ sender: Any)
     {
         if fav1
@@ -314,18 +319,20 @@ class HomeViewController: UIViewController {
         }
     }
     
+    // get the index of the catgory before doing segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "quickItem")
         {
-            //mainView!.record.catgChanged = false
+            mainView!.record.catgChanged = false
+            tmpCatDisable = true
             let itemsView = segue.destination as! ItemsViewController
             itemsView.catgIndex = catgIndex
         }
     }
     
     
-    
-    func pageLook() // to have the fancy look of the application
+    // to have the fancy look of the application
+    func pageLook()
     {
         view_HomeTop.layer.cornerRadius = 45
         view_HomeTop.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
@@ -345,13 +352,14 @@ class HomeViewController: UIViewController {
         updateTheme()
     }
 
-    
+    // update the colors of the page
     func updateTheme()
     {
         view_HomeBody.backgroundColor = mainView!.mianColor
         view_HomeTop.backgroundColor = mainView!.scndColor
     }
     
+    // refresh the data (move btns/ amount/ theme)
     func refreshPage()
     {
         mainView = tabBarController as? MainViewController
@@ -383,9 +391,16 @@ class HomeViewController: UIViewController {
         
     }
     
+    // call the refresh methods whenever the page is loaded
     override func viewWillAppear(_ animated: Bool) {
         
         refreshPage()
+        
+        if tmpCatDisable
+        {
+            mainView!.record.catgChanged = true
+            tmpCatDisable = false
+        }
         
         Record.saveRocrd(mainView!.record)
     }

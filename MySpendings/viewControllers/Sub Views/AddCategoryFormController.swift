@@ -35,7 +35,7 @@ class AddCategoryFormController: UIViewController {
     @IBOutlet weak var btn_Add: UIBarButtonItem!
     
     
-    var catgIndex: Int?
+    var catgIndex: Int? // from prev page - to know where to save information to
     
     var catgEdit: Bool = false
     
@@ -62,11 +62,13 @@ class AddCategoryFormController: UIViewController {
         updateTheme()
     }
     
+    // update the colors of the page
     func updateTheme()
     {
         view_MainBody.backgroundColor = mainView!.mianColor
     }
     
+    // get the proprties of the object and populate the view if edit
     func initCatg()
     {
         let retrivedCatg = mainView!.record.records[mainView!.record.currRcrd]![catgIndex!]
@@ -100,7 +102,7 @@ class AddCategoryFormController: UIViewController {
         }
     }
     
-    
+    // functions for inputs (edit, done edditing of boxes, stepers)
     @IBAction func stch_Budget(_ sender: Any)
     {
         if(stch_Budget.isOn)
@@ -156,7 +158,7 @@ class AddCategoryFormController: UIViewController {
     }
     
     
-
+    // functions for inputs (edit, done edditing of boxes, stepers)
     @IBAction func txt_CatgBudgetStart(_ sender: Any)
     {
         if txt_CatgBudget.text == mainView!.record.currncy || txt_CatgBudget.text == "0.0"
@@ -201,7 +203,7 @@ class AddCategoryFormController: UIViewController {
     }
     
     
-    
+    // add the item to the database (edit if edit), verification
     @IBAction func btn_AddCategory(_ sender: Any)
     {
         guard let icon = txt_CatgIcon.text,  txt_CatgIcon.text != "" else {
@@ -294,7 +296,7 @@ class AddCategoryFormController: UIViewController {
         }
     }
     
-    
+    // call the refresh methods whenever the page is loaded
     override func viewWillAppear(_ animated: Bool) {
         if (mainView!.record.catgChanged)
         {
@@ -305,6 +307,7 @@ class AddCategoryFormController: UIViewController {
     
     // known issue for toggle switch https://developer.apple.com/forums/thread/132035
     
+    // functions to chnage scroll when keyboard is on
     func keyboardLsnr(){
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
 

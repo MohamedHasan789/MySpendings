@@ -21,7 +21,7 @@ struct Item: Equatable, Comparable, Codable
     var rcptImage: Data?
     
 
-    
+    // function to get the total price of item (amount*price)
     func getPrice() -> Double
     {
         var price = Double(self.amount)*self.price
@@ -32,7 +32,7 @@ struct Item: Equatable, Comparable, Codable
         return price
     }
     
-    
+    // compar functions (sorting, searching)
     static func ==(lhs: Item, rhs: Item) -> Bool
     {
         return lhs.id == rhs.id
